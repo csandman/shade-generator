@@ -1,32 +1,61 @@
+#root {
+  height: 100%;
+}
+
 .App {
+  text-align: center;
+  height: 100%;
+}
+
+body, html { 
+  height: 100%;
+  background-color: #2361a2;
+}
+.outer-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.input-container {
+  margin-bottom: 3rem;
+}
+
+.ui.action.input {
+  width: 30rem;
+}
+
+.container {
+  background-color: #2972BE;
+  display: grid;
+  grid-template-columns: repeat(9, auto);
+  border-radius: 10px;
+  padding: 1rem;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}
+
+.color-square {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.space-below {
+  margin-bottom: .75rem;
+}
+
+.popup-header {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.popup-button button {
+  width: 13rem;
 }
