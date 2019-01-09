@@ -15,16 +15,18 @@ body, html {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   align-items: center;
 }
 
 .input-container {
-  margin-bottom: 3rem;
+  margin: 2rem;
+  max-width: calc(100% - 2rem);
 }
 
 .ui.action.input {
   width: 30rem;
+  max-width: calc(100% - 2rem);
 }
 
 .container {
@@ -35,11 +37,12 @@ body, html {
   padding: 1rem;
   row-gap: 1rem;
   column-gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .color-square {
-  width: 5rem;
-  height: 5rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -58,4 +61,28 @@ body, html {
 
 .popup-button button {
   width: 13rem;
+}
+
+@media only screen and (max-width: 1250px) {
+  .color-square {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .container {
+    grid-template-columns: repeat(6, auto);
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .container {
+    grid-template-columns: repeat(4, auto);
+  }
+
+  .color-square {
+    width: 4rem;
+    height: 4rem;
+  }
 }
