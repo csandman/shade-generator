@@ -35,15 +35,11 @@ class App extends Component {
   calcAllGradients(rgb) {
     let outArr = [];
     for (let opac = 90; opac >= 5; opac-=5) {
-      console.log(opac)
       outArr.push(parse(this.rgbToHex(...this.calculateColor(rgb,false,opac/100))));
     }
-    console.log('end of first loop')
     for (let opac = 5; opac <= 90; opac+=5) {
-      console.log(opac)
       outArr.push(parse(this.rgbToHex(...this.calculateColor(rgb,true,opac/100))));
     }
-    console.log(outArr);
     this.setState({colorArr: outArr});
   }
 
@@ -52,22 +48,17 @@ class App extends Component {
   }
 
   handleSubmit() {
-
     let color = parse(this.state.inputValue).rgb
     if (!color)
       color = parse('#' + this.state.inputValue).rgb
     if(color) {
-      console.log('Color from color-parse',color);
-      let resultRgb = this.calculateColor(color, true, 0.15);
-      console.log('dimmed color',resultRgb);
-      let result = this.rgbToHex(...resultRgb);
-      console.log(this.rgbToHex(...color));
+      const bgrgb = this.calculateColor(color, true, 0.15);
+      const background = this.rgbToHex(...bgrgb);
       document.querySelector('.container').style.backgroundColor = this.state.inputValue;
-      document.querySelector('body').style.backgroundColor = result;
+      document.querySelector('body').style.backgroundColor = background;
       this.setState({color: color});
       this.calcAllGradients(color);
     }
-    
   }
 
   calculateColor(colorVals, isDark, opacity) {
@@ -80,44 +71,38 @@ class App extends Component {
   
   calculateIndividualColor(color, bColor, opacity) {
     return Math.round(opacity * bColor + (1 - opacity) * color);
+  }    
+
+  rgbToHex(r, g, b) {
+    return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
   }
-  
-  parseRGB(colorStr) {
-    return colorStr.split(',').map(
-      val => Number(val.replace(/\D/g,''))
-    );
-  }
-      
       
   componentToHex(c) {
     var hex = c.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
   }
   
-  rgbToHex(r, g, b) {
-      return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-  }
-  
-  hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? [
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16)
-    ] : null;
-  }
-
   copyHexCode(e) {
-    console.log(e.target.dataset.index)
     const output = this.state.colorArr[e.target.dataset.index].hex;
     this.copyToClipboard(output);
+
+    this.changeButtonText(e.target, "Copied!");
   }
 
   copyRgb(e) {
-    console.log(e.target.dataset.index)
     const rgb = this.state.colorArr[e.target.dataset.index].rgb;
     const output = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
     this.copyToClipboard(output);
+
+    this.changeButtonText(e.target, "Copied!");
+  }
+
+  changeButtonText(button, text) {
+    const original = button.textContent;
+    button.textContent = text;
+    setTimeout(() => {
+      button.textContent = original;
+    }, 1200);
   }
 
   copyToClipboard(str) {
