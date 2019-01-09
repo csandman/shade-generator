@@ -110,14 +110,14 @@ class App extends Component {
   copyHexCode(e) {
     console.log(e.target.dataset.index)
     const output = this.state.colorArr[e.target.dataset.index].hex;
-    copyToClipboard(output);
+    this.copyToClipboard(output);
   }
 
   copyRgb(e) {
     console.log(e.target.dataset.index)
     const rgb = this.state.colorArr[e.target.dataset.index].rgb;
     const output = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
-    copyToClipboard(output);
+    this.copyToClipboard(output);
   }
 
   copyToClipboard(str) {
