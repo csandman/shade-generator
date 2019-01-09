@@ -110,15 +110,27 @@ class App extends Component {
   copyHexCode(e) {
     console.log(e.target.dataset.index)
     const output = this.state.colorArr[e.target.dataset.index].hex;
-    navigator.clipboard.writeText(output);
+    copyToClipboard(output);
   }
 
   copyRgb(e) {
     console.log(e.target.dataset.index)
     const rgb = this.state.colorArr[e.target.dataset.index].rgb;
     const output = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
-    navigator.clipboard.writeText(output);
+    copyToClipboard(output);
   }
+
+  copyToClipboard(str) {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  };
 
 
   render() {
