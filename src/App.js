@@ -142,7 +142,7 @@ class App extends Component {
               (color,i) => {
                   return (
                     <Popup 
-                      key={color.hex} 
+                      key={color.hex + i} 
                       trigger={<div style={{backgroundColor:color.hex}}
                       className="color-square"></div>} 
                       hoverable 
