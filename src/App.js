@@ -152,7 +152,7 @@ class App extends Component {
                           data-index={i}
                           onClick={this.copyHexCode}
                           className="ui button">
-                          {'Hex: ' + color.hex.toUpperCase()}
+                          {color.hex.toUpperCase()}
                         </button>
                       </div>
                       <div className="popup-button">
@@ -160,7 +160,7 @@ class App extends Component {
                           data-index={i}
                           onClick={this.copyRgb}
                           className="ui button">
-                          {'RGB: (' + color.rgb[0] + ', ' + color.rgb[1] + ', ' + color.rgb[2] + ')'}
+                          {'rgb: (' + color.rgb[0] + ', ' + color.rgb[1] + ', ' + color.rgb[2] + ')'}
                         </button>
                       </div>
                     </Popup>
