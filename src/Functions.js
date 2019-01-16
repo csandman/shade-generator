@@ -1,11 +1,12 @@
 export const calcTextColor = rgb => {
-  rgb.map(el => {
-    el = el / 255.0;
-    return el <= 0.03928 ? el / 12.92 : ((el+0.055)/1.055) ^ 2.4;
+  const lumRgb = rgb.map(el => {
+    el = el / 255.000;
+    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
   });
-  const lum = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
+  // let isDark = lum > 0.179;
   let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05;
-  return rgbToHex(...calculateGradient(rgb, isDark, 0.35));
+  return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
 }
 
 const namer = require('color-namer');
