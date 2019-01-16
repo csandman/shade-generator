@@ -13,10 +13,9 @@
 
 body, html { 
   height: 100%;
-  background-color: #2361a2;
 }
 .outer-container {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   flex-direction: column;
   min-height: 100%;
@@ -24,24 +23,25 @@ body, html {
 }
 
 .input-container {
-  margin: 2rem;
-  max-width: calc(100% - 2rem);
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 1rem;
 }
 
 .ui.action.input {
-  width: 30rem;
-  max-width: calc(100% - 2rem);
+  width: 27rem;
 }
 
 .container {
-  background-color: #2972BE;
   display: grid;
   grid-template-columns: repeat(9, auto);
   border-radius: 10px;
   padding: 1rem;
   row-gap: 1rem;
   column-gap: 1rem;
-  margin-bottom: 2rem;
 }
 
 .color-square {
@@ -67,10 +67,27 @@ body, html {
   width: 13rem;
 }
 
+.color-name {
+  font-size: 2rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 2rem;
+  text-align: center;
+}
+
 @media only screen and (max-width: 1250px) {
   .color-square {
     width: 5rem;
     height: 5rem;
+  }
+  .color-name {
+    font-size: 1.8rem;
+  }
+
+  .ui.action.input {
+    width: 23rem;
   }
 }
 
@@ -78,6 +95,16 @@ body, html {
   .container {
     grid-template-columns: repeat(6, auto);
   }
+
+  .ui.action.input {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .color-name {
+    width: 100%;
+  }
+
 }
 
 @media only screen and (max-width: 650px) {

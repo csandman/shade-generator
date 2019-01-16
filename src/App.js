@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import { Popup } from 'semantic-ui-react'
 import "./App.css";
 
-var parse = require('parse-color');
+import { 
+  calcTextColor,
+  getColorName,
+  rgbToHex,
+  calcAllGradients
+} from './Functions';
+
+const parse = require('parse-color');
 
 class App extends Component {
 
@@ -11,10 +18,13 @@ class App extends Component {
     this.state = {
       inputValue: '',
       color: [36,103,182],
-      colorArr: []
+      hexColor: "",
+      colorArr: [],
+      textColor: 'white',
+      colorName: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEnterPress = this.handleEnterPress.bind(this);
     this.copyHexCode = this.copyHexCode.bind(this);
@@ -23,7 +33,13 @@ class App extends Component {
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
-    this.calcAllGradients(this.state.color);
+    this.setState({
+      colorName: getColorName(rgbToHex(...this.state.color)),
+      textColor: calcTextColor(this.state.color),
+      colorArr: calcAllGradients(this.state.color),
+      hexColor: rgbToHex(...this.state.color)
+    });
+    
   }
 
   handleEnterPress(e){
@@ -32,18 +48,7 @@ class App extends Component {
     }
   }
 
-  calcAllGradients(rgb) {
-    let outArr = [];
-    for (let opac = 90; opac >= 5; opac-=5) {
-      outArr.push(parse(this.rgbToHex(...this.calculateColor(rgb,false,opac/100))));
-    }
-    for (let opac = 5; opac <= 90; opac+=5) {
-      outArr.push(parse(this.rgbToHex(...this.calculateColor(rgb,true,opac/100))));
-    }
-    this.setState({colorArr: outArr});
-  }
-
-  handleChange(event) {
+  handleInputChange(event) {
     this.setState({inputValue: event.target.value});
   }
 
@@ -52,40 +57,19 @@ class App extends Component {
     if (!color)
       color = parse('#' + this.state.inputValue).rgb
     if(color) {
-      const bgrgb = this.calculateColor(color, true, 0.15);
-      const background = this.rgbToHex(...bgrgb);
-      document.querySelector('.container').style.backgroundColor = this.state.inputValue;
-      document.querySelector('body').style.backgroundColor = background;
-      this.setState({color: color});
-      this.calcAllGradients(color);
+      this.setState({
+        color: color,
+        colorName: getColorName(rgbToHex(...color)),
+        textColor: calcTextColor(color),
+        colorArr: calcAllGradients(color),
+        hexColor: rgbToHex(...color)
+      });
     }
   }
 
-  calculateColor(colorVals, isDark, opacity) {
-    if (isDark) {
-      return colorVals.map(val => this.calculateIndividualColor(val,0,opacity))
-    } else {
-      return colorVals.map(val => this.calculateIndividualColor(val,255,opacity))
-    } 
-  }
-  
-  calculateIndividualColor(color, bColor, opacity) {
-    return Math.round(opacity * bColor + (1 - opacity) * color);
-  }    
-
-  rgbToHex(r, g, b) {
-    return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-  }
-      
-  componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length === 1 ? "0" + hex : hex;
-  }
-  
   copyHexCode(e) {
     const output = this.state.colorArr[e.target.dataset.index].hex;
     this.copyToClipboard(output);
-
     this.changeButtonText(e.target, "Copied!");
   }
 
@@ -93,7 +77,6 @@ class App extends Component {
     const rgb = this.state.colorArr[e.target.dataset.index].rgb;
     const output = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
     this.copyToClipboard(output);
-
     this.changeButtonText(e.target, "Copied!");
   }
 
@@ -117,17 +100,16 @@ class App extends Component {
     document.body.removeChild(el);
   };
 
-
   render() {
     return (
-      <div className="App">
-        <div className="outer-container">
+      <div className="App" style={{backgroundColor: this.state.hexColor }}>
+        <div className="outer-container" >
           <div className="input-container">
             <div className="ui action input">
               <input 
                 type="text"
                 placeholder="Color Code (Hex, RGB, or Name)"
-                onChange={this.handleChange}
+                onChange={this.handleInputChange}
                 value={this.state.inputValue}/>
               <button 
                 onClick={this.handleSubmit}
@@ -135,6 +117,7 @@ class App extends Component {
                 GO
               </button>
             </div>
+            <div className="color-name" style={{color: this.state.textColor}}>{this.state.colorName}</div>
           </div>
           <div className="container">
             {
