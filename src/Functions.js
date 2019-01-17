@@ -4,8 +4,7 @@ export const calcTextColor = rgb => {
     return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
   });
   const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
-  // let isDark = lum > 0.179;
-  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05;
+  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
   return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
 }
 
@@ -13,12 +12,10 @@ const namer = require('color-namer');
 
 export const getColorName = hex => {
   let colors = namer(hex, { pick: ['html', 'ntc', 'pantone'] });
-  console.log(colors);
   let colorArr = [];
   for (const key in colors) {
     colorArr = mergeTwo(colorArr,colors[key])
   }
-  console.log(colorArr);
   let sorted = colorArr.sort((a,b) => a.distance < b.distance);
   return sorted[0].name;
 }
