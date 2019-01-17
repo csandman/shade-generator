@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Popup } from "semantic-ui-react";
 import { slide as Menu } from "react-burger-menu";
+import './Hamburger.css';
 import "./App.css";
 
 import {
@@ -21,7 +22,45 @@ class App extends Component {
       hexColor: "",
       colorArr: [],
       textColor: "white",
-      colorName: ""
+      colorName: "",
+      menuItems: [
+        {
+          hexColor: "#1B5446",
+          colorName: ""
+        },
+        {
+          hexColor: "#B2675E",
+          colorName: ""
+        },
+        {
+          hexColor: "#A14A76",
+          colorName: ""
+        },
+        {
+          hexColor: "#84ACCE",
+          colorName: ""
+        },
+        {
+          hexColor: "#7D1D3F",
+          colorName: ""
+        },
+        {
+          hexColor: "#D7D9B1",
+          colorName: ""
+        },
+        {
+          hexColor: "#512500",
+          colorName: ""
+        },
+        {
+          hexColor: "#827191",
+          colorName: ""
+        },
+        {
+          hexColor: "#8DB580",
+          colorName: ""
+        }
+      ]
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,6 +68,7 @@ class App extends Component {
     this.handleEnterPress = this.handleEnterPress.bind(this);
     this.copyHexCode = this.copyHexCode.bind(this);
     this.copyRgb = this.copyRgb.bind(this);
+    this.clickColor = this.clickColor.bind(this);
   }
 
   componentDidMount() {
@@ -37,8 +77,36 @@ class App extends Component {
       colorName: getColorName(rgbToHex(...this.state.color)),
       textColor: calcTextColor(this.state.color),
       colorArr: calcAllGradients(this.state.color),
-      hexColor: rgbToHex(...this.state.color)
+      hexColor: rgbToHex(...this.state.color),
+      menuItems: this.state.menuItems.map(el => {
+        el.colorName = getColorName(el.hexColor);
+        el.textColor = calcTextColor(parse(el.hexColor).rgb);
+        return el;
+      })
     });
+  }
+
+  clickColor(e) {
+    console.log(e.target);
+    const hex = this.state.menuItems[e.target.dataset.index].hexColor
+    this.setState({
+      inputValue: hex
+    });
+    this.updateStateValues(parse(hex).rgb);
+  }
+
+  addMenuItem(hex) {
+    const newMenuItem = [{
+      hexColor: hex,
+      colorName: getColorName(hex),
+      textColor: calcTextColor(parse(hex).rgb)
+    }];
+    const filteredMenu = this.state.menuItems.filter(el => {
+      return el.hexColor.toLowerCase() !== hex.toLowerCase();
+    });
+    this.setState({
+      menuItems: newMenuItem.concat(filteredMenu)
+    })
   }
 
   handleEnterPress(e) {
@@ -52,17 +120,22 @@ class App extends Component {
   }
 
   handleSubmit() {
-    let color = parse(this.state.inputValue).rgb;
-    if (!color) color = parse("#" + this.state.inputValue).rgb;
-    if (color) {
-      this.setState({
-        color: color,
-        colorName: getColorName(rgbToHex(...color)),
-        textColor: calcTextColor(color),
-        colorArr: calcAllGradients(color),
-        hexColor: rgbToHex(...color)
-      });
+    let rgb = parse(this.state.inputValue).rgb;
+    if (!rgb) rgb = parse("#" + this.state.inputValue).rgb;
+    if (rgb) {
+      this.updateStateValues(rgb)
     }
+  }
+
+  updateStateValues(rgb) {
+    this.setState({
+      color: rgb,
+      colorName: getColorName(rgbToHex(...rgb)),
+      textColor: calcTextColor(rgb),
+      colorArr: calcAllGradients(rgb),
+      hexColor: rgbToHex(...rgb)
+    });
+    this.addMenuItem(rgbToHex(...rgb));
   }
 
   copyHexCode(e) {
@@ -101,10 +174,23 @@ class App extends Component {
   render() {
     return (
       <div className="App" style={{ backgroundColor: this.state.hexColor }}>
-        <Menu>
-          <a id="home" className="menu-item" href="/">Home</a>
-          <a id="about" className="menu-item" href="/about">About</a>
-          <a id="contact" className="menu-item" href="/contact">Contact</a>
+        <Menu customCrossIcon={ false }
+        menuClassName={ "my-class" }>
+          {
+            this.state.menuItems.map((item, i) => {
+              return (
+                <div
+                  key={item.hexColor + i}
+                  className="menu-item"
+                  style={{backgroundColor: item.hexColor}}
+                  onClick={this.clickColor}
+                  data-index={i}>
+                  <div className="color-name" data-index={i}>{item.colorName}</div>
+                  <div className="color-name" data-index={i}>{item.hexColor}</div>
+                </div>
+              )
+            })
+          }
         </Menu>
         <div className='page'>
         <div className="outer-container">
