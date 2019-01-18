@@ -6,12 +6,6 @@ import "./App.css";
 
 import { withFirebase } from './Firebase';
 
-// menuItems: this.state.menuItems.map(el => {
-//   el.colorName = getColorName(el.hexColor);
-//   el.textColor = calcTextColor(parse(el.hexColor).rgb);
-//   return el;
-// })
-
 import {
   calcTextColor,
   getColorName,
@@ -32,44 +26,7 @@ class App extends Component {
       textColor: "white",
       colorName: "",
       loading: false,
-      menuItems: [
-        {
-          hexColor: "#1B5446",
-          colorName: ""
-        },
-        {
-          hexColor: "#B2675E",
-          colorName: ""
-        },
-        {
-          hexColor: "#A14A76",
-          colorName: ""
-        },
-        {
-          hexColor: "#84ACCE",
-          colorName: ""
-        },
-        {
-          hexColor: "#7D1D3F",
-          colorName: ""
-        },
-        {
-          hexColor: "#D7D9B1",
-          colorName: ""
-        },
-        {
-          hexColor: "#512500",
-          colorName: ""
-        },
-        {
-          hexColor: "#827191",
-          colorName: ""
-        },
-        {
-          hexColor: "#8DB580",
-          colorName: ""
-        }
-      ]
+      menuItems: []
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -86,13 +43,11 @@ class App extends Component {
       colorName: getColorName(rgbToHex(...this.state.color)),
       textColor: calcTextColor(this.state.color),
       colorArr: calcAllGradients(this.state.color),
-      hexColor: rgbToHex(...this.state.color),
-      
+      hexColor: rgbToHex(...this.state.color)
     });
 
     this.setState({ loading: true});
-    await this.props.firebase.colorHistory().onSnapshot((querySnapshot) => {
-      
+    await this.props.firebase.colorHistory().orderBy("dateAdded", "desc").limit(100).onSnapshot((querySnapshot) => {
       let data = querySnapshot.docs.map(doc => {
           let out = doc.data()
           out.id = doc.id;
@@ -103,9 +58,7 @@ class App extends Component {
           menuItems: data,
           loading: false
       })
-
       return true;
-
     });
   }
 
@@ -119,17 +72,20 @@ class App extends Component {
   }
 
   addMenuItem(hex) {
-    const newMenuItem = [{
+    const newMenuItem = {
       hexCode: hex,
       colorName: getColorName(hex),
-      textColor: calcTextColor(parse(hex).rgb)
-    }];
-    const filteredMenu = this.state.menuItems.filter(el => {
-      return el.hexCode.toLowerCase() !== hex.toLowerCase();
-    });
-    this.setState({
-      menuItems: newMenuItem.concat(filteredMenu)
+      textColor: calcTextColor(parse(hex).rgb),
+      dateAdded: new Date()
+    };
+
+    this.props.firebase.colorHistory().doc(hex.toUpperCase()).set(newMenuItem)
+    .then(function() {
+      console.log("Document successfully written!");
     })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });
   }
 
   handleEnterPress(e) {

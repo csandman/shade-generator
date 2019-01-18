@@ -13,7 +13,7 @@ const config = {
 
 class Firebase {
   constructor() {
-    console.log(app.initializeApp(config));
+    app.initializeApp(config);
 
     // DB setup
     this.db = app.firestore();
@@ -22,7 +22,7 @@ class Firebase {
 
   }
 
-  colorHistory = () => this.db.collection(`color-history`);
+  colorHistory = () => this.db.collection('color-history');
 }
 
 export default Firebase;
