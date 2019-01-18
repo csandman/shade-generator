@@ -9,12 +9,12 @@
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #373a47;
+  background: rgba(0,0,0,0.4);;
 }
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-  background: #272932;
+  background: (255,255,255,0.4);;
 }
 
 /* Position and sizing of clickable cross button */
@@ -41,7 +41,6 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu {
   background: #373a47;
   font-size: 1.15em;
-  border-right: #373a47 solid 2px;
 }
 
 /* Morph shape necessary with bubble or elastic */
