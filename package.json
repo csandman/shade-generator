@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "color-namer": "^1.3.0",
+    "firebase": "^5.8.0",
     "parse-color": "^1.0.0",
     "react": "^16.7.0",
     "react-burger-menu": "^2.6.1",

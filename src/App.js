@@ -4,6 +4,14 @@ import { slide as Menu } from "react-burger-menu";
 import './Hamburger.css';
 import "./App.css";
 
+import { withFirebase } from './Firebase';
+
+// menuItems: this.state.menuItems.map(el => {
+//   el.colorName = getColorName(el.hexColor);
+//   el.textColor = calcTextColor(parse(el.hexColor).rgb);
+//   return el;
+// })
+
 import {
   calcTextColor,
   getColorName,
@@ -23,6 +31,7 @@ class App extends Component {
       colorArr: [],
       textColor: "white",
       colorName: "",
+      loading: false,
       menuItems: [
         {
           hexColor: "#1B5446",
@@ -71,24 +80,38 @@ class App extends Component {
     this.clickColor = this.clickColor.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
     this.setState({
       colorName: getColorName(rgbToHex(...this.state.color)),
       textColor: calcTextColor(this.state.color),
       colorArr: calcAllGradients(this.state.color),
       hexColor: rgbToHex(...this.state.color),
-      menuItems: this.state.menuItems.map(el => {
-        el.colorName = getColorName(el.hexColor);
-        el.textColor = calcTextColor(parse(el.hexColor).rgb);
-        return el;
+      
+    });
+
+    this.setState({ loading: true});
+    await this.props.firebase.colorHistory().onSnapshot((querySnapshot) => {
+      
+      let data = querySnapshot.docs.map(doc => {
+          let out = doc.data()
+          out.id = doc.id;
+          return out;
+      });
+      console.log(data);
+      this.setState({
+          menuItems: data,
+          loading: false
       })
+
+      return true;
+
     });
   }
 
   clickColor(e) {
     console.log(e.target);
-    const hex = this.state.menuItems[e.target.dataset.index].hexColor
+    const hex = this.state.menuItems[e.target.dataset.index].hexCode;
     this.setState({
       inputValue: hex
     });
@@ -97,12 +120,12 @@ class App extends Component {
 
   addMenuItem(hex) {
     const newMenuItem = [{
-      hexColor: hex,
+      hexCode: hex,
       colorName: getColorName(hex),
       textColor: calcTextColor(parse(hex).rgb)
     }];
     const filteredMenu = this.state.menuItems.filter(el => {
-      return el.hexColor.toLowerCase() !== hex.toLowerCase();
+      return el.hexCode.toLowerCase() !== hex.toLowerCase();
     });
     this.setState({
       menuItems: newMenuItem.concat(filteredMenu)
@@ -180,13 +203,13 @@ class App extends Component {
             this.state.menuItems.map((item, i) => {
               return (
                 <div
-                  key={item.hexColor + i}
+                  key={item.id}
                   className="menu-item"
-                  style={{backgroundColor: item.hexColor}}
+                  style={{backgroundColor: item.hexCode}}
                   onClick={this.clickColor}
                   data-index={i}>
                   <div className="color-name" data-index={i}>{item.colorName}</div>
-                  <div className="color-name" data-index={i}>{item.hexColor}</div>
+                  <div className="color-name" data-index={i}>{item.hexCode}</div>
                 </div>
               )
             })
@@ -259,4 +282,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withFirebase(App);
