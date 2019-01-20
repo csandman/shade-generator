@@ -11,6 +11,9 @@ export const calcTextColor = rgb => {
   return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
 }
 
+// Uses the named-colors library for a list of named of colors
+// and uses nearest color to match the entered color to the closest
+// option with a name
 export const getColorName = hex => {
   const colors = namedColors.reduce((o, { name, hex }) => Object.assign(o, { [name]: hex }), {});
   const nearest = nearestColor.from(colors);
