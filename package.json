@@ -1,5 +1,5 @@
 {
-  "name": "gradient-generator",
+  "name": "shade-generator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
