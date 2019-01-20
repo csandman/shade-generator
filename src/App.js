@@ -99,9 +99,11 @@ class App extends Component {
   }
 
   handleSubmit() {
+    alert("This is actually processing")
     let rgb = parse(this.state.inputValue).rgb;
     if (!rgb) rgb = parse("#" + this.state.inputValue).rgb;
     if (rgb) {
+      alert(rgb);
       this.updateStateValues(rgb)
     }
   }
