@@ -52,7 +52,6 @@ class App extends Component {
           out.id = doc.id;
           return out;
       });
-      console.log(data);
       this.setState({
           menuItems: data,
           loading: false
@@ -62,7 +61,6 @@ class App extends Component {
   }
 
   clickColor(e) {
-    console.log(e.target);
     const hex = this.state.menuItems[e.target.dataset.index].hexCode;
     this.setState({
       inputValue: hex,
@@ -80,9 +78,6 @@ class App extends Component {
     };
 
     this.props.firebase.colorHistory().doc(hex.toUpperCase()).set(newMenuItem)
-    .then(function() {
-      console.log("Document successfully written!");
-    })
     .catch(function(error) {
       console.error("Error writing document: ", error);
     });
@@ -99,11 +94,9 @@ class App extends Component {
   }
 
   handleSubmit() {
-    alert("This is actually processing")
-    let rgb = parse(this.state.inputValue).rgb;
-    if (!rgb) rgb = parse("#" + this.state.inputValue).rgb;
+    let rgb = parse(this.state.inputValue.toLowerCase()).rgb;
+    if (!rgb) rgb = parse("#" + this.state.inputValue.toLowerCase()).rgb;
     if (rgb) {
-      alert(rgb);
       this.updateStateValues(rgb)
     }
   }
@@ -169,8 +162,8 @@ class App extends Component {
                   style={{backgroundColor: item.hexCode}}
                   onClick={this.clickColor}
                   data-index={i}>
-                  <div className="color-name" data-index={i}>{item.colorName}</div>
-                  <div className="color-name" data-index={i}>{item.hexCode}</div>
+                  <div className="color-name" style={{color: item.textColor}} data-index={i}>{item.colorName}</div>
+                  <div className="color-name" style={{color: item.textColor}} data-index={i}>{item.hexCode}</div>
                 </div>
               )
             })
