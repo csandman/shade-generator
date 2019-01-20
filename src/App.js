@@ -20,13 +20,14 @@ class App extends Component {
     super(props);
     this.state = {
       inputValue: "",
-      color: [36, 103, 182],
+      color: [],
       hexColor: "",
       colorArr: [],
       textColor: "white",
       colorName: "",
       loading: false,
-      menuItems: []
+      menuItems: [],
+      menuIsOpen: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,14 +40,12 @@ class App extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
-    this.setState({
-      colorName: getColorName(rgbToHex(...this.state.color)),
-      textColor: calcTextColor(this.state.color),
-      colorArr: calcAllGradients(this.state.color),
-      hexColor: rgbToHex(...this.state.color)
-    });
-
     this.setState({ loading: true});
+    await this.props.firebase.colorHistory().orderBy("dateAdded", "desc").limit(1).get().then(
+      snapshot => {
+        this.updateStateValues(parse(snapshot.docs[0].data().hexCode).rgb);
+      }
+    )
     await this.props.firebase.colorHistory().orderBy("dateAdded", "desc").limit(100).onSnapshot((querySnapshot) => {
       let data = querySnapshot.docs.map(doc => {
           let out = doc.data()
@@ -66,7 +65,8 @@ class App extends Component {
     console.log(e.target);
     const hex = this.state.menuItems[e.target.dataset.index].hexCode;
     this.setState({
-      inputValue: hex
+      inputValue: hex,
+      menuIsOpen: false
     });
     this.updateStateValues(parse(hex).rgb);
   }
@@ -112,7 +112,8 @@ class App extends Component {
       colorName: getColorName(rgbToHex(...rgb)),
       textColor: calcTextColor(rgb),
       colorArr: calcAllGradients(rgb),
-      hexColor: rgbToHex(...rgb)
+      hexColor: rgbToHex(...rgb),
+      inputValue: rgbToHex(...rgb).toUpperCase()
     });
     this.addMenuItem(rgbToHex(...rgb));
   }
@@ -153,8 +154,10 @@ class App extends Component {
   render() {
     return (
       <div className="App" style={{ backgroundColor: this.state.hexColor }}>
-        <Menu customCrossIcon={ false }
-        menuClassName={ "my-class" }>
+        <Menu 
+          customCrossIcon={ false }
+          menuClassName={ "my-class" }
+          isOpen={ this.state.menuIsOpen }>
           {
             this.state.menuItems.map((item, i) => {
               return (
