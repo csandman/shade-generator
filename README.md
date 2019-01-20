@@ -1,6 +1,6 @@
 # gradient-generator
 
-[https://gradgen.herokuapp.com/](https://gradgen.herokuapp.com/)
+[shadegenerator.com](http://www.shadegenerator.com)
 
 ## Available Scripts
 
