@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "clipboard-polyfill": "^2.7.0",
     "color-name-list": "^3.52.1",
     "firebase": "^5.8.0",
     "nearest-color": "^0.4.4",

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Popup } from "semantic-ui-react";
 import { slide as Menu } from "react-burger-menu";
+import * as clipboard from "clipboard-polyfill";
 import "./Hamburger.css";
 import "./App.css";
 
@@ -145,16 +146,7 @@ class App extends Component {
   }
 
   copyToClipboard(str) {
-    const el = document.createElement("textarea");
-    el.value = str;
-    el.setAttribute("readonly", "");
-    el.contentEditable = "true";
-    el.style.position = "absolute";
-    el.style.left = "-9999px";
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
+    clipboard.writeText(str);
   }
 
   render() {
