@@ -105,8 +105,10 @@ class App extends Component {
   }
 
   handleSubmit() {
-    let rgb = parse(this.state.inputValue.toLowerCase()).rgb;
-    if (!rgb) rgb = parse("#" + this.state.inputValue.toLowerCase()).rgb;
+    let rgb = (
+      parse(this.state.inputValue.toLowerCase().replace(/\s/g,'')).rgb ||
+      parse("#" + this.state.inputValue.toLowerCase().replace(/\s/g,'')).rgb
+    )
     if (rgb) {
       this.updateStateValues(rgb);
     }
