@@ -5,7 +5,7 @@ import * as clipboard from "clipboard-polyfill";
 import "./Hamburger.css";
 import "./App.css";
 
-import { withFirebase } from "./Firebase";
+import { withFirebase } from "./Components/Firebase";
 
 import {
   calcTextColor,
@@ -126,14 +126,14 @@ class App extends Component {
 
   copyHexCode(e) {
     const output = this.state.colorArr[e.target.dataset.index].hex;
-    this.copyToClipboard(output);
+    clipboard.writeText(output);
     this.changeButtonText(e.target, "Copied!");
   }
 
   copyRgb(e) {
     const rgb = this.state.colorArr[e.target.dataset.index].rgb;
     const output = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
-    this.copyToClipboard(output);
+    clipboard.writeText(output);
     this.changeButtonText(e.target, "Copied!");
   }
 
@@ -143,10 +143,6 @@ class App extends Component {
     setTimeout(() => {
       button.textContent = original;
     }, 1200);
-  }
-
-  copyToClipboard(str) {
-    clipboard.writeText(str);
   }
 
   render() {
