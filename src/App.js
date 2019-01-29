@@ -116,7 +116,6 @@ class App extends Component {
     if (rgb) 
       this.updateStateValues(rgb);
   }
-  }
 
   updateStateValues(rgb) {
     this.setState({
