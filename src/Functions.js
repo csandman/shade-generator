@@ -11,6 +11,15 @@ export const calcTextColor = rgb => {
   return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
 }
 
+export const searchNamedColors = searchTerm => {
+  console.log(namedColors);
+  for (let i = 0; i < namedColors.length; i++) {
+    if (namedColors[i].name.replace(/\s/g,'').toLowerCase() === searchTerm)
+      return parse(namedColors[i].hex).rgb;
+  }
+  return null;
+}
+
 // Uses the named-colors library for a list of named of colors
 // and uses nearest color to match the entered color to the closest
 // option with a name
@@ -52,4 +61,4 @@ const calculateGradient = (colorVals, isDark, opacity) => {
 
 const calculateIndividualColor = (color, bColor, opacity) => {
   return Math.round(opacity * bColor + (1 - opacity) * color);
-}    
+}

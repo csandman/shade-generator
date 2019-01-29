@@ -11,7 +11,8 @@ import {
   calcTextColor,
   getColorName,
   rgbToHex,
-  calcAllGradients
+  calcAllGradients,
+  searchNamedColors
 } from "./Functions";
 
 const parse = require("parse-color");
@@ -105,13 +106,16 @@ class App extends Component {
   }
 
   handleSubmit() {
+    const searchTerm = this.state.inputValue.toLowerCase().replace(/\s/g,'');
     let rgb = (
-      parse(this.state.inputValue.toLowerCase().replace(/\s/g,'')).rgb ||
-      parse("#" + this.state.inputValue.toLowerCase().replace(/\s/g,'')).rgb
+      parse(searchTerm).rgb ||
+      parse("#" + searchTerm).rgb
     )
-    if (rgb) {
+    if (!rgb)
+      rgb = searchNamedColors(searchTerm);
+    if (rgb) 
       this.updateStateValues(rgb);
-    }
+  }
   }
 
   updateStateValues(rgb) {
