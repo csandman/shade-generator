@@ -1,0 +1,112 @@
+#signup-page {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.7);
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* transition: 100ms ease-out opacity; */
+  z-index: 1000;
+
+  &.hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .signup-modal {
+    height: 30rem;
+    width: 30rem;
+    border-radius: 4px;
+    /* transition: 100ms ease-out opacity; */
+    z-index: 1001;
+    background-color: white;
+  
+    display: flex;
+
+    &.hidden {
+      height: 0;
+      width: 0;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .color-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: stretch;
+
+      div[class^="color-pane-"] {
+        flex: 1;
+        width: 100%;
+      }
+
+      .color-pane-1 {
+        background-color: #5d7197;
+        border-radius: 4px 0 0 0;
+      }
+      
+      .color-pane-2 {
+        background-color: #49608a;
+      }
+      
+      .color-pane-3 {
+        background-color: #354E7D;
+      }
+      
+      .color-pane-4 {
+        background-color: #2d426a;
+      }
+      
+      .color-pane-5 {
+        background-color: #253758;
+        border-radius: 0 0 0 4px;
+      }
+    
+    }
+
+    .sign-in-content {
+      flex: 3;
+
+      .flex-row {
+        display: flex;
+        flex: 1;
+        height: 3rem;
+        align-items: center;
+      }
+      
+      .flex-row > * {
+        flex: 1;
+        text-align: center;
+        font-size: 1.2rem;
+        font-family: 'Nunito', sans-serif;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: .5rem;
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .login-tab {
+        border-bottom: 3px solid #354E7D;
+        border-right: 1px solid #bebebe;
+      }
+      
+      .signup-tab {
+        border-bottom: 2px solid #bebebe;
+      }
+    }
+  }
+  
+}

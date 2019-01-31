@@ -1,7 +1,7 @@
 import nearestColor from 'nearest-color';
 import namedColors from 'color-name-list';
 
-export const calcTextColor = rgb => {
+export const getContrastColor = rgb => {
   const lumRgb = rgb.map(el => {
     el = el / 255.000;
     return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
@@ -9,6 +9,16 @@ export const calcTextColor = rgb => {
   const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
   let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
   return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
+}
+
+export const getHighContrastColor = rgb => {
+  const lumRgb = rgb.map(el => {
+    el = el / 255.000;
+    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
+  });
+  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
+  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  return rgbToHex(...calculateGradient(rgb, isDark, 0.70));
 }
 
 export const searchNamedColors = searchTerm => {

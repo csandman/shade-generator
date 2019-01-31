@@ -7,9 +7,12 @@
   outline: none !important;
 }
 
-
 *::-webkit-scrollbar { 
   display: none !important; 
+}
+
+body, html { 
+  height: 100%;
 }
 
 #root {
@@ -20,28 +23,12 @@
   min-height: 100%;
 }
 
-.menu-item {
-  display: flex !important;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 10rem;
-  align-items: center;
-  cursor: pointer;
-  padding: 2rem;
-}
-.menu-item .color-name {
-  font-size: 1.5rem;
-}
-
 .page {
   display: flex;
   min-height: 100vh;
   justify-content: center;
 }
 
-body, html { 
-  height: 100%;
-}
 .outer-container {
   display: inline-flex;
   justify-content: center;
@@ -110,6 +97,7 @@ body, html {
     width: 5rem;
     height: 5rem;
   }
+
   .color-name {
     font-size: 1.8rem;
   }

@@ -1,0 +1,65 @@
+#header {
+  height: 5rem;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .right-content {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .title-text {
+    font-size: 1.7rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      display: grid;
+      grid-template-columns: 9px 9px;
+      grid-gap: 2px;
+      margin-right: .8rem;
+
+      .icon-dot {
+        height: 9px;
+        background-color: rgba(0,0,0,0.3);
+        display: flex;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  button {
+    font-size: 1.2rem;
+    padding: .5rem 1rem;
+    margin-right: 3rem;
+    background-color: rgba(0,0,0,0);
+    border: 2px solid;
+    color: rgb(134, 149, 177);
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+  }
+
+  .bars.big.icon {
+    margin-right: 3rem;
+    height: auto;
+    cursor: pointer;
+  }
+}

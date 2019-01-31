@@ -1,0 +1,56 @@
+#sidebar {
+  visibility: visible;
+  opacity: 1;
+  overflow: hidden;
+  z-index: 1300;
+  
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+
+    .sidebar-content {
+      transform: translateX(100%);
+    }
+  }
+
+  .background {
+    z-index: 1400;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.4);
+  }
+
+  .sidebar-content {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20rem;
+    z-index: 1500;
+    transform: translateX(0);
+    transition: 300ms ease-out all;
+    overflow: scroll;
+    will-change: tranform;
+    
+  }
+  
+  .menu-items {
+
+    .menu-item {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 10rem;
+      align-items: center;
+      cursor: pointer;
+      padding: 2rem;
+
+      .color-name {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

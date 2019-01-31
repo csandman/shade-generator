@@ -1,6 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/firestore';
-// import 'firebase/auth'; //Do later
+import 'firebase/auth'; //Do later
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -18,9 +18,22 @@ class Firebase {
     // DB setup
     this.db = app.firestore();
     // Add Google Login here
-    // this.auth = app.auth();
+    this.auth = app.auth();
 
   }
+
+  doCreateUserWithEmailAndPassword = (email, password) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
+
+  doSignInWithEmailAndPassword = (email, password) =>
+    this.auth.signInWithEmailAndPassword(email, password);
+
+  doSignOut = () => this.auth.signOut();
+
+  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+
+  doPasswordUpdate = password =>
+    this.auth.currentUser.updatePassword(password);
 
   colorHistory = () => this.db.collection('color-history');
 }

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { Popup } from "semantic-ui-react";
-import { slide as Menu } from "react-burger-menu";
 import * as clipboard from "clipboard-polyfill";
+import Header from "./Components/Header/Header";
+import SignUp from "./Components/SignUp/SignUp";
+import Sidebar from "./Components/Sidebar/Sidebar";
 import "./Hamburger.css";
 import "./App.css";
 
 import { withFirebase } from "./Components/Firebase";
 
 import {
-  calcTextColor,
+  getContrastColor,
+  getHighContrastColor,
   getColorName,
   rgbToHex,
   calcAllGradients,
@@ -25,11 +28,13 @@ class App extends Component {
       color: [],
       hexColor: "",
       colorArr: [],
-      textColor: "white",
+      contrastColor: "white",
+      highContrastColor: "white",
       colorName: "",
       loading: false,
       menuItems: [],
-      menuIsOpen: false
+      menuIsOpen: false,
+      signupOpen: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -38,6 +43,18 @@ class App extends Component {
     this.copyHexCode = this.copyHexCode.bind(this);
     this.copyRgb = this.copyRgb.bind(this);
     this.clickColor = this.clickColor.bind(this);
+    this.openSignUpModal = this.openSignUpModal.bind(this);
+    this.openSidebar = this.openSidebar.bind(this);
+    this.closeSidebar = this.closeSidebar.bind(this);
+    this.closeSignUpModal = this.closeSignUpModal.bind(this);
+  }
+
+  openSidebar(e) {
+    this.setState({ menuIsOpen: true });
+  }
+
+  closeSidebar(e) {
+    this.setState({ menuIsOpen: false });
   }
 
   async componentDidMount() {
@@ -67,9 +84,28 @@ class App extends Component {
         });
         return true;
       });
+      this.props.firebase.auth.onAuthStateChanged(authUser => {
+        authUser
+          ? this.setState({ authUser })
+          : this.setState({ authUser: null });
+          console.log(authUser);
+      });
+  }
+
+  openSignUpModal() {
+    this.setState({
+      signupOpen: true
+    });
+  }
+
+  closeSignUpModal(e) {
+    this.setState({
+      signupOpen: false
+    });
   }
 
   clickColor(e) {
+    console.log(e);
     const hex = this.state.menuItems[e.target.dataset.index].hexCode;
     this.setState({
       inputValue: hex,
@@ -82,7 +118,7 @@ class App extends Component {
     const newMenuItem = {
       hexCode: hex,
       colorName: getColorName(hex),
-      textColor: calcTextColor(parse(hex).rgb),
+      contrastColor: getContrastColor(parse(hex).rgb),
       dateAdded: new Date()
     };
 
@@ -99,6 +135,12 @@ class App extends Component {
     if (e.keyCode === 13) {
       this.handleSubmit();
     }
+    if (e.keyCode === 27) {
+      this.setState({
+        menuIsOpen: false,
+        signupOpen: false
+      })
+    }
   }
 
   handleInputChange(event) {
@@ -106,22 +148,21 @@ class App extends Component {
   }
 
   handleSubmit() {
-    const searchTerm = this.state.inputValue.toLowerCase().replace(/\s/g,'');
-    let rgb = (
+    const searchTerm = this.state.inputValue.toLowerCase().replace(/\s/g, "");
+    let rgb =
       parse(searchTerm).rgb ||
-      parse("#" + searchTerm).rgb
-    )
-    if (!rgb)
-      rgb = searchNamedColors(searchTerm);
-    if (rgb) 
-      this.updateStateValues(rgb);
+      parse("#" + searchTerm).rgb ||
+      searchNamedColors(searchTerm);
+
+    if (rgb) this.updateStateValues(rgb);
   }
 
   updateStateValues(rgb) {
     this.setState({
       color: rgb,
       colorName: getColorName(rgbToHex(...rgb)),
-      textColor: calcTextColor(rgb),
+      contrastColor: getContrastColor(rgb),
+      highContrastColor: getHighContrastColor(rgb),
       colorArr: calcAllGradients(rgb),
       hexColor: rgbToHex(...rgb),
       inputValue: rgbToHex(...rgb).toUpperCase()
@@ -153,38 +194,20 @@ class App extends Component {
   render() {
     return (
       <div className="App" style={{ backgroundColor: this.state.hexColor }}>
-        <Menu
-          customCrossIcon={false}
-          menuClassName={"my-class"}
+        <SignUp closeSignUpModal={this.closeSignUpModal} isOpen={this.state.signupOpen} />
+        <Header
+          colorArr={this.state.colorArr}
+          openSidebar={this.openSidebar}
+          handleSignupClick={this.openSignUpModal}
+          contrastColor={this.state.contrastColor}
+          highContrastColor={this.state.highContrastColor}
+        />
+        <Sidebar 
           isOpen={this.state.menuIsOpen}
-        >
-          {this.state.menuItems.map((item, i) => {
-            return (
-              <div
-                key={item.id}
-                className="menu-item"
-                style={{ backgroundColor: item.hexCode }}
-                onClick={this.clickColor}
-                data-index={i}
-              >
-                <div
-                  className="color-name"
-                  style={{ color: item.textColor }}
-                  data-index={i}
-                >
-                  {item.colorName}
-                </div>
-                <div
-                  className="color-name"
-                  style={{ color: item.textColor }}
-                  data-index={i}
-                >
-                  {item.hexCode}
-                </div>
-              </div>
-            );
-          })}
-        </Menu>
+          closeSidebar={this.closeSidebar}
+          menuItems={this.state.menuItems}
+          clickColor={this.clickColor}></Sidebar>
+
         <div className="page">
           <div className="outer-container">
             <div className="input-container">
@@ -201,7 +224,7 @@ class App extends Component {
               </div>
               <div
                 className="color-name"
-                style={{ color: this.state.textColor }}
+                style={{ color: this.state.contrastColor }}
               >
                 {this.state.colorName}
               </div>
