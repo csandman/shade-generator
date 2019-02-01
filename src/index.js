@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Firebase, { FirebaseContext } from './Components/Firebase';
+import HttpsRedirect from 'react-https-redirect';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
-      <App />
+      <HttpsRedirect>
+        <App />
+      </HttpsRedirect>
   </FirebaseContext.Provider>,
   document.getElementById('root')
 );
