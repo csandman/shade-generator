@@ -124,9 +124,7 @@ class App extends Component {
       .colorHistory()
       .doc(hex.toUpperCase())
       .set(newMenuItem)
-      .catch(function(error) {
-        console.error("Error writing document: ", error);
-      });
+      .catch(function(error) {});
   }
 
   handleEnterPress(e) {
@@ -215,24 +213,14 @@ class App extends Component {
         <div className="page">
           <div className="outer-container">
             <div className="input-container">
-              <div className="color-input">
+              <div className="ui action input">
                 <input
                   type="search"
                   placeholder="Color Code (Hex, RGB, or Name)"
                   onChange={this.handleInputChange}
                   value={this.state.inputValue}
-                  style={{
-                    borderColor: this.state.highContrastColor
-                  }}
                 />
-                <button
-                  onClick={this.handleSubmit}
-                  style={{
-                    backgroundColor: this.state.highContrastColor,
-                    borderColor: this.state.highContrastColor,
-                    color: this.state.hexColor
-                  }}
-                >
+                <button onClick={this.handleSubmit} className="ui button">
                   GO
                 </button>
               </div>

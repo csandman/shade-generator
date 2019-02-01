@@ -9,6 +9,7 @@
     "nearest-color": "^0.4.4",
     "node-sass": "^4.11.0",
     "parse-color": "^1.0.0",
+    "radium": "^0.25.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-https-redirect": "^1.1.0",
