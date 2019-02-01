@@ -28,7 +28,6 @@ export const getHighContrastColor = rgb => {
 }
 
 export const searchNamedColors = searchTerm => {
-  console.log(namedColors);
   for (let i = 0; i < namedColors.length; i++) {
     if (namedColors[i].name.replace(/\s/g,'').toLowerCase() === searchTerm)
       return parse(namedColors[i].hex).rgb;

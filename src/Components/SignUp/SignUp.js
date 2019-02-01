@@ -40,7 +40,7 @@ class SignUp extends Component {
         authUser.updateProfile({
           displayName: userName
         }).then(function() {
-          console.log(authUser)
+          
         }).catch(function(error) {
           // An error happened.
         });

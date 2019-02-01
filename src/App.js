@@ -88,7 +88,6 @@ class App extends Component {
       authUser
         ? this.setState({ authUser })
         : this.setState({ authUser: null });
-      console.log(authUser);
     });
   }
 
@@ -105,7 +104,6 @@ class App extends Component {
   }
 
   clickColor(e) {
-    console.log(e);
     const hex = this.state.menuItems[e.target.dataset.index].hexCode;
     this.setState({
       inputValue: hex,
