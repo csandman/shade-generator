@@ -1,6 +1,6 @@
 # shade-generator
 
-[shadegenerator.com](http://www.shadegenerator.com)
+[shadegenerator.com](https://www.shadegenerator.com)
 
 ## Available Scripts
 
