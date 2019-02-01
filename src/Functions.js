@@ -1,6 +1,12 @@
 import nearestColor from 'nearest-color';
 import namedColors from 'color-name-list';
 
+export const getRandomHexColor = () => {
+  return '#'+'0123456789abcdef'.split('').map((v,i,a) => {
+    return i>5 ? null : a[Math.floor(Math.random()*16)] 
+  }).join('');
+}
+
 export const getContrastColor = rgb => {
   const lumRgb = rgb.map(el => {
     el = el / 255.000;
@@ -46,6 +52,15 @@ export const rgbToHex = (r, g, b) => {
 const componentToHex = c => {
   var hex = c.toString(16);
   return hex.length === 1 ? "0" + hex : hex;
+}
+
+export const hexToRgb = hex => {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? [
+    parseInt(result[1], 16),
+    parseInt(result[2], 16),
+    parseInt(result[3], 16)
+  ] : null;
 }
 
 const parse = require('parse-color');

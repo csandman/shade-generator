@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import {
+  hexToRgb,
+  getRandomHexColor
+} from "../../Functions";
 import "./Header.scss";
 
 export default class Header extends Component {
@@ -6,11 +10,16 @@ export default class Header extends Component {
     super(props);
 
     this.handleSignInClick = this.handleSignInClick.bind(this);
+    this.generateRandomColor = this.generateRandomColor.bind(this);
   }
 
   handleSignInClick(e) {}
 
   handleSignUpClick(e) {}
+
+  generateRandomColor() {
+    this.props.updateStateValues(hexToRgb(getRandomHexColor()));
+  }
 
   render() {
     return (
@@ -21,17 +30,32 @@ export default class Header extends Component {
           backgroundColor: this.props.hexColor
         }}
       >
-      <div style={{ color: this.props.contrastColor }} className="title-text">
-        { this.props.colorArr.length &&
-          <div className="icon">
-            <div style={{backgroundColor: this.props.colorArr[10].hex}} className="icon-dot"></div> 
-            <div style={{backgroundColor: this.props.colorArr[24].hex}} className="icon-dot"></div> 
-            <div style={{backgroundColor: this.props.colorArr[24].hex}} className="icon-dot"></div> 
-            <div style={{backgroundColor: this.props.colorArr[10].hex}} className="icon-dot"></div> 
-          </div>
-        }
-        Shade Generator
-      </div>
+        <div
+          style={{ color: this.props.contrastColor }}
+          className="title-text"
+        >
+          {this.props.colorArr.length && (
+            <div className="icon" onClick={this.generateRandomColor}>
+              <div
+                style={{ backgroundColor: this.props.colorArr[10].hex }}
+                className="icon-dot"
+              />
+              <div
+                style={{ backgroundColor: this.props.colorArr[24].hex }}
+                className="icon-dot"
+              />
+              <div
+                style={{ backgroundColor: this.props.colorArr[24].hex }}
+                className="icon-dot"
+              />
+              <div
+                style={{ backgroundColor: this.props.colorArr[10].hex }}
+                className="icon-dot"
+              />
+            </div>
+          )}
+          Shade Generator
+        </div>
         <div className="right-content">
           <button
             onClick={this.props.handleSignupClick}

@@ -50,6 +50,35 @@ body, html {
   width: 27rem;
 }
 
+.color-input {
+  width: 27rem;
+  display: flex;
+
+  input {
+    flex: 7;
+    height: 3rem;
+    border: 2px solid black;
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+    padding-left: 1rem;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  button {
+    flex: 0 0 6rem;
+    cursor: pointer;
+    border: 2px solid black;
+    border-radius: 0 5px 5px 0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+  }
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(9, auto);

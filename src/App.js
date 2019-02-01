@@ -46,6 +46,7 @@ class App extends Component {
     this.openSidebar = this.openSidebar.bind(this);
     this.closeSidebar = this.closeSidebar.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
+    this.updateStateValues = this.updateStateValues.bind(this);
   }
 
   openSidebar(e) {
@@ -83,12 +84,12 @@ class App extends Component {
         });
         return true;
       });
-      this.props.firebase.auth.onAuthStateChanged(authUser => {
-        authUser
-          ? this.setState({ authUser })
-          : this.setState({ authUser: null });
-          console.log(authUser);
-      });
+    this.props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState({ authUser })
+        : this.setState({ authUser: null });
+      console.log(authUser);
+    });
   }
 
   openSignUpModal() {
@@ -138,7 +139,7 @@ class App extends Component {
       this.setState({
         menuIsOpen: false,
         signupOpen: false
-      })
+      });
     }
   }
 
@@ -193,7 +194,10 @@ class App extends Component {
   render() {
     return (
       <div className="App" style={{ backgroundColor: this.state.hexColor }}>
-        <SignUp closeSignUpModal={this.closeSignUpModal} isOpen={this.state.signupOpen} />
+        <SignUp
+          closeSignUpModal={this.closeSignUpModal}
+          isOpen={this.state.signupOpen}
+        />
         <Header
           hexColor={this.state.hexColor}
           colorArr={this.state.colorArr}
@@ -201,24 +205,36 @@ class App extends Component {
           handleSignupClick={this.openSignUpModal}
           contrastColor={this.state.contrastColor}
           highContrastColor={this.state.highContrastColor}
+          updateStateValues={this.updateStateValues}
         />
-        <Sidebar 
+        <Sidebar
           isOpen={this.state.menuIsOpen}
           closeSidebar={this.closeSidebar}
           menuItems={this.state.menuItems}
-          clickColor={this.clickColor}></Sidebar>
+          clickColor={this.clickColor}
+        />
 
         <div className="page">
           <div className="outer-container">
             <div className="input-container">
-              <div className="ui action input">
+              <div className="color-input">
                 <input
                   type="search"
                   placeholder="Color Code (Hex, RGB, or Name)"
                   onChange={this.handleInputChange}
                   value={this.state.inputValue}
+                  style={{
+                    borderColor: this.state.highContrastColor
+                  }}
                 />
-                <button onClick={this.handleSubmit} className="ui button">
+                <button
+                  onClick={this.handleSubmit}
+                  style={{
+                    backgroundColor: this.state.highContrastColor,
+                    borderColor: this.state.highContrastColor,
+                    color: this.state.hexColor
+                  }}
+                >
                   GO
                 </button>
               </div>
