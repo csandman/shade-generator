@@ -4,8 +4,7 @@ import * as clipboard from "clipboard-polyfill";
 import Header from "./Components/Header/Header";
 import SignUp from "./Components/SignUp/SignUp";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import "./Hamburger.css";
-import "./App.css";
+import "./App.scss";
 
 import { withFirebase } from "./Components/Firebase";
 
@@ -196,6 +195,7 @@ class App extends Component {
       <div className="App" style={{ backgroundColor: this.state.hexColor }}>
         <SignUp closeSignUpModal={this.closeSignUpModal} isOpen={this.state.signupOpen} />
         <Header
+          hexColor={this.state.hexColor}
           colorArr={this.state.colorArr}
           openSidebar={this.openSidebar}
           handleSignupClick={this.openSignUpModal}

@@ -16,7 +16,10 @@ export default class Header extends Component {
     return (
       <div
         id="header"
-        style={{ borderBottom: "2px solid " + this.props.contrastColor }}
+        style={{
+          borderBottom: "2px solid " + this.props.contrastColor,
+          backgroundColor: this.props.hexColor
+        }}
       >
       <div style={{ color: this.props.contrastColor }} className="title-text">
         { this.props.colorArr.length &&

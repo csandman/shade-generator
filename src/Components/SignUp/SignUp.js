@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './SignUp.scss';
 import { withFirebase } from '../Firebase';
-import { auth } from 'firebase';
 
 
 class SignUp extends Component {

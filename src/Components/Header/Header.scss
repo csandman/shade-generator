@@ -6,10 +6,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 500;
 
   .right-content {
     display: inline-flex;
     align-items: center;
+    margin-right: 3rem;
   }
   
   .title-text {
@@ -58,8 +60,33 @@
   }
 
   .bars.big.icon {
-    margin-right: 3rem;
     height: auto;
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 650px) {
+
+    button {
+      display: none;
+    }
+  
+    .title-text {
+      letter-spacing: 0;
+      margin-left: 1rem;
+    }
+
+    .right-content {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 1rem;
+    }
+  
+  }
+
+  @media only screen and (max-width: 350px) {
+
+    .title-text {
+      font-size: 1.4rem;
+    }
   }
 }

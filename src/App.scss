@@ -124,12 +124,33 @@ body, html {
 }
 
 @media only screen and (max-width: 650px) {
+
+  .page {
+    padding-top: 5rem;
+  }
+
   .container {
     grid-template-columns: repeat(4, auto);
+    width: 100vw;
   }
 
   .color-square {
-    width: 4rem;
-    height: 4rem;
+    background-color: green;
+    border-radius: 4px;
+    width: calc(100vw / 4 - 5/ 4 * 1rem);
+    height: calc(100vw / 4 - 5 / 4 * 1rem);
+  }
+
+  .input-container {
+    flex-direction: column-reverse;
+  }
+
+  .color-name {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .ui.action.input {
+    margin-bottom: 0;
   }
 }
