@@ -1,4 +1,4 @@
-# gradient-generator
+# shade-generator
 
 [shadegenerator.com](http://www.shadegenerator.com)
 
