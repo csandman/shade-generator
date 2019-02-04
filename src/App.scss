@@ -19,9 +19,12 @@ body, html {
   height: 100%;
 }
 
-.App {
+#App {
   min-height: 100%;
+  // transition: 150ms background-color ease-in-out;
+  will-change: background-color;
 }
+
 
 .page {
   display: flex;
@@ -97,6 +100,7 @@ body, html {
   justify-content: center;
   text-transform: uppercase;
   cursor: pointer;
+  // transition: 150ms background-color ease-in-out;
 }
 
 .space-below {
@@ -119,6 +123,7 @@ body, html {
   letter-spacing: 2px;
   line-height: 2rem;
   text-align: center;
+  transition: 150ms color ease-in-out;
 }
 
 @media only screen and (max-width: 1250px) {

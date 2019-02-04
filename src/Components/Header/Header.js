@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  hexToRgb,
-  getRandomHexColor
-} from "../../Functions";
+import { hexToRgb, getRandomHexColor } from "../../Functions";
 import "./Header.scss";
 
 export default class Header extends Component {
@@ -30,10 +27,7 @@ export default class Header extends Component {
           backgroundColor: this.props.hexColor
         }}
       >
-        <div
-          style={{ color: this.props.contrastColor }}
-          className="title-text"
-        >
+        <div style={{ color: this.props.contrastColor }} className="title-text">
           {this.props.colorArr.length && (
             <div className="icon" onClick={this.generateRandomColor}>
               <div
@@ -57,6 +51,23 @@ export default class Header extends Component {
           Shade Generator
         </div>
         <div className="right-content">
+          <div
+            className="icon-button"
+            onClick={this.generateRandomColor}
+            style={{
+              border: "2px solid " + this.props.contrastColor,
+              color: this.props.contrastColor
+            }}
+          >
+            <i
+              className="fas fa-random fa-2x"
+              style={{
+                color: this.props.contrastColor,
+                fontSize: "1.4rem"
+              }}
+            />
+            Random
+          </div>
           <button
             onClick={this.props.handleSignupClick}
             style={{ color: this.props.contrastColor }}

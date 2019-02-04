@@ -4,6 +4,7 @@ import * as clipboard from "clipboard-polyfill";
 import Header from "./Components/Header/Header";
 import SignUp from "./Components/SignUp/SignUp";
 import Sidebar from "./Components/Sidebar/Sidebar";
+import LoadingScreen from "./Components/LoadingScreen/LoadingScreen";
 import "./App.scss";
 
 import { withFirebase } from "./Components/Firebase";
@@ -79,8 +80,7 @@ class App extends Component {
           return out;
         });
         this.setState({
-          menuItems: data,
-          loading: false
+          menuItems: data
         });
         return true;
       });
@@ -89,6 +89,7 @@ class App extends Component {
         ? this.setState({ authUser })
         : this.setState({ authUser: null });
     });
+    this.setState({ loading: false });
   }
 
   openSignUpModal() {
@@ -189,38 +190,48 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" style={{ backgroundColor: this.state.hexColor }}>
+      <div id="App" style={{ backgroundColor: this.state.hexColor }}>
+        { this.state.loading ? 
+        (<LoadingScreen></LoadingScreen>) : 
+      
+      (
+        <div>
         <SignUp
-          closeSignUpModal={this.closeSignUpModal}
-          isOpen={this.state.signupOpen}
-        />
-        <Header
-          hexColor={this.state.hexColor}
-          colorArr={this.state.colorArr}
-          openSidebar={this.openSidebar}
-          handleSignupClick={this.openSignUpModal}
-          contrastColor={this.state.contrastColor}
-          highContrastColor={this.state.highContrastColor}
-          updateStateValues={this.updateStateValues}
-        />
-        <Sidebar
-          isOpen={this.state.menuIsOpen}
-          closeSidebar={this.closeSidebar}
-          menuItems={this.state.menuItems}
-          clickColor={this.clickColor}
-        />
-
+        closeSignUpModal={this.closeSignUpModal}
+        isOpen={this.state.signupOpen}
+      />
+      <Header
+        hexColor={this.state.hexColor}
+        colorArr={this.state.colorArr}
+        openSidebar={this.openSidebar}
+        handleSignupClick={this.openSignUpModal}
+        contrastColor={this.state.contrastColor}
+        highContrastColor={this.state.highContrastColor}
+        updateStateValues={this.updateStateValues}
+      />
+      <Sidebar
+        isOpen={this.state.menuIsOpen}
+        closeSidebar={this.closeSidebar}
+        menuItems={this.state.menuItems}
+        clickColor={this.clickColor}
+      />
+      
         <div className="page">
+        
           <div className="outer-container">
             <div className="input-container">
-              <div className="ui action input">
+              <div className="color-input">
                 <input
                   type="search"
                   placeholder="Color Code (Hex, RGB, or Name)"
                   onChange={this.handleInputChange}
                   value={this.state.inputValue}
+                  style={{ borderColor: this.state.contrastColor }}
                 />
-                <button onClick={this.handleSubmit} className="ui button">
+                <button
+                  onClick={this.handleSubmit}
+                  style={{ borderColor: this.state.contrastColor }}
+                >
                   GO
                 </button>
               </div>
@@ -275,6 +286,8 @@ class App extends Component {
             </div>
           </div>
         </div>
+        </div>
+        )}
       </div>
     );
   }

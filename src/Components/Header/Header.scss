@@ -8,6 +8,7 @@
   align-items: center;
   z-index: 500;
   box-sizing: border-box;
+  // transition: 150ms background-color ease-in-out;
 
   .right-content {
     display: inline-flex;
@@ -60,6 +61,27 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+  }
+
+  .icon-button {
+    margin-right: .5rem;
+    border-radius: 5px;
+    padding: 7px 12px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+    cursor: pointer;
+  }
+
+  .fa-random {
+    margin-right: 9px;
   }
 
   .bars.big.icon {
