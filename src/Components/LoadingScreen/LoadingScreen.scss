@@ -11,6 +11,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 200ms all ease-out;
+
+  &.hidden {
+    visibility: hidden;
+    opacity: 0;
+
+    svg {
+      display: none;
+    }
+  }
 
 //   /* Transparent Overlay */
 //   &:before {

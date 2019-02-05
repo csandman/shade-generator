@@ -68,12 +68,7 @@ export default class Header extends Component {
             />
             Random
           </div>
-          <button
-            onClick={this.props.handleSignupClick}
-            style={{ color: this.props.contrastColor }}
-          >
-            Sign in
-          </button>
+          
           <i
             aria-hidden="true"
             className="bars big icon"

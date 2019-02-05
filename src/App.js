@@ -191,103 +191,98 @@ class App extends Component {
   render() {
     return (
       <div id="App" style={{ backgroundColor: this.state.hexColor }}>
-        { this.state.loading ? 
-        (<LoadingScreen></LoadingScreen>) : 
-      
-      (
+        <LoadingScreen show={this.state.loading} />
         <div>
-        <SignUp
-        closeSignUpModal={this.closeSignUpModal}
-        isOpen={this.state.signupOpen}
-      />
-      <Header
-        hexColor={this.state.hexColor}
-        colorArr={this.state.colorArr}
-        openSidebar={this.openSidebar}
-        handleSignupClick={this.openSignUpModal}
-        contrastColor={this.state.contrastColor}
-        highContrastColor={this.state.highContrastColor}
-        updateStateValues={this.updateStateValues}
-      />
-      <Sidebar
-        isOpen={this.state.menuIsOpen}
-        closeSidebar={this.closeSidebar}
-        menuItems={this.state.menuItems}
-        clickColor={this.clickColor}
-      />
-      
-        <div className="page">
-        
-          <div className="outer-container">
-            <div className="input-container">
-              <div className="color-input">
-                <input
-                  type="search"
-                  placeholder="Color Code (Hex, RGB, or Name)"
-                  onChange={this.handleInputChange}
-                  value={this.state.inputValue}
-                  style={{ borderColor: this.state.contrastColor }}
-                />
-                <button
-                  onClick={this.handleSubmit}
-                  style={{ borderColor: this.state.contrastColor }}
-                >
-                  GO
-                </button>
-              </div>
-              <div
-                className="color-name"
-                style={{ color: this.state.contrastColor }}
-              >
-                {this.state.colorName}
-              </div>
-            </div>
-            <div className="container">
-              {this.state.colorArr.map((color, i) => {
-                return (
-                  <Popup
-                    key={color.hex + i}
-                    trigger={
-                      <div
-                        style={{ backgroundColor: color.hex }}
-                        className="color-square"
-                      />
-                    }
-                    hoverable
-                    position="bottom center"
+          <SignUp
+            closeSignUpModal={this.closeSignUpModal}
+            isOpen={this.state.signupOpen}
+          />
+          <Header
+            hexColor={this.state.hexColor}
+            colorArr={this.state.colorArr}
+            openSidebar={this.openSidebar}
+            handleSignupClick={this.openSignUpModal}
+            contrastColor={this.state.contrastColor}
+            highContrastColor={this.state.highContrastColor}
+            updateStateValues={this.updateStateValues}
+          />
+          <Sidebar
+            isOpen={this.state.menuIsOpen}
+            closeSidebar={this.closeSidebar}
+            menuItems={this.state.menuItems}
+            clickColor={this.clickColor}
+          />
+
+          <div className="page">
+            <div className="outer-container">
+              <div className="input-container">
+                <div className="color-input">
+                  <input
+                    type="search"
+                    placeholder="Color Code (Hex, RGB, or Name)"
+                    onChange={this.handleInputChange}
+                    value={this.state.inputValue}
+                    style={{ borderColor: this.state.contrastColor }}
+                  />
+                  <button
+                    onClick={this.handleSubmit}
+                    style={{ borderColor: this.state.contrastColor }}
                   >
-                    <div className="popup-button space-below">
-                      <button
-                        data-index={i}
-                        onClick={this.copyHexCode}
-                        className="ui button"
-                      >
-                        {color.hex.toUpperCase()}
-                      </button>
-                    </div>
-                    <div className="popup-button">
-                      <button
-                        data-index={i}
-                        onClick={this.copyRgb}
-                        className="ui button"
-                      >
-                        {"rgb: (" +
-                          color.rgb[0] +
-                          ", " +
-                          color.rgb[1] +
-                          ", " +
-                          color.rgb[2] +
-                          ")"}
-                      </button>
-                    </div>
-                  </Popup>
-                );
-              })}
+                    GO
+                  </button>
+                </div>
+                <div
+                  className="color-name"
+                  style={{ color: this.state.contrastColor }}
+                >
+                  {this.state.colorName}
+                </div>
+              </div>
+              <div className="container">
+                {this.state.colorArr.map((color, i) => {
+                  return (
+                    <Popup
+                      key={color.hex + i}
+                      trigger={
+                        <div
+                          style={{ backgroundColor: color.hex }}
+                          className="color-square"
+                        />
+                      }
+                      hoverable
+                      position="bottom center"
+                    >
+                      <div className="popup-button space-below">
+                        <button
+                          data-index={i}
+                          onClick={this.copyHexCode}
+                          className="ui button"
+                        >
+                          {color.hex.toUpperCase()}
+                        </button>
+                      </div>
+                      <div className="popup-button">
+                        <button
+                          data-index={i}
+                          onClick={this.copyRgb}
+                          className="ui button"
+                        >
+                          {"rgb: (" +
+                            color.rgb[0] +
+                            ", " +
+                            color.rgb[1] +
+                            ", " +
+                            color.rgb[2] +
+                            ")"}
+                        </button>
+                      </div>
+                    </Popup>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
-        </div>
-        )}
       </div>
     );
   }
