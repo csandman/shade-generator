@@ -16,7 +16,8 @@ import {
   getColorName,
   rgbToHex,
   calcAllGradients,
-  searchNamedColors
+  searchNamedColors,
+  getOppositeContrastColor
 } from "./Functions";
 
 const parse = require("parse-color");
@@ -30,6 +31,7 @@ class App extends Component {
       hexColor: "",
       colorArr: [],
       contrastColor: "white",
+      oppositeContrastColor: "white",
       highContrastColor: "white",
       lowContrastColor: "white",
       colorName: "",
@@ -163,6 +165,7 @@ class App extends Component {
       contrastColor: getContrastColor(rgb),
       highContrastColor: getHighContrastColor(rgb),
       lowContrastColor: getLowContrastColor(rgb),
+      oppositeContrastColor: getOppositeContrastColor(rgb),
       colorArr: calcAllGradients(rgb),
       hexColor: rgbToHex(...rgb),
       inputValue: rgbToHex(...rgb).toUpperCase()
@@ -208,6 +211,8 @@ class App extends Component {
             contrastColor={this.state.contrastColor}
             highContrastColor={this.state.highContrastColor}
             updateStateValues={this.updateStateValues}
+            lowContrastColor={this.state.lowContrastColor}
+            oppositeContrastColor={this.state.oppositeContrastColor}
           />
           <Sidebar
             isOpen={this.state.menuIsOpen}

@@ -193,3 +193,24 @@ body, html {
     margin-bottom: 0;
   }
 }
+
+.button-group {
+  margin: 1rem !important;
+  display: flex !important;
+  > * {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border-width: 2px 0 2px 2px !important;
+
+    &:first-child {
+      border-top-left-radius: 5px !important;
+      border-bottom-left-radius: 5px !important;
+    }
+
+    &:last-child {
+      border-top-right-radius: 5px !important;
+      border-bottom-right-radius: 5px !important;
+      border-right-width: 2px !important;
+    }
+  }
+}

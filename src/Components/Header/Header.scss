@@ -10,6 +10,10 @@
   box-sizing: border-box;
   transition: 150ms all ease-in-out;
 
+  * {
+    transition: 150ms all ease-in-out;
+  }
+
   .right-content {
     display: inline-flex;
     align-items: center;
@@ -66,7 +70,7 @@
   .icon-button {
     margin-left: 1rem;
     border-radius: 5px;
-    padding: 7px 11px;
+    padding: 7px 12px;
     font-size: 1.2rem;
     display: flex;
     align-items: center;
@@ -82,7 +86,7 @@
     font-weight: 700;
     border: 2px solid white;
     i {
-      margin-right: 9px;
+      margin-right: 10px;
       font-size: 1.4rem;
     }
   }
@@ -91,6 +95,10 @@
     cursor: pointer;
     margin-left: 3rem;
     font-size: 2.5rem;
+  }
+
+  .button-section {
+    display: flex;
   }
 
   @media only screen and (max-width: 900px) {
