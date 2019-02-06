@@ -21,7 +21,7 @@ body, html {
 
 #App {
   min-height: 100%;
-  // transition: 150ms background-color ease-in-out;
+  transition: 150ms background-color ease-in-out;
   will-change: background-color;
 }
 
@@ -101,7 +101,7 @@ body, html {
   justify-content: center;
   text-transform: uppercase;
   cursor: pointer;
-  // transition: 150ms background-color ease-in-out;
+  transition: 150ms background-color ease-in-out;
 }
 
 .space-below {
@@ -137,8 +137,12 @@ body, html {
     font-size: 1.8rem;
   }
 
-  .ui.action.input, .color-input {
+  .color-input {
     width: 23rem;
+
+    button {
+      flex: 0 0 5rem;
+    }
   }
 }
 

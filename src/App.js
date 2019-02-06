@@ -12,6 +12,7 @@ import { withFirebase } from "./Components/Firebase";
 import {
   getContrastColor,
   getHighContrastColor,
+  getLowContrastColor,
   getColorName,
   rgbToHex,
   calcAllGradients,
@@ -30,6 +31,7 @@ class App extends Component {
       colorArr: [],
       contrastColor: "white",
       highContrastColor: "white",
+      lowContrastColor: "white",
       colorName: "",
       loading: false,
       menuItems: [],
@@ -160,6 +162,7 @@ class App extends Component {
       colorName: getColorName(rgbToHex(...rgb)),
       contrastColor: getContrastColor(rgb),
       highContrastColor: getHighContrastColor(rgb),
+      lowContrastColor: getLowContrastColor(rgb),
       colorArr: calcAllGradients(rgb),
       hexColor: rgbToHex(...rgb),
       inputValue: rgbToHex(...rgb).toUpperCase()
@@ -222,11 +225,11 @@ class App extends Component {
                     placeholder="Color Code (Hex, RGB, or Name)"
                     onChange={this.handleInputChange}
                     value={this.state.inputValue}
-                    style={{ borderColor: this.state.contrastColor }}
+                    style={{ borderColor: this.state.lowContrastColor }}
                   />
                   <button
                     onClick={this.handleSubmit}
-                    style={{ borderColor: this.state.contrastColor }}
+                    style={{ borderColor: this.state.lowContrastColor }}
                   >
                     GO
                   </button>

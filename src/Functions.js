@@ -27,6 +27,16 @@ export const getHighContrastColor = rgb => {
   return rgbToHex(...calculateGradient(rgb, isDark, 0.70));
 }
 
+export const getLowContrastColor = rgb => {
+  const lumRgb = rgb.map(el => {
+    el = el / 255.000;
+    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
+  });
+  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
+  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  return rgbToHex(...calculateGradient(rgb, isDark, 0.20));
+}
+
 export const searchNamedColors = searchTerm => {
   for (let i = 0; i < namedColors.length; i++) {
     if (namedColors[i].name.replace(/\s/g,'').toLowerCase() === searchTerm)

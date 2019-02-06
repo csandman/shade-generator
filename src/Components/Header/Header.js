@@ -55,23 +55,20 @@ export default class Header extends Component {
             className="icon-button"
             onClick={this.generateRandomColor}
             style={{
-              border: "2px solid " + this.props.contrastColor,
+              borderColor: this.props.contrastColor,
               color: this.props.contrastColor
             }}
           >
             <i
-              className="fas fa-random fa-2x"
+              className="fas fa-random"
               style={{
-                color: this.props.contrastColor,
-                fontSize: "1.4rem"
+                color: this.props.contrastColor
               }}
             />
             Random
           </div>
-          
           <i
-            aria-hidden="true"
-            className="bars big icon"
+            className="fas fa-bars menu-icon"
             style={{ color: this.props.contrastColor }}
             onClick={this.props.openSidebar}
           />
@@ -96,3 +93,5 @@ export default class Header extends Component {
 //             <span className="title-letter" style={{color: "#484140"}}>T</span>
 //             <span className="title-letter" style={{color: "#3c3534"}}>O</span>
 //             <span className="title-letter" style={{color: "#312928"}}>R</span>
+
+
