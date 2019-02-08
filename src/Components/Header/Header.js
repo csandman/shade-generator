@@ -69,23 +69,7 @@ export default class Header extends Component {
             />
             Random
           </div>
-          <div
-            className="icon-button"
-            onClick={this.props.handleSignupClick}
-            style={{
-              borderColor: this.props.contrastColor,
-              color: this.props.contrastColor,
-              backgroundColor: this.props.oppositeContrastColor
-            }}
-          >
-            <i
-              className="fas fa-user"
-              style={{
-                color: this.props.contrastColor
-              }}
-            />
-            Sign in
-          </div>
+          
           </div>
           <i
             className="fas fa-bars menu-icon"

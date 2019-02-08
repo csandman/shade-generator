@@ -65,14 +65,25 @@ class App extends Component {
   async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
     this.setState({ loading: true });
+    let rgb = [];
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
       .limit(1)
       .get()
       .then(snapshot => {
-        this.updateStateValues(parse(snapshot.docs[0].data().hexCode).rgb);
+        rgb = parse(snapshot.docs[0].data().hexCode).rgb;
       });
+    this.setState({
+      color: rgb,
+      colorName: getColorName(rgbToHex(...rgb)),
+      contrastColor: getContrastColor(rgb),
+      highContrastColor: getHighContrastColor(rgb),
+      lowContrastColor: getLowContrastColor(rgb),
+      oppositeContrastColor: getOppositeContrastColor(rgb),
+      colorArr: calcAllGradients(rgb),
+      hexColor: rgbToHex(...rgb)
+    });
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
@@ -230,11 +241,15 @@ class App extends Component {
                     placeholder="Color Code (Hex, RGB, or Name)"
                     onChange={this.handleInputChange}
                     value={this.state.inputValue}
-                    style={{ borderColor: this.state.lowContrastColor }}
+                    style={{ borderColor: this.state.contrastColor }}
                   />
                   <button
                     onClick={this.handleSubmit}
-                    style={{ borderColor: this.state.lowContrastColor }}
+                    style={{
+                      borderColor: this.state.contrastColor,
+                      backgroundColor: this.state.contrastColor,
+                      color: this.state.oppositeContrastColor
+                    }}
                   >
                     GO
                   </button>
