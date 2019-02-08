@@ -5,8 +5,12 @@
   z-index: 1300;
   
   &.hidden {
-    opacity: 0;
-    visibility: hidden;
+    
+    .background {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
 
     .sidebar-content {
       transform: translateX(100%);
@@ -21,6 +25,7 @@
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,.4);
+    transition: 300ms all ease-out;
   }
 
   .sidebar-content {
@@ -31,7 +36,7 @@
     width: 20rem;
     z-index: 1500;
     transform: translateX(0);
-    transition: 300ms ease-out all;
+    transition: 300ms ease-out transform;
     overflow: scroll;
     will-change: tranform;
     
