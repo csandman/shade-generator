@@ -85,6 +85,13 @@ button {
           font-family: "Nunito", sans-serif;
           display: flex;
           align-items: center;
+
+          &::-webkit-search-cancel-button {
+            cursor: pointer;
+            height: 18px;
+            width: 18px;
+            background-image: url("images/clear-input.svg");
+          }
         }
 
         button {
