@@ -8,10 +8,10 @@
   align-items: center;
   z-index: 500;
   box-sizing: border-box;
-  transition: 150ms all ease-in-out;
+  transition: 150ms all linear;
 
   * {
-    transition: 150ms all ease-in-out;
+    transition: 150ms all linear;
   }
 
   .right-content {
@@ -131,10 +131,6 @@
   }
 
   @media only screen and (max-width: 350px) {
-
-    .title-text {
-      font-size: 1.4rem;
-    }
 
     .bars.big.icon {
       margin-left: 0;
