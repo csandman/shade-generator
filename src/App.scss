@@ -1,197 +1,38 @@
 * {
   font-size: 16px;
-  outline: none !important;
-}
+  box-sizing: border-box;
 
-*:focus {
-  outline: none !important;
-}
+  &:focus {
+    outline: none;
+  }
 
-*::-webkit-scrollbar { 
-  display: none !important; 
-}
-
-body, html { 
-  height: 100%;
-}
-
-#root {
-  height: 100%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 #App {
-  min-height: 100%;
   transition: 150ms background-color ease-in-out;
   will-change: background-color;
 }
 
-
-.page {
-  display: flex;
-  min-height: 100vh;
-  justify-content: center;
-}
-
-.outer-container {
-  display: inline-flex;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 100%;
-  align-items: center;
-}
-
-.input-container {
-  width: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 1rem 1rem 0 1rem;
-}
-
-.ui.action.input {
-  width: 27rem;
-}
-
-.color-input {
-  width: 27rem;
-  display: flex;
-
-  input {
-    flex: 7;
-    height: 3rem;
-    border: 2px solid black;
-    border-right: 0;
-    border-radius: 5px 0 0 5px;
-    padding-left: 1rem;
-    font-family: 'Nunito', sans-serif;
-  }
-
-  button {
-    flex: 0 0 6rem;
-    cursor: pointer;
-    border: 2px solid black;
-    border-radius: 0 5px 5px 0;
-    font-family: 'Nunito', sans-serif;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.4rem;
-    line-height: 1.4rem;
-    color: #272a29;
-  }
-}
-
-.container {
-  display: grid;
-  grid-template-columns: repeat(9, auto);
-  border-radius: 10px;
-  padding: 1rem;
-  row-gap: 1rem;
-  column-gap: 1rem;
-}
-
-.color-square {
-  width: 6rem;
-  height: 6rem;
+button {
+  font-size: 1.2rem;
+  font-family: "Nunito", sans-serif;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid;
+  color: white;
   border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
+  overflow: hidden;
   cursor: pointer;
-  transition: 150ms background-color ease-in-out;
-}
-
-.space-below {
-  margin-bottom: .75rem;
-}
-
-.popup-header {
-  text-align: center;
-}
-
-.popup-button button {
-  width: 13rem;
-}
-
-.color-name {
-  font-size: 2rem;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 2rem;
-  text-align: center;
-  transition: 150ms color ease-in-out;
-}
-
-@media only screen and (max-width: 1250px) {
-  .color-square {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  .color-name {
-    font-size: 1.8rem;
-  }
-
-  .color-input {
-    width: 23rem;
-
-    button {
-      flex: 0 0 5rem;
-    }
-  }
-}
-
-@media only screen and (max-width: 950px) {
-  .container {
-    grid-template-columns: repeat(6, auto);
-  }
-
-  .ui.action.input, .color-input {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .color-name {
-    width: 100%;
-  }
-
-}
-
-@media only screen and (max-width: 650px) {
-
-  .page {
-    padding-top: 4rem;
-  }
-
-  .container {
-    grid-template-columns: repeat(4, auto);
-    width: 100vw;
-  }
-
-  .color-square {
-    background-color: green;
-    border-radius: 4px;
-    width: calc(100vw / 4 - 5/ 4 * 1rem);
-    height: calc(100vw / 4 - 5 / 4 * 1rem);
-  }
-
-  .input-container {
-    flex-direction: column-reverse;
-  }
-
-  .color-name {
-    margin-bottom: 1rem;
-    text-align: left;
-  }
-
-  .ui.action.input, .color-input {
-    margin-bottom: 0;
-  }
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
 }
 
 .button-group {
@@ -211,6 +52,142 @@ body, html {
       border-top-right-radius: 5px !important;
       border-bottom-right-radius: 5px !important;
       border-right-width: 2px !important;
+    }
+  }
+}
+
+.page {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+
+  .outer-container {
+    .input-container {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 1rem 0 1rem;
+
+      .color-input {
+        width: 27rem;
+        display: flex;
+
+        input {
+          flex: 7;
+          height: 3rem;
+          border: 2px solid black;
+          border-right: 0;
+          border-radius: 5px 0 0 5px;
+          padding: 0 1rem;
+          font-family: "Nunito", sans-serif;
+        }
+
+        button {
+          flex: 0 0 6rem;
+          cursor: pointer;
+          border: 2px solid black;
+          border-radius: 0 5px 5px 0;
+          font-family: "Nunito", sans-serif;
+          font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.4rem;
+          line-height: 1.4rem;
+          color: #272a29;
+        }
+      }
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(9, auto);
+      border-radius: 10px;
+      padding: 1rem;
+      row-gap: 1rem;
+      column-gap: 1rem;
+    }
+  }
+}
+
+.color-name {
+  font-size: 2rem;
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 2rem;
+  text-align: center;
+  transition: 150ms color ease-in-out;
+}
+
+@media only screen and (max-width: 1250px) {
+
+  .page {
+    .outer-container {
+      .input-container {
+        .color-input {
+          width: 23rem;
+
+          button {
+            flex: 0 0 5rem;
+          }
+        }
+
+        .color-name {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .page {
+    .outer-container {
+      .container {
+        grid-template-columns: repeat(6, auto);
+      }
+
+      .input-container {
+        .color-input {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        .color-name {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .page {
+    padding-top: 4rem;
+
+    .outer-container {
+      .container {
+        grid-template-columns: repeat(4, auto);
+        width: 100vw;
+      }
+
+      .input-container {
+        flex-direction: column-reverse;
+
+        .color-input {
+          margin-bottom: 0;
+        }
+
+        .color-name {
+          margin-bottom: 1rem;
+          text-align: left;
+        }
+      }
     }
   }
 }

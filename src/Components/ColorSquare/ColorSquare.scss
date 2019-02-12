@@ -1,0 +1,69 @@
+.color-square {
+  .color-tile {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 150ms background-color ease-in-out;
+  }
+
+  @media only screen and (max-width: 1250px) {
+    .color-tile {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    .color-tile {
+      border-radius: 4px;
+      width: calc(100vw / 4 - 5 / 4 * 1rem);
+      height: calc(100vw / 4 - 5 / 4 * 1rem);
+    }
+  }
+}
+
+.tooltip-title {
+  font-family: "Nunito", sans-serif;
+  margin: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.popup-button {
+  margin-bottom: 0.75rem;
+
+  &:last-of-type {
+    margin-bottom: .35rem;
+  }
+
+  button {
+    width: 13.5rem;
+    transition: 100ms background-color linear;
+
+    &:hover {
+      background-color: #222;
+    }
+  }
+}
+
+.tippy-tooltip.dark-border-theme {
+  background-clip: padding-box;
+  border: 2px solid white;
+}
+
+.tippy-popper[x-placement^=top] [x-arrow] {
+  border-top-color: white;
+}
+
+.tippy-popper[x-placement^=bottom] [x-arrow] {
+  border-bottom-color: white;
+}
+
+.tippy-popper[x-placement^=right] [x-arrow] {
+  border-right-color: white;
+}
+
+.tippy-popper[x-placement^=left] [x-arrow] {
+  border-left-color: white;
+}
