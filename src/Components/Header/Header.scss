@@ -54,7 +54,7 @@
     padding: .5rem 1rem;
     background-color: rgba(0,0,0,0);
     border: 2px solid;
-    color: rgb(134, 149, 177);
+    color: white;
     border-radius: 5px;
     overflow: hidden;
     cursor: pointer;
@@ -119,6 +119,7 @@
     .title-text {
       letter-spacing: 0;
       margin-left: 1rem;
+      font-size: 1.4rem;
     }
 
     .right-content {

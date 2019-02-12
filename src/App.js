@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Popup } from "semantic-ui-react";
-import * as clipboard from "clipboard-polyfill";
-import Header from "./Components/Header/Header";
-import SignUp from "./Components/SignUp/SignUp";
-import Sidebar from "./Components/Sidebar/Sidebar";
-import LoadingScreen from "./Components/LoadingScreen/LoadingScreen";
+import Header from "./Components/Header";
+import SignUp from "./Components/SignUp";
+import Sidebar from "./Components/Sidebar";
+import LoadingScreen from "./Components/LoadingScreen";
+import ColorSquare from './Components/ColorSquare';
 import "./App.scss";
 
 import { withFirebase } from "./Components/Firebase";
@@ -44,8 +43,6 @@ class App extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEnterPress = this.handleEnterPress.bind(this);
-    this.copyHexCode = this.copyHexCode.bind(this);
-    this.copyRgb = this.copyRgb.bind(this);
     this.clickColor = this.clickColor.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.openSidebar = this.openSidebar.bind(this);
@@ -184,27 +181,6 @@ class App extends Component {
     this.addMenuItem(rgbToHex(...rgb));
   }
 
-  copyHexCode(e) {
-    const output = this.state.colorArr[e.target.dataset.index].hex;
-    clipboard.writeText(output);
-    this.changeButtonText(e.target, "Copied!");
-  }
-
-  copyRgb(e) {
-    const rgb = this.state.colorArr[e.target.dataset.index].rgb;
-    const output = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
-    clipboard.writeText(output);
-    this.changeButtonText(e.target, "Copied!");
-  }
-
-  changeButtonText(button, text) {
-    const original = button.textContent;
-    button.textContent = text;
-    setTimeout(() => {
-      button.textContent = original;
-    }, 1200);
-  }
-
   render() {
     return (
       <div id="App" style={{ backgroundColor: this.state.hexColor }}>
@@ -237,7 +213,7 @@ class App extends Component {
               <div className="input-container">
                 <div className="color-input">
                   <input
-                    type="search"
+                    type="text"
                     placeholder="Color Code (Hex, RGB, or Name)"
                     onChange={this.handleInputChange}
                     value={this.state.inputValue}
@@ -262,45 +238,8 @@ class App extends Component {
                 </div>
               </div>
               <div className="container">
-                {this.state.colorArr.map((color, i) => {
-                  return (
-                    <Popup
-                      key={color.hex + i}
-                      trigger={
-                        <div
-                          style={{ backgroundColor: color.hex }}
-                          className="color-square"
-                        />
-                      }
-                      hoverable
-                      position="bottom center"
-                    >
-                      <div className="popup-button space-below">
-                        <button
-                          data-index={i}
-                          onClick={this.copyHexCode}
-                          className="ui button"
-                        >
-                          {color.hex.toUpperCase()}
-                        </button>
-                      </div>
-                      <div className="popup-button">
-                        <button
-                          data-index={i}
-                          onClick={this.copyRgb}
-                          className="ui button"
-                        >
-                          {"rgb: (" +
-                            color.rgb[0] +
-                            ", " +
-                            color.rgb[1] +
-                            ", " +
-                            color.rgb[2] +
-                            ")"}
-                        </button>
-                      </div>
-                    </Popup>
-                  );
+                {this.state.colorArr.map((color, index) => {
+                  return <ColorSquare color={color} key={color + index}></ColorSquare>
                 })}
               </div>
             </div>
