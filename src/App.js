@@ -213,7 +213,7 @@ class App extends Component {
               <div className="input-container">
                 <div className="color-input">
                   <input
-                    type="text"
+                    type="search"
                     placeholder="Color Code (Hex, RGB, or Name)"
                     onChange={this.handleInputChange}
                     value={this.state.inputValue}
