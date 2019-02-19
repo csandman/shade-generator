@@ -57,6 +57,23 @@ const Header = props => {
             />
             Random
           </div>
+          <div
+            className="icon-button"
+            onClick={props.handleSignupClick}
+            style={{
+              borderColor: props.contrastColor,
+              color: props.contrastColor,
+              backgroundColor: props.oppositeContrastColor
+            }}
+          >
+            <i
+              className="fas fa-user"
+              style={{
+                color: props.contrastColor
+              }}
+            />
+            Sign in
+          </div>
         </div>
         <i
           className="fas fa-bars menu-icon"

@@ -16,7 +16,8 @@ import {
   rgbToHex,
   calcAllGradients,
   searchNamedColors,
-  getOppositeContrastColor
+  getOppositeContrastColor,
+  getAllColorInfo
 } from "./Functions";
 
 const parse = require("parse-color");
@@ -167,6 +168,13 @@ class App extends Component {
   }
 
   updateStateValues(rgb) {
+
+    let hex = rgbToHex(...rgb);
+    console.time("test");
+    let allColorInfo = getAllColorInfo(hex);
+    console.timeEnd("test");
+    console.log(allColorInfo);
+
     this.setState({
       color: rgb,
       colorName: getColorName(rgbToHex(...rgb)),
