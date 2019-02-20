@@ -10,13 +10,8 @@ import { withFirebase } from "./Components/Firebase";
 
 import {
   getContrastColor,
-  getHighContrastColor,
-  getLowContrastColor,
   getColorName,
-  rgbToHex,
-  calcAllGradients,
   searchNamedColors,
-  getOppositeContrastColor,
   getAllColorInfo
 } from "./Functions";
 
@@ -27,15 +22,12 @@ class App extends Component {
     super(props);
     this.state = {
       inputValue: "",
-      color: [],
-      hexColor: "",
-      colorArr: [],
-      contrastColor: "white",
-      oppositeContrastColor: "white",
-      highContrastColor: "white",
-      lowContrastColor: "white",
-      colorName: "",
-      loading: false,
+      colorData: {
+        hex: "",
+        rgb: [],
+        shades: []
+      },
+      loading: true,
       menuItems: [],
       menuIsOpen: false,
       signupOpen: false
@@ -52,35 +44,27 @@ class App extends Component {
     this.updateStateValues = this.updateStateValues.bind(this);
   }
 
-  openSidebar(e) {
+  openSidebar() {
     this.setState({ menuIsOpen: true });
   }
 
-  closeSidebar(e) {
+  closeSidebar() {
     this.setState({ menuIsOpen: false });
   }
 
   async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
-    this.setState({ loading: true });
-    let rgb = [];
+    let colorData = {};
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
       .limit(1)
       .get()
       .then(snapshot => {
-        rgb = parse(snapshot.docs[0].data().hexCode).rgb;
+        colorData = getAllColorInfo(snapshot.docs[0].data().hexCode)
       });
     this.setState({
-      color: rgb,
-      colorName: getColorName(rgbToHex(...rgb)),
-      contrastColor: getContrastColor(rgb),
-      highContrastColor: getHighContrastColor(rgb),
-      lowContrastColor: getLowContrastColor(rgb),
-      oppositeContrastColor: getOppositeContrastColor(rgb),
-      colorArr: calcAllGradients(rgb),
-      hexColor: rgbToHex(...rgb)
+      colorData: colorData
     });
     await this.props.firebase
       .colorHistory()
@@ -111,7 +95,7 @@ class App extends Component {
     });
   }
 
-  closeSignUpModal(e) {
+  closeSignUpModal() {
     this.setState({
       signupOpen: false
     });
@@ -123,7 +107,7 @@ class App extends Component {
       inputValue: hex,
       menuIsOpen: false
     });
-    this.updateStateValues(parse(hex).rgb);
+    this.updateStateValues(hex);
   }
 
   addMenuItem(hex) {
@@ -159,39 +143,27 @@ class App extends Component {
 
   handleSubmit() {
     const searchTerm = this.state.inputValue.toLowerCase().replace(/\s/g, "");
-    let rgb =
-      parse(searchTerm).rgb ||
-      parse("#" + searchTerm).rgb ||
-      searchNamedColors(searchTerm);
 
-    if (rgb) this.updateStateValues(rgb);
+    let hex =
+      parse(searchTerm).hex ||
+      parse("#" + searchTerm).hex ||
+      searchNamedColors(searchTerm);
+    if (hex) this.updateStateValues(hex);
   }
 
-  updateStateValues(rgb) {
-
-    let hex = rgbToHex(...rgb);
-    console.time("test");
-    let allColorInfo = getAllColorInfo(hex);
-    console.timeEnd("test");
-    console.log(allColorInfo);
+  updateStateValues(hex) {
+    let colorData = getAllColorInfo(hex);
 
     this.setState({
-      color: rgb,
-      colorName: getColorName(rgbToHex(...rgb)),
-      contrastColor: getContrastColor(rgb),
-      highContrastColor: getHighContrastColor(rgb),
-      lowContrastColor: getLowContrastColor(rgb),
-      oppositeContrastColor: getOppositeContrastColor(rgb),
-      colorArr: calcAllGradients(rgb),
-      hexColor: rgbToHex(...rgb),
-      inputValue: rgbToHex(...rgb).toUpperCase()
+      colorData: colorData,
+      inputValue: colorData.hex
     });
-    this.addMenuItem(rgbToHex(...rgb));
+    this.addMenuItem(hex);
   }
 
   render() {
     return (
-      <div id="App" style={{ backgroundColor: this.state.hexColor }}>
+      <div id="App" style={{ backgroundColor: this.state.colorData.hex }}>
         <LoadingScreen show={this.state.loading} />
         <div>
           <SignUp
@@ -199,15 +171,11 @@ class App extends Component {
             isOpen={this.state.signupOpen}
           />
           <Header
-            hexColor={this.state.hexColor}
-            colorArr={this.state.colorArr}
+            colorData={this.state.colorData}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
-            contrastColor={this.state.contrastColor}
-            highContrastColor={this.state.highContrastColor}
             updateStateValues={this.updateStateValues}
-            lowContrastColor={this.state.lowContrastColor}
-            oppositeContrastColor={this.state.oppositeContrastColor}
+            
           />
           <Sidebar
             isOpen={this.state.menuIsOpen}
@@ -225,14 +193,14 @@ class App extends Component {
                     placeholder="Color Code (Hex, RGB, or Name)"
                     onChange={this.handleInputChange}
                     value={this.state.inputValue}
-                    style={{ borderColor: this.state.contrastColor }}
+                    style={{ borderColor: this.state.colorData.contrast }}
                   />
                   <button
                     onClick={this.handleSubmit}
                     style={{
-                      borderColor: this.state.contrastColor,
-                      backgroundColor: this.state.contrastColor,
-                      color: this.state.oppositeContrastColor
+                      borderColor: this.state.colorData.contrast,
+                      backgroundColor: this.state.colorData.contrast,
+                      color: this.state.colorData.oppositeContrast
                     }}
                   >
                     GO
@@ -240,13 +208,13 @@ class App extends Component {
                 </div>
                 <div
                   className="color-name"
-                  style={{ color: this.state.contrastColor }}
+                  style={{ color: this.state.colorData.contrast }}
                 >
-                  {this.state.colorName}
+                  {this.state.colorData.name}
                 </div>
               </div>
               <div className="container">
-                {this.state.colorArr.map((color, index) => {
+                {this.state.colorData.shades.map((color, index) => {
                   return <ColorSquare color={color} key={color + index}></ColorSquare>
                 })}
               </div>
