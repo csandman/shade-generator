@@ -34,6 +34,11 @@ class App extends Component {
         rgb: [],
         shades: []
       },
+      baseColor: {
+        color: "#222222",
+        contrast: "#7a7a7a",
+        oppositeContrast: "#181818"
+      },
       loading: true,
       menuItems: [],
       menuIsOpen: false,
@@ -64,19 +69,17 @@ class App extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
-    let colorData = {};
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
-      .limit(1)
+      .limit(2)
       .get()
       .then(snapshot => {
-        colorData = getAllColorInfo(snapshot.docs[0].data().hexCode);
+        this.setState({
+          colorData1: getAllColorInfo(snapshot.docs[0].data().hexCode),
+          colorData2: getAllColorInfo(snapshot.docs[1].data().hexCode)
+        })
       });
-    this.setState({
-      colorData1: colorData,
-      colorData2: getAllColorInfo(getRandomHexColor())
-    });
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
@@ -217,6 +220,7 @@ class App extends Component {
           <Header
             colorData={this.state.colorData1}
             colorDataAlt={this.state.colorData2}
+            baseColor={this.state.baseColor}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
             updateStateValues={this.updateStateValues}

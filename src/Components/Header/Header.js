@@ -9,14 +9,14 @@ const Header = props => {
       style={{
         borderBottom:
           "2px solid " +
-          (props.splitView ? "rgb(122, 122, 122)" : props.colorData.contrast),
-        backgroundColor: props.splitView ? "#222" : props.colorData.hex
+          (props.splitView ? props.baseColor.contrast : props.colorData.contrast),
+        backgroundColor: props.splitView ? props.baseColor.color : props.colorData.hex
       }}
     >
       <div
         style={{
           color: props.splitView
-            ? "rgb(122, 122, 122)"
+            ? props.baseColor.contrast
             : props.colorData.contrast
         }}
         className="title-text"
@@ -50,13 +50,13 @@ const Header = props => {
             onClick={props.getRandomColors}
             style={{
               borderColor: props.splitView
-                ? "rgb(122, 122, 122)"
+                ? props.baseColor.contrast
                 : props.colorData.contrast,
               color: props.splitView
-                ? "rgb(122, 122, 122)"
+                ? props.baseColor.contrast
                 : props.colorData.contrast,
               backgroundColor: props.splitView
-                ? "rgb(24, 24, 24)"
+                ? props.baseColor.oppositeContrast
                 : props.colorData.oppositeContrast
             }}
           >
@@ -64,7 +64,7 @@ const Header = props => {
               className="fas fa-random"
               style={{
                 color: props.splitView
-                  ? "rgb(122, 122, 122)"
+                  ? props.baseColor.contrast
                   : props.colorData.contrast
               }}
             />
@@ -76,13 +76,13 @@ const Header = props => {
             onClick={props.toggleSplitView}
             style={{
               borderColor: props.splitView
-                ? "rgb(122, 122, 122)"
+                ? props.baseColor.contrast
                 : props.colorData.contrast,
               color: props.splitView
-                ? "rgb(24, 24, 24)"
+                ? props.baseColor.oppositeContrast
                 : props.colorData.contrast,
               backgroundColor: props.splitView
-                ? "rgb(122, 122, 122)"
+                ? props.baseColor.contrast
                 : props.colorData.oppositeContrast
             }}
           >
@@ -90,7 +90,7 @@ const Header = props => {
               className="fas fa-columns"
               style={{
                 color: props.splitView
-                  ? "rgb(24, 24, 24)"
+                  ? props.baseColor.oppositeContrast
                   : props.colorData.contrast
               }}
             />
@@ -101,13 +101,13 @@ const Header = props => {
             onClick={props.handleSignupClick}
             style={{
               borderColor: props.splitView
-                ? "rgb(122, 122, 122)"
+                ? props.baseColor.contrast
                 : props.colorData.contrast,
               color: props.splitView
-                ? "rgb(122, 122, 122)"
+                ? props.baseColor.contrast
                 : props.colorData.contrast,
               backgroundColor: props.splitView
-                ? "rgb(24, 24, 24)"
+                ? props.baseColor.oppositeContrast
                 : props.colorData.oppositeContrast
             }}
           >
@@ -115,7 +115,7 @@ const Header = props => {
               className="fas fa-user"
               style={{
                 color: props.splitView
-                  ? "rgb(122, 122, 122)"
+                  ? props.baseColor.contrast
                   : props.colorData.contrast
               }}
             />
@@ -126,7 +126,7 @@ const Header = props => {
           className="fas fa-bars menu-icon"
           style={{
             color: props.splitView
-              ? "rgb(122, 122, 122)"
+              ? props.baseColor.contrast
               : props.colorData.contrast
           }}
           onClick={props.openSidebar}
