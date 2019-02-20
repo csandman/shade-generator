@@ -1,11 +1,7 @@
 import React from "react";
-import { getRandomHexColor } from "../../Functions";
 import "./Header.scss";
 
 const Header = props => {
-  const generateRandomColor = () => {
-    props.updateStateValues(getRandomHexColor());
-  };
 
   return (
     <div
@@ -26,7 +22,7 @@ const Header = props => {
         className="title-text"
       >
         {props.colorData.shades.length && (
-          <div className="icon" onClick={generateRandomColor}>
+          <div className="icon" onClick={props.getRandomColors}>
             <div
               style={{ backgroundColor: props.splitView ? props.colorData.hex : props.colorData.shades[10].hex }}
               className="icon-dot"

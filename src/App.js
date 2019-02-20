@@ -131,6 +131,9 @@ class App extends Component {
       colorData2: random2,
       inputValue2: random2.hex
     });
+
+    this.addMenuItem(random2.hex);
+    this.addMenuItem(random1.hex);
   }
 
   addMenuItem(hex) {

@@ -75,11 +75,7 @@ button {
   transition: 150ms color ease-in-out;
 }
 
-@media only screen and (max-width: 650px) {
-  .page {
-    padding-top: 4rem;
-  }
-}
+
 
 .content-background {
   min-height: calc(100vh - 5rem);
@@ -88,4 +84,14 @@ button {
   align-items: center;
   justify-content: center;
   transition: background-color 200ms linear;
+}
+
+@media only screen and (max-width: 650px) {
+  .page {
+    padding-top: 4rem;
+  }
+
+  .content-background {
+    min-height: calc(100vh - 4rem);
+  }
 }
