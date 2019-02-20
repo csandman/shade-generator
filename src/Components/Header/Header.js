@@ -11,11 +11,20 @@ const Header = props => {
     <div
       id="header"
       style={{
-        borderBottom: "2px solid " + props.colorData.contrast,
-        backgroundColor: props.colorData.hex
+        borderBottom:
+          "2px solid " +
+          (props.splitView ? "rgb(122, 122, 122)" : props.colorData.contrast),
+        backgroundColor: props.splitView ? "#222" : props.colorData.hex
       }}
     >
-      <div style={{ color: props.colorData.contrast }} className="title-text">
+      <div
+        style={{
+          color: props.splitView
+            ? "rgb(122, 122, 122)"
+            : props.colorData.contrast
+        }}
+        className="title-text"
+      >
         {props.colorData.shades.length && (
           <div className="icon" onClick={generateRandomColor}>
             <div
@@ -42,34 +51,76 @@ const Header = props => {
         <div className="button-section">
           <div
             className="icon-button"
-            onClick={generateRandomColor}
+            onClick={props.getRandomColors}
             style={{
-              borderColor: props.colorData.contrast,
-              color: props.colorData.contrast,
-              backgroundColor: props.colorData.oppositeContrast
+              borderColor: props.splitView
+                ? "rgb(122, 122, 122)"
+                : props.colorData.contrast,
+              color: props.splitView
+                ? "rgb(122, 122, 122)"
+                : props.colorData.contrast,
+              backgroundColor: props.splitView
+                ? "rgb(24, 24, 24)"
+                : props.colorData.oppositeContrast
             }}
           >
             <i
               className="fas fa-random"
               style={{
-                color: props.colorData.contrast
+                color: props.splitView
+                  ? "rgb(122, 122, 122)"
+                  : props.colorData.contrast
               }}
             />
             Random
+          </div>
+
+          <div
+            className="icon-button"
+            onClick={props.toggleSplitView}
+            style={{
+              borderColor: props.splitView
+                ? "rgb(122, 122, 122)"
+                : props.colorData.contrast,
+              color: props.splitView
+                ? "rgb(24, 24, 24)"
+                : props.colorData.contrast,
+              backgroundColor: props.splitView
+                ? "rgb(122, 122, 122)"
+                : props.colorData.oppositeContrast
+            }}
+          >
+            <i
+              className="fas fa-columns"
+              style={{
+                color: props.splitView
+                  ? "rgb(24, 24, 24)"
+                  : props.colorData.contrast
+              }}
+            />
+            Split View
           </div>
           <div
             className="icon-button"
             onClick={props.handleSignupClick}
             style={{
-              borderColor: props.colorData.contrast,
-              color: props.colorData.contrast,
-              backgroundColor: props.colorData.oppositeContrast
+              borderColor: props.splitView
+                ? "rgb(122, 122, 122)"
+                : props.colorData.contrast,
+              color: props.splitView
+                ? "rgb(122, 122, 122)"
+                : props.colorData.contrast,
+              backgroundColor: props.splitView
+                ? "rgb(24, 24, 24)"
+                : props.colorData.oppositeContrast
             }}
           >
             <i
               className="fas fa-user"
               style={{
-                color: props.colorData.contrast
+                color: props.splitView
+                  ? "rgb(122, 122, 122)"
+                  : props.colorData.contrast
               }}
             />
             Sign in
@@ -77,7 +128,11 @@ const Header = props => {
         </div>
         <i
           className="fas fa-bars menu-icon"
-          style={{ color: props.colorData.contrast }}
+          style={{
+            color: props.splitView
+              ? "rgb(122, 122, 122)"
+              : props.colorData.contrast
+          }}
           onClick={props.openSidebar}
         />
       </div>

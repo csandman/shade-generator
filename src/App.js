@@ -3,7 +3,7 @@ import Header from "./Components/Header";
 import SignUp from "./Components/SignUp";
 import Sidebar from "./Components/Sidebar";
 import LoadingScreen from "./Components/LoadingScreen";
-import ColorSquare from './Components/ColorSquare';
+import BodyContent from "./Components/BodyContent";
 import "./App.scss";
 
 import { withFirebase } from "./Components/Firebase";
@@ -12,7 +12,8 @@ import {
   getContrastColor,
   getColorName,
   searchNamedColors,
-  getAllColorInfo
+  getAllColorInfo,
+  getRandomHexColor
 } from "./Functions";
 
 const parse = require("parse-color");
@@ -21,8 +22,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: "",
-      colorData: {
+      inputValue1: "",
+      inputValue2: "",
+      colorData1: {
+        hex: "",
+        rgb: [],
+        shades: []
+      },
+      colorData2: {
         hex: "",
         rgb: [],
         shades: []
@@ -30,7 +37,8 @@ class App extends Component {
       loading: true,
       menuItems: [],
       menuIsOpen: false,
-      signupOpen: false
+      signupOpen: false,
+      splitView: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -42,6 +50,8 @@ class App extends Component {
     this.closeSidebar = this.closeSidebar.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
     this.updateStateValues = this.updateStateValues.bind(this);
+    this.toggleSplitView = this.toggleSplitView.bind(this);
+    this.getRandomColors = this.getRandomColors.bind(this);
   }
 
   openSidebar() {
@@ -61,10 +71,11 @@ class App extends Component {
       .limit(1)
       .get()
       .then(snapshot => {
-        colorData = getAllColorInfo(snapshot.docs[0].data().hexCode)
+        colorData = getAllColorInfo(snapshot.docs[0].data().hexCode);
       });
     this.setState({
-      colorData: colorData
+      colorData1: colorData,
+      colorData2: getAllColorInfo(getRandomHexColor())
     });
     await this.props.firebase
       .colorHistory()
@@ -104,10 +115,22 @@ class App extends Component {
   clickColor(e) {
     const hex = this.state.menuItems[e.target.dataset.index].hexCode;
     this.setState({
-      inputValue: hex,
+      inputValue1: hex,
       menuIsOpen: false
     });
-    this.updateStateValues(hex);
+    this.updateStateValues(hex, "inputValue1");
+  }
+
+  getRandomColors() {
+    const random1 = getAllColorInfo(getRandomHexColor());
+    const random2 = getAllColorInfo(getRandomHexColor());
+
+    this.setState({
+      colorData1: random1,
+      inputValue1: random1.hex,
+      colorData2: random2,
+      inputValue2: random2.hex
+    });
   }
 
   addMenuItem(hex) {
@@ -126,8 +149,10 @@ class App extends Component {
   }
 
   handleEnterPress(e) {
-    if (e.keyCode === 13) {
-      this.handleSubmit();
+    console.log(document.activeElement.tagName);
+    if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
+      console.log(document.activeElement);
+      this.handleSubmit({ target: { name: document.activeElement.name } });
     }
     if (e.keyCode === 27) {
       this.setState({
@@ -138,32 +163,48 @@ class App extends Component {
   }
 
   handleInputChange(event) {
-    this.setState({ inputValue: event.target.value });
+    let state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
   }
 
-  handleSubmit() {
-    const searchTerm = this.state.inputValue.toLowerCase().replace(/\s/g, "");
+  handleSubmit(e) {
+    console.log(e.target.name);
+    const searchTerm = this.state[e.target.name]
+      .toLowerCase()
+      .replace(/\s/g, "");
 
     let hex =
       parse(searchTerm).hex ||
       parse("#" + searchTerm).hex ||
       searchNamedColors(searchTerm);
-    if (hex) this.updateStateValues(hex);
+    if (hex) this.updateStateValues(hex, e.target.name);
   }
 
-  updateStateValues(hex) {
+  updateStateValues(hex, inputName) {
     let colorData = getAllColorInfo(hex);
 
-    this.setState({
-      colorData: colorData,
-      inputValue: colorData.hex
-    });
+    inputName === "inputValue1"
+      ? this.setState({
+          colorData1: colorData,
+          inputValue1: colorData.hex
+        })
+      : this.setState({
+          colorData2: colorData,
+          inputValue2: colorData.hex
+        });
     this.addMenuItem(hex);
+  }
+
+  toggleSplitView() {
+    this.setState({
+      splitView: !this.state.splitView
+    });
   }
 
   render() {
     return (
-      <div id="App" style={{ backgroundColor: this.state.colorData.hex }}>
+      <div id="App" style={{ backgroundColor: this.state.colorData1.hex }}>
         <LoadingScreen show={this.state.loading} />
         <div>
           <SignUp
@@ -171,11 +212,13 @@ class App extends Component {
             isOpen={this.state.signupOpen}
           />
           <Header
-            colorData={this.state.colorData}
+            colorData={this.state.colorData1}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
             updateStateValues={this.updateStateValues}
-            
+            splitView={this.state.splitView}
+            toggleSplitView={this.toggleSplitView}
+            getRandomColors={this.getRandomColors}
           />
           <Sidebar
             isOpen={this.state.menuIsOpen}
@@ -185,40 +228,37 @@ class App extends Component {
           />
 
           <div className="page">
-            <div className="outer-container">
-              <div className="input-container">
-                <div className="color-input">
-                  <input
-                    type="search"
-                    placeholder="Color Code (Hex, RGB, or Name)"
-                    onChange={this.handleInputChange}
-                    value={this.state.inputValue}
-                    style={{ borderColor: this.state.colorData.contrast }}
-                  />
-                  <button
-                    onClick={this.handleSubmit}
-                    style={{
-                      borderColor: this.state.colorData.contrast,
-                      backgroundColor: this.state.colorData.contrast,
-                      color: this.state.colorData.oppositeContrast
-                    }}
-                  >
-                    GO
-                  </button>
-                </div>
-                <div
-                  className="color-name"
-                  style={{ color: this.state.colorData.contrast }}
-                >
-                  {this.state.colorData.name}
-                </div>
-              </div>
-              <div className="container">
-                {this.state.colorData.shades.map((color, index) => {
-                  return <ColorSquare color={color} key={color + index}></ColorSquare>
-                })}
-              </div>
+            <div
+              className="content-background"
+              style={{ backgroundColor: this.state.colorData1.hex }}
+            >
+              <BodyContent
+                handleInputChange={this.handleInputChange}
+                inputValue={this.state.inputValue1}
+                handleSubmit={this.handleSubmit}
+                colorData={this.state.colorData1}
+                number={1}
+                splitView={this.state.splitView}
+              />
             </div>
+            {this.state.splitView && (
+              <div
+                className="content-background"
+                style={{ backgroundColor: this.state.colorData2.hex }}
+              >
+                <BodyContent
+                  style={{
+                    borderLeft: "2px solid" + this.state.colorData1.contrast
+                  }}
+                  handleInputChange={this.handleInputChange}
+                  inputValue={this.state.inputValue2}
+                  handleSubmit={this.handleSubmit}
+                  colorData={this.state.colorData2}
+                  number={2}
+                  splitView={this.state.splitView}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

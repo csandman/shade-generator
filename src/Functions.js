@@ -50,7 +50,7 @@ export const getLowContrastColor = rgb => {
 export const searchNamedColors = searchTerm => {
   for (let i = 0; i < namedColors.length; i++) {
     if (namedColors[i].name.replace(/\s/g,'').toLowerCase() === searchTerm)
-      return parse(namedColors[i].hex).rgb;
+      return parse(namedColors[i].hex).hex;
   }
   return null;
 }

@@ -23,6 +23,21 @@
   }
 }
 
+.outer-container.split {
+  .color-tile {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  @media only screen and (max-width: 1150px) {
+    .color-tile {
+      border-radius: 4px;
+      width: calc(50vw / 4 - 5 / 4 * 1rem);
+      height: calc(50vw / 4 - 5 / 4 * 1rem);
+    }
+  }
+}
+
 .tooltip-title {
   font-family: "Nunito", sans-serif;
   margin: 0.5rem;
