@@ -28,19 +28,19 @@ const Header = props => {
         {props.colorData.shades.length && (
           <div className="icon" onClick={generateRandomColor}>
             <div
-              style={{ backgroundColor: props.colorData.shades[10].hex }}
+              style={{ backgroundColor: props.splitView ? props.colorData.hex : props.colorData.shades[10].hex }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.colorData.shades[24].hex }}
+              style={{ backgroundColor: props.splitView ? props.colorDataAlt.hex : props.colorData.shades[24].hex }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.colorData.shades[24].hex }}
+              style={{ backgroundColor: props.splitView ? props.colorDataAlt.hex : props.colorData.shades[24].hex }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.colorData.shades[10].hex }}
+              style={{ backgroundColor: props.splitView ? props.colorData.hex : props.colorData.shades[10].hex }}
               className="icon-dot"
             />
           </div>

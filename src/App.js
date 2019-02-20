@@ -213,6 +213,7 @@ class App extends Component {
           />
           <Header
             colorData={this.state.colorData1}
+            colorDataAlt={this.state.colorData2}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
             updateStateValues={this.updateStateValues}
