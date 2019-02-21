@@ -36,6 +36,13 @@
       height: calc(50vw / 4 - 5 / 4 * 1rem);
     }
   }
+
+  @media only screen and (max-width: 720px) {
+    .color-tile {
+      width: calc(50vw / 3 - 4 / 3 * .75rem);
+      height: calc(50vw / 3 - 4 / 3 * .75rem);
+    }
+  }
 }
 
 .tooltip-title {
