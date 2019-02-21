@@ -33,7 +33,8 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 20rem;
+    width: 24rem;
+    max-width: 100vw;
     z-index: 1500;
     transform: translateX(0);
     transition: 300ms ease-out transform;

@@ -58,6 +58,7 @@ class App extends Component {
     this.toggleSplitView = this.toggleSplitView.bind(this);
     this.getRandomColors = this.getRandomColors.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.handleColorSquareClick = this.handleColorSquareClick.bind(this);
   }
 
   openSidebar() {
@@ -170,9 +171,9 @@ class App extends Component {
   }
 
   handleInputChange(event) {
-    let state = {};
-    state[event.target.name] = event.target.value;
-    this.setState(state);
+    let newState = {};
+    newState[event.target.name] = event.target.value;
+    this.setState(newState);
   }
 
   handleSubmit(e) {
@@ -213,6 +214,12 @@ class App extends Component {
     this.setState({
       menuIsOpen: !this.state.menuIsOpen
     });
+  }
+
+  handleColorSquareClick(hex, dataNum) {
+    let newState = {};
+    newState['colorData' + dataNum] = getAllColorInfo(hex);
+    this.setState(newState);
   }
 
   render() {
@@ -256,6 +263,7 @@ class App extends Component {
                 colorData={this.state.colorData1}
                 number={1}
                 splitView={this.state.splitView}
+                handleColorSquareClick={this.handleColorSquareClick}
               />
             </div>
             {this.state.splitView && (
@@ -273,6 +281,7 @@ class App extends Component {
                   colorData={this.state.colorData2}
                   number={2}
                   splitView={this.state.splitView}
+                  handleColorSquareClick={this.handleColorSquareClick}
                 />
               </div>
             )}
