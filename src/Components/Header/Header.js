@@ -1,37 +1,62 @@
 import React from "react";
-import { hexToRgb, getRandomHexColor } from "../../Functions";
+import HamburgerButton from "../HamburgerButton";
 import "./Header.scss";
 
 const Header = props => {
-  const generateRandomColor = () => {
-    props.updateStateValues(hexToRgb(getRandomHexColor()));
-  };
-
   return (
     <div
       id="header"
       style={{
-        borderBottom: "2px solid " + props.contrastColor,
-        backgroundColor: props.hexColor
+        borderBottom:
+          "2px solid " +
+          (props.splitView
+            ? props.baseColor.contrast
+            : props.colorData.contrast),
+        backgroundColor: props.splitView
+          ? props.baseColor.color
+          : props.colorData.hex
       }}
     >
-      <div style={{ color: props.contrastColor }} className="title-text">
-        {props.colorArr.length && (
-          <div className="icon" onClick={generateRandomColor}>
+      <div
+        style={{
+          color: props.splitView
+            ? props.baseColor.contrast
+            : props.colorData.contrast
+        }}
+        className="title-text"
+      >
+        {props.colorData.shades.length && (
+          <div className="icon" onClick={props.getRandomColors}>
             <div
-              style={{ backgroundColor: props.colorArr[10].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorData.hex
+                  : props.colorData.shades[10].hex
+              }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.colorArr[24].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorDataAlt.hex
+                  : props.colorData.shades[24].hex
+              }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.colorArr[24].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorDataAlt.hex
+                  : props.colorData.shades[24].hex
+              }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.colorArr[10].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorData.hex
+                  : props.colorData.shades[10].hex
+              }}
               className="icon-dot"
             />
           </div>
@@ -42,26 +67,63 @@ const Header = props => {
         <div className="button-section">
           <div
             className="icon-button"
-            onClick={generateRandomColor}
+            onClick={props.getRandomColors}
             style={{
-              borderColor: props.contrastColor,
-              color: props.contrastColor,
-              backgroundColor: props.oppositeContrastColor
+              borderColor: props.splitView
+                ? props.baseColor.contrast
+                : props.colorData.contrast,
+              color: props.splitView
+                ? props.baseColor.contrast
+                : props.colorData.contrast,
+              backgroundColor: props.splitView
+                ? props.baseColor.oppositeContrast
+                : props.colorData.oppositeContrast
             }}
           >
             <i
               className="fas fa-random"
               style={{
-                color: props.contrastColor
+                color: props.splitView
+                  ? props.baseColor.contrast
+                  : props.colorData.contrast
               }}
             />
             Random
           </div>
+
+          <div
+            className="icon-button"
+            onClick={props.toggleSplitView}
+            style={{
+              borderColor: props.splitView
+                ? props.baseColor.contrast
+                : props.colorData.contrast,
+              color: props.splitView
+                ? props.baseColor.oppositeContrast
+                : props.colorData.contrast,
+              backgroundColor: props.splitView
+                ? props.baseColor.contrast
+                : props.colorData.oppositeContrast
+            }}
+          >
+            <i
+              className="fas fa-columns"
+              style={{
+                color: props.splitView
+                  ? props.baseColor.oppositeContrast
+                  : props.colorData.contrast
+              }}
+            />
+            Split View
+          </div>
         </div>
-        <i
-          className="fas fa-bars menu-icon"
-          style={{ color: props.contrastColor }}
-          onClick={props.openSidebar}
+        <HamburgerButton
+          className="menu-icon"
+          open={props.menuIsOpen}
+          action={props.toggleSidebar}
+          color={props.splitView
+            ? props.baseColor.contrast
+            : props.colorData.contrast}
         />
       </div>
     </div>
@@ -69,3 +131,29 @@ const Header = props => {
 };
 
 export default Header;
+
+// <div
+// className="icon-button"
+// onClick={props.handleSignupClick}
+// style={{
+//   borderColor: props.splitView
+//     ? props.baseColor.contrast
+//     : props.colorData.contrast,
+//   color: props.splitView
+//     ? props.baseColor.contrast
+//     : props.colorData.contrast,
+//   backgroundColor: props.splitView
+//     ? props.baseColor.oppositeContrast
+//     : props.colorData.oppositeContrast
+// }}
+// >
+// <i
+//   className="fas fa-user"
+//   style={{
+//     color: props.splitView
+//       ? props.baseColor.contrast
+//       : props.colorData.contrast
+//   }}
+// />
+// Sign in
+// </div>

@@ -50,7 +50,7 @@ export const getLowContrastColor = rgb => {
 export const searchNamedColors = searchTerm => {
   for (let i = 0; i < namedColors.length; i++) {
     if (namedColors[i].name.replace(/\s/g,'').toLowerCase() === searchTerm)
-      return parse(namedColors[i].hex).rgb;
+      return parse(namedColors[i].hex).hex;
   }
   return null;
 }
@@ -105,4 +105,21 @@ const calculateGradient = (colorVals, isDark, opacity) => {
 
 const calculateIndividualColor = (color, bColor, opacity) => {
   return Math.round(opacity * bColor + (1 - opacity) * color);
+}
+
+export const getAllColorInfo = colorStr => {
+  let colorObj = parse(colorStr);
+  colorObj.contrast = getContrastColor(colorObj.rgb);
+  colorObj.highContrast = getHighContrastColor(colorObj.rgb);
+  colorObj.lowContrast = getLowContrastColor(colorObj.rgb);
+  colorObj.oppositeContrast = getOppositeContrastColor(colorObj.rgb);
+  colorObj.name = getColorName(colorObj.hex);
+  colorObj.shades = calcAllGradients(colorObj.rgb).map(childObj => {
+    childObj.highContrast = getHighContrastColor(childObj.rgb);
+    childObj.contrast = getContrastColor(childObj.rgb);
+    childObj.lowContrast = getLowContrastColor(childObj.rgb);
+    childObj.oppositeContrast = getOppositeContrastColor(childObj.rgb);
+    return childObj;
+  })
+  return colorObj;
 }

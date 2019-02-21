@@ -13,7 +13,7 @@ const ColorSquare = ({ color }) => {
 
   const copyRgb = e => {
     const rgb = color.rgb;
-    const output = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
+    const output = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
     clipboard.writeText(output);
     changeButtonText(e.target, "Copied!");
   };

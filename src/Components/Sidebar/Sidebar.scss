@@ -39,7 +39,11 @@
     transition: 300ms ease-out transform;
     overflow: scroll;
     will-change: tranform;
-    
+    padding-top: 5rem;
+
+    @media only screen and (max-width: 650px) {
+      padding-top: 4rem;
+    }
   }
   
   .menu-items {
