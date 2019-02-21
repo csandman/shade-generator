@@ -57,6 +57,7 @@ class App extends Component {
     this.updateStateValues = this.updateStateValues.bind(this);
     this.toggleSplitView = this.toggleSplitView.bind(this);
     this.getRandomColors = this.getRandomColors.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
   }
 
   openSidebar() {
@@ -208,6 +209,12 @@ class App extends Component {
     });
   }
 
+  toggleSidebar() {
+    this.setState({
+      menuIsOpen: !this.state.menuIsOpen
+    });
+  }
+
   render() {
     return (
       <div id="App" style={{ backgroundColor: this.state.colorData1.hex }}>
@@ -227,6 +234,8 @@ class App extends Component {
             splitView={this.state.splitView}
             toggleSplitView={this.toggleSplitView}
             getRandomColors={this.getRandomColors}
+            menuIsOpen={this.state.menuIsOpen}
+            toggleSidebar={this.toggleSidebar}
           />
           <Sidebar
             isOpen={this.state.menuIsOpen}

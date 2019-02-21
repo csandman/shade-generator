@@ -1,16 +1,20 @@
 import React from "react";
+import HamburgerButton from "../HamburgerButton";
 import "./Header.scss";
 
 const Header = props => {
-
   return (
     <div
       id="header"
       style={{
         borderBottom:
           "2px solid " +
-          (props.splitView ? props.baseColor.contrast : props.colorData.contrast),
-        backgroundColor: props.splitView ? props.baseColor.color : props.colorData.hex
+          (props.splitView
+            ? props.baseColor.contrast
+            : props.colorData.contrast),
+        backgroundColor: props.splitView
+          ? props.baseColor.color
+          : props.colorData.hex
       }}
     >
       <div
@@ -24,19 +28,35 @@ const Header = props => {
         {props.colorData.shades.length && (
           <div className="icon" onClick={props.getRandomColors}>
             <div
-              style={{ backgroundColor: props.splitView ? props.colorData.hex : props.colorData.shades[10].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorData.hex
+                  : props.colorData.shades[10].hex
+              }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.splitView ? props.colorDataAlt.hex : props.colorData.shades[24].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorDataAlt.hex
+                  : props.colorData.shades[24].hex
+              }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.splitView ? props.colorDataAlt.hex : props.colorData.shades[24].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorDataAlt.hex
+                  : props.colorData.shades[24].hex
+              }}
               className="icon-dot"
             />
             <div
-              style={{ backgroundColor: props.splitView ? props.colorData.hex : props.colorData.shades[10].hex }}
+              style={{
+                backgroundColor: props.splitView
+                  ? props.colorData.hex
+                  : props.colorData.shades[10].hex
+              }}
               className="icon-dot"
             />
           </div>
@@ -96,40 +116,14 @@ const Header = props => {
             />
             Split View
           </div>
-          <div
-            className="icon-button"
-            onClick={props.handleSignupClick}
-            style={{
-              borderColor: props.splitView
-                ? props.baseColor.contrast
-                : props.colorData.contrast,
-              color: props.splitView
-                ? props.baseColor.contrast
-                : props.colorData.contrast,
-              backgroundColor: props.splitView
-                ? props.baseColor.oppositeContrast
-                : props.colorData.oppositeContrast
-            }}
-          >
-            <i
-              className="fas fa-user"
-              style={{
-                color: props.splitView
-                  ? props.baseColor.contrast
-                  : props.colorData.contrast
-              }}
-            />
-            Sign in
-          </div>
         </div>
-        <i
-          className="fas fa-bars menu-icon"
-          style={{
-            color: props.splitView
-              ? props.baseColor.contrast
-              : props.colorData.contrast
-          }}
-          onClick={props.openSidebar}
+        <HamburgerButton
+          className="menu-icon"
+          open={props.menuIsOpen}
+          action={props.toggleSidebar}
+          color={props.splitView
+            ? props.baseColor.contrast
+            : props.colorData.contrast}
         />
       </div>
     </div>
@@ -137,3 +131,29 @@ const Header = props => {
 };
 
 export default Header;
+
+// <div
+// className="icon-button"
+// onClick={props.handleSignupClick}
+// style={{
+//   borderColor: props.splitView
+//     ? props.baseColor.contrast
+//     : props.colorData.contrast,
+//   color: props.splitView
+//     ? props.baseColor.contrast
+//     : props.colorData.contrast,
+//   backgroundColor: props.splitView
+//     ? props.baseColor.oppositeContrast
+//     : props.colorData.oppositeContrast
+// }}
+// >
+// <i
+//   className="fas fa-user"
+//   style={{
+//     color: props.splitView
+//       ? props.baseColor.contrast
+//       : props.colorData.contrast
+//   }}
+// />
+// Sign in
+// </div>

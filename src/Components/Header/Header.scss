@@ -9,6 +9,7 @@
   z-index: 500;
   box-sizing: border-box;
   transition: 150ms all linear;
+  z-index: 2000;
 
   * {
     transition: 150ms all linear;
@@ -92,9 +93,13 @@
   }
 
   .menu-icon{
-    cursor: pointer;
     margin-left: 3rem;
-    font-size: 2.5rem;
+    transition: none;
+    transition: color 150ms linear;
+
+    &.fa-times {
+      font-size: 2.8rem;
+    }
   }
 
   .button-section {
