@@ -48,6 +48,11 @@ $hover: #1A1A1A;
 
     @media only screen and (max-width: 650px) {
       top: 4rem;
+      width: 100vw;
+    }
+
+    @media only screen and (max-width: 550px) {
+      width: 100vw;
     }
 
     * {
@@ -173,7 +178,7 @@ $hover: #1A1A1A;
     .color-result-item {
       padding: 1rem 1.25rem;
       font-size: 1.6rem;
-      line-height: 2.5rem;
+      line-height: 2.1rem;
       font-weight: 500;
       letter-spacing: 1px;
       font-family: 'Nunito';
