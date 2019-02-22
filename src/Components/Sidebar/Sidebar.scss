@@ -174,9 +174,11 @@ $hover: #1A1A1A;
       padding: .75rem 1rem;
       font-size: 1.6rem;
       line-height: 2.5rem;
-      font-weight: 700;
+      font-weight: 600;
+      letter-spacing: 1px;
       font-family: 'Nunito';
       cursor: pointer;
+      text-transform: uppercase;
     }
 
     .menu-item {
