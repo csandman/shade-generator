@@ -37,7 +37,8 @@ class App extends Component {
       baseColor: {
         color: "#222222",
         contrast: "#7a7a7a",
-        oppositeContrast: "#181818"
+        oppositeContrast: "#181818",
+        highContrast: "#bdbdbd"
       },
       loading: true,
       menuItems: [],
@@ -191,6 +192,7 @@ class App extends Component {
 
   updateStateValues(hex, inputName) {
     let colorData = getAllColorInfo(hex);
+    console.log(colorData);
 
     inputName === "inputValue1"
       ? this.setState({
@@ -219,6 +221,7 @@ class App extends Component {
   handleColorSquareClick(hex, dataNum) {
     let newState = {};
     newState['colorData' + dataNum] = getAllColorInfo(hex);
+    newState['inputValue' + dataNum] = hex.toUpperCase();
     this.setState(newState);
   }
 
@@ -249,6 +252,8 @@ class App extends Component {
             closeSidebar={this.closeSidebar}
             menuItems={this.state.menuItems}
             clickColor={this.clickColor}
+            baseColor={this.state.baseColor}
+            handleColorClick={this.handleColorSquareClick}
           />
 
           <div className="page">
