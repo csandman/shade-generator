@@ -37,7 +37,8 @@ class App extends Component {
       baseColor: {
         color: "#222222",
         contrast: "#7a7a7a",
-        oppositeContrast: "#181818"
+        oppositeContrast: "#181818",
+        highContrast: "#bdbdbd"
       },
       loading: true,
       menuItems: [],
@@ -58,6 +59,7 @@ class App extends Component {
     this.toggleSplitView = this.toggleSplitView.bind(this);
     this.getRandomColors = this.getRandomColors.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.handleColorSquareClick = this.handleColorSquareClick.bind(this);
   }
 
   openSidebar() {
@@ -170,9 +172,9 @@ class App extends Component {
   }
 
   handleInputChange(event) {
-    let state = {};
-    state[event.target.name] = event.target.value;
-    this.setState(state);
+    let newState = {};
+    newState[event.target.name] = event.target.value;
+    this.setState(newState);
   }
 
   handleSubmit(e) {
@@ -190,6 +192,7 @@ class App extends Component {
 
   updateStateValues(hex, inputName) {
     let colorData = getAllColorInfo(hex);
+    console.log(colorData);
 
     inputName === "inputValue1"
       ? this.setState({
@@ -213,6 +216,13 @@ class App extends Component {
     this.setState({
       menuIsOpen: !this.state.menuIsOpen
     });
+  }
+
+  handleColorSquareClick(hex, dataNum) {
+    let newState = {};
+    newState['colorData' + dataNum] = getAllColorInfo(hex);
+    newState['inputValue' + dataNum] = hex.toUpperCase();
+    this.setState(newState);
   }
 
   render() {
@@ -242,6 +252,8 @@ class App extends Component {
             closeSidebar={this.closeSidebar}
             menuItems={this.state.menuItems}
             clickColor={this.clickColor}
+            baseColor={this.state.baseColor}
+            handleColorClick={this.handleColorSquareClick}
           />
 
           <div className="page">
@@ -256,6 +268,7 @@ class App extends Component {
                 colorData={this.state.colorData1}
                 number={1}
                 splitView={this.state.splitView}
+                handleColorSquareClick={this.handleColorSquareClick}
               />
             </div>
             {this.state.splitView && (
@@ -273,6 +286,7 @@ class App extends Component {
                   colorData={this.state.colorData2}
                   number={2}
                   splitView={this.state.splitView}
+                  handleColorSquareClick={this.handleColorSquareClick}
                 />
               </div>
             )}

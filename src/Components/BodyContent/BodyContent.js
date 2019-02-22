@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import ColorSquare from '../ColorSquare';
+import ColorSquare from "../ColorSquare";
 import "./BodyContent.scss";
 
 class BodyContent extends Component {
   render() {
     return (
-      <div className={this.props.splitView ? "outer-container split" : "outer-container"}>
+      <div
+        className={
+          this.props.splitView ? "outer-container split" : "outer-container"
+        }
+      >
         <div className="input-container">
           <div className="color-input">
             <input
@@ -38,7 +42,14 @@ class BodyContent extends Component {
         </div>
         <div className="container">
           {this.props.colorData.shades.map((color, index) => {
-            return <ColorSquare color={color} key={color + index} />;
+            return (
+              <ColorSquare
+                handleClick={this.props.handleColorSquareClick}
+                colorDataNumber={this.props.number}
+                color={color}
+                key={color + index}
+              />
+            );
           })}
         </div>
       </div>
