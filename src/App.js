@@ -171,9 +171,7 @@ class App extends Component {
   }
 
   handleEnterPress(e) {
-    console.log(document.activeElement.tagName);
     if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
-      console.log(document.activeElement);
       this.handleSubmit({ target: { name: document.activeElement.name } });
     }
     if (e.keyCode === 27) {
@@ -191,7 +189,6 @@ class App extends Component {
   }
 
   handleSubmit(e) {
-    console.log(e.target.name);
     const searchTerm = this.state[e.target.name]
       .toLowerCase()
       .replace(/\s/g, "");
@@ -205,7 +202,6 @@ class App extends Component {
 
   updateStateValues(hex, inputName) {
     let colorData = getAllColorInfo(hex);
-    console.log(colorData);
 
     inputName === "inputValue1"
       ? this.setState({
