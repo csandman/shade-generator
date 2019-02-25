@@ -1,4 +1,4 @@
-.outer-container {
+.body-content {
   .input-container {
     width: 100%;
     display: inline-flex;
@@ -55,7 +55,7 @@
 }
 
 @media only screen and (max-width: 1250px) {
-  .outer-container {
+  .body-content {
     .input-container {
       .color-input {
         width: 23rem;
@@ -73,7 +73,7 @@
 }
 
 @media only screen and (max-width: 950px) {
-  .outer-container {
+  .body-content {
     .container {
       grid-template-columns: repeat(6, auto);
     }
@@ -98,7 +98,7 @@
   .page {
     padding-top: 4rem;
 
-    .outer-container {
+    .body-content {
       .container {
         grid-template-columns: repeat(4, auto);
         width: 100vw;
@@ -107,7 +107,7 @@
   }
 }
 
-.outer-container.split {
+.body-content.split {
   .container {
     grid-template-columns: repeat(6, auto);
   }

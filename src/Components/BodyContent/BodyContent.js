@@ -7,7 +7,7 @@ class BodyContent extends Component {
     return (
       <div
         className={
-          this.props.splitView ? "outer-container split" : "outer-container"
+          this.props.splitView & !this.props.splitScreenDisabled ? "body-content split" : "body-content"
         }
       >
         <div className="input-container">
