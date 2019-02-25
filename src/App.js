@@ -44,7 +44,8 @@ class App extends Component {
       menuItems: [],
       menuIsOpen: false,
       signupOpen: false,
-      splitView: false
+      splitView: false,
+      splitScreenDisabled: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -60,6 +61,7 @@ class App extends Component {
     this.getRandomColors = this.getRandomColors.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.handleColorSquareClick = this.handleColorSquareClick.bind(this);
+    this.setSplitScreenAbility = this.setSplitScreenAbility.bind(this);
   }
 
   openSidebar() {
@@ -72,6 +74,9 @@ class App extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
+    window.addEventListener("resize", this.setSplitScreenAbility);
+    this.setSplitScreenAbility();
+
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
@@ -103,7 +108,21 @@ class App extends Component {
         ? this.setState({ authUser })
         : this.setState({ authUser: null });
     });
+
     this.setState({ loading: false });
+  }
+
+  setSplitScreenAbility() {
+    const width = window.innerWidth;
+    if (width <= 600) {
+      this.setState({
+        splitScreenDisabled: true
+      });
+    } else {
+      this.setState({
+        splitScreenDisabled: false
+      });
+    }
   }
 
   openSignUpModal() {
@@ -269,9 +288,10 @@ class App extends Component {
                 number={1}
                 splitView={this.state.splitView}
                 handleColorSquareClick={this.handleColorSquareClick}
+                splitScreenDisabled={this.state.splitScreenDisabled}
               />
             </div>
-            {this.state.splitView && (
+            {(this.state.splitView && !this.state.splitScreenDisabled) && (
               <div
                 className="content-background"
                 style={{ backgroundColor: this.state.colorData2.hex }}
@@ -287,6 +307,7 @@ class App extends Component {
                   number={2}
                   splitView={this.state.splitView}
                   handleColorSquareClick={this.handleColorSquareClick}
+                  splitScreenDisabled={this.state.splitScreenDisabled}
                 />
               </div>
             )}
