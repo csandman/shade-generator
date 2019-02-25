@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Header from "./Components/Header";
-import SignUp from "./Components/SignUp";
-import Sidebar from "./Components/Sidebar";
-import LoadingScreen from "./Components/LoadingScreen";
-import BodyContent from "./Components/BodyContent";
+import Header from "../Header";
+import SignUp from "../SignUp";
+import Sidebar from "../Sidebar";
+import LoadingScreen from "../LoadingScreen";
+import BodyContent from "../BodyContent";
 import "./App.scss";
 
-import { withFirebase } from "./Components/Firebase";
+import { withFirebase } from "../Firebase";
 
 import {
   getContrastColor,
@@ -14,7 +14,7 @@ import {
   searchNamedColors,
   getAllColorInfo,
   getRandomHexColor
-} from "./Functions";
+} from "../../Functions";
 
 const parse = require("parse-color");
 

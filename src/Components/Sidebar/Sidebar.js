@@ -41,7 +41,11 @@ class Sidebar extends Component {
       searchInput: e.target.value,
       colorNameList: namedColors
         .filter(
-          el => el.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+          el =>
+            el.name
+              .toLowerCase()
+              .replace(/\s/g, "")
+              .indexOf(e.target.value.toLowerCase().replace(/\s/g, "")) >= 0
         )
         .slice(0, 1000)
         .map(el => {
