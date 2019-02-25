@@ -34,17 +34,12 @@ class App extends Component {
         rgb: [],
         shades: []
       },
-      baseColor: {
-        color: "#222222",
-        contrast: "#7a7a7a",
-        oppositeContrast: "#181818",
-        highContrast: "#bdbdbd"
-      },
       loading: true,
       menuItems: [],
       menuIsOpen: false,
       signupOpen: false,
-      splitView: false
+      splitView: false,
+      splitScreenDisabled: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -60,6 +55,7 @@ class App extends Component {
     this.getRandomColors = this.getRandomColors.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.handleColorSquareClick = this.handleColorSquareClick.bind(this);
+    this.setSplitScreenAbility = this.setSplitScreenAbility.bind(this);
   }
 
   openSidebar() {
@@ -72,6 +68,9 @@ class App extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.handleEnterPress, false);
+    window.addEventListener("resize", this.setSplitScreenAbility);
+    this.setSplitScreenAbility();
+
     await this.props.firebase
       .colorHistory()
       .orderBy("dateAdded", "desc")
@@ -103,7 +102,21 @@ class App extends Component {
         ? this.setState({ authUser })
         : this.setState({ authUser: null });
     });
+
     this.setState({ loading: false });
+  }
+
+  setSplitScreenAbility() {
+    const width = window.innerWidth;
+    if (width <= 600) {
+      this.setState({
+        splitScreenDisabled: true
+      });
+    } else {
+      this.setState({
+        splitScreenDisabled: false
+      });
+    }
   }
 
   openSignUpModal() {
@@ -158,9 +171,7 @@ class App extends Component {
   }
 
   handleEnterPress(e) {
-    console.log(document.activeElement.tagName);
     if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
-      console.log(document.activeElement);
       this.handleSubmit({ target: { name: document.activeElement.name } });
     }
     if (e.keyCode === 27) {
@@ -178,7 +189,6 @@ class App extends Component {
   }
 
   handleSubmit(e) {
-    console.log(e.target.name);
     const searchTerm = this.state[e.target.name]
       .toLowerCase()
       .replace(/\s/g, "");
@@ -192,7 +202,6 @@ class App extends Component {
 
   updateStateValues(hex, inputName) {
     let colorData = getAllColorInfo(hex);
-    console.log(colorData);
 
     inputName === "inputValue1"
       ? this.setState({
@@ -237,7 +246,6 @@ class App extends Component {
           <Header
             colorData={this.state.colorData1}
             colorDataAlt={this.state.colorData2}
-            baseColor={this.state.baseColor}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
             updateStateValues={this.updateStateValues}
@@ -246,6 +254,7 @@ class App extends Component {
             getRandomColors={this.getRandomColors}
             menuIsOpen={this.state.menuIsOpen}
             toggleSidebar={this.toggleSidebar}
+            splitScreenDisabled={this.state.splitScreenDisabled}
           />
           <Sidebar
             isOpen={this.state.menuIsOpen}
@@ -269,9 +278,10 @@ class App extends Component {
                 number={1}
                 splitView={this.state.splitView}
                 handleColorSquareClick={this.handleColorSquareClick}
+                splitScreenDisabled={this.state.splitScreenDisabled}
               />
             </div>
-            {this.state.splitView && (
+            {(this.state.splitView && !this.state.splitScreenDisabled) && (
               <div
                 className="content-background"
                 style={{ backgroundColor: this.state.colorData2.hex }}
@@ -287,6 +297,7 @@ class App extends Component {
                   number={2}
                   splitView={this.state.splitView}
                   handleColorSquareClick={this.handleColorSquareClick}
+                  splitScreenDisabled={this.state.splitScreenDisabled}
                 />
               </div>
             )}

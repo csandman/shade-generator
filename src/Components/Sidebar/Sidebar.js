@@ -28,15 +28,12 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
-    this.setState(
-      {
-        colorNameList: namedColors.slice(0, 500).map(el => {
-          el.contrast = getContrastColor(hexToRgb(el.hex));
-          return el;
-        })
-      },
-      () => console.log(this.state.colorNameList)
-    );
+    this.setState({
+      colorNameList: namedColors.slice(0, 1000).map(el => {
+        el.contrast = getContrastColor(hexToRgb(el.hex));
+        return el;
+      })
+    });
   }
 
   searchColorNames(e) {
@@ -46,7 +43,7 @@ class Sidebar extends Component {
         .filter(
           el => el.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
         )
-        .slice(0, 500)
+        .slice(0, 1000)
         .map(el => {
           el.contrast = getContrastColor(hexToRgb(el.hex));
           return el;
@@ -55,23 +52,18 @@ class Sidebar extends Component {
   }
 
   openColorHistory() {
-    console.log("color history");
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isHistoryMenuOpen = true;
-    console.log(newState);
     this.setState({ menuStates: newState });
   }
 
   openColorSearch() {
-    console.log("color history");
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isSearchMenuOpen = true;
-    console.log(newState);
     this.setState({ menuStates: newState });
   }
 
   closeSubMenu() {
-    console.log("close sub");
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isMainMenuOpen = true;
     this.setState({ menuStates: newState });

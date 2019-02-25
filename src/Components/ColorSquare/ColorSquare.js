@@ -5,6 +5,13 @@ import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
 
 class ColorSquare extends Component {
+
+  constructor(props) {
+    super(props);
+    this.copyHexCode = this.copyHexCode.bind(this);
+    this.copyRgb = this.copyRgb.bind(this);
+  }
+
   copyHexCode(e) {
     const output = this.props.color.hex;
     clipboard.writeText(output);

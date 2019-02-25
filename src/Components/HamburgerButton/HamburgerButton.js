@@ -7,7 +7,7 @@ class HamburgerButton extends Component {
 
     this.state = {
       open: this.props.open ? this.props.open : false,
-      color: this.props.color ? this.props.color : "black"
+      color: this.props.color ? this.props.color : "#7a7a7a"
     };
   }
 
