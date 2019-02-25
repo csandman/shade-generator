@@ -1,158 +1,154 @@
-import React from "react";
+import React, { Component } from "react";
 import HamburgerButton from "../HamburgerButton";
 import "./Header.scss";
 
-const Header = props => {
-  return (
-    <div
-      id="header"
-      style={{
-        borderBottom:
-          "2px solid " +
-          (props.splitView
-            ? props.baseColor.contrast
-            : props.colorData.contrast),
-        backgroundColor: props.splitView
-          ? props.baseColor.color
-          : props.colorData.hex
-      }}
-    >
+class Header extends Component {
+  render() {
+    return (
       <div
-        style={{
-          color: props.splitView
-            ? props.baseColor.contrast
-            : props.colorData.contrast
-        }}
-        className="title-text"
+        id="header"
+        style={
+          (!this.props.splitView || this.props.splitSreenDisabled) && {
+            borderColor: this.props.colorData.contrast,
+            backgroundColor: this.props.colorData.hex
+          }
+        }
       >
-        {props.colorData.shades.length && (
-          <div className="icon" onClick={props.getRandomColors}>
-            <div
-              style={{
-                backgroundColor: props.splitView
-                  ? props.colorData.hex
-                  : props.colorData.shades[10].hex
-              }}
-              className="icon-dot"
-            />
-            <div
-              style={{
-                backgroundColor: props.splitView
-                  ? props.colorDataAlt.hex
-                  : props.colorData.shades[24].hex
-              }}
-              className="icon-dot"
-            />
-            <div
-              style={{
-                backgroundColor: props.splitView
-                  ? props.colorDataAlt.hex
-                  : props.colorData.shades[24].hex
-              }}
-              className="icon-dot"
-            />
-            <div
-              style={{
-                backgroundColor: props.splitView
-                  ? props.colorData.hex
-                  : props.colorData.shades[10].hex
-              }}
-              className="icon-dot"
-            />
-          </div>
-        )}
-        Shade Generator
-      </div>
-      <div className="right-content">
-        <div className="button-section">
-          <div
-            className="icon-button"
-            onClick={props.getRandomColors}
-            style={{
-              borderColor: props.splitView
-                ? props.baseColor.contrast
-                : props.colorData.contrast,
-              color: props.splitView
-                ? props.baseColor.contrast
-                : props.colorData.contrast,
-              backgroundColor: props.splitView
-                ? props.baseColor.oppositeContrast
-                : props.colorData.oppositeContrast
-            }}
-          >
-            <i
-              className="fas fa-random"
-              style={{
-                color: props.splitView
-                  ? props.baseColor.contrast
-                  : props.colorData.contrast
-              }}
-            />
-            Random
-          </div>
-
-          <div
-            className="icon-button"
-            onClick={props.toggleSplitView}
-            style={{
-              borderColor: props.splitView
-                ? props.baseColor.contrast
-                : props.colorData.contrast,
-              color: props.splitView
-                ? props.baseColor.oppositeContrast
-                : props.colorData.contrast,
-              backgroundColor: props.splitView
-                ? props.baseColor.contrast
-                : props.colorData.oppositeContrast
-            }}
-          >
-            <i
-              className="fas fa-columns"
-              style={{
-                color: props.splitView
-                  ? props.baseColor.oppositeContrast
-                  : props.colorData.contrast
-              }}
-            />
-            Split View
-          </div>
+        <div
+          style={
+            (!this.props.splitView || this.props.splitSreenDisabled) && {
+              color: this.props.colorData.contrast
+            }
+          }
+          className="title-text"
+        >
+          {this.props.colorData.shades.length && (
+            <div className="icon" onClick={this.props.getRandomColors}>
+              <div
+                style={{
+                  backgroundColor:
+                    this.props.splitView && !this.props.splitSreenDisabled
+                      ? this.props.colorData.hex
+                      : this.props.colorData.shades[10].hex
+                }}
+                className="icon-dot"
+              />
+              <div
+                style={{
+                  backgroundColor:
+                    this.props.splitView && !this.props.splitSreenDisabled
+                      ? this.props.colorDataAlt.hex
+                      : this.props.colorData.shades[24].hex
+                }}
+                className="icon-dot"
+              />
+              <div
+                style={{
+                  backgroundColor:
+                    this.props.splitView && !this.props.splitSreenDisabled
+                      ? this.props.colorDataAlt.hex
+                      : this.props.colorData.shades[24].hex
+                }}
+                className="icon-dot"
+              />
+              <div
+                style={{
+                  backgroundColor:
+                    this.props.splitView && !this.props.splitSreenDisabled
+                      ? this.props.colorData.hex
+                      : this.props.colorData.shades[10].hex
+                }}
+                className="icon-dot"
+              />
+            </div>
+          )}
+          Shade Generator
         </div>
-        <HamburgerButton
-          className="menu-icon"
-          open={props.menuIsOpen}
-          action={props.toggleSidebar}
-          color={props.splitView
-            ? props.baseColor.contrast
-            : props.colorData.contrast}
-        />
+        <div className="right-content">
+          <div className="button-section">
+            <div
+              className="icon-button"
+              onClick={this.props.getRandomColors}
+              style={
+                (!this.props.splitView || this.props.splitSreenDisabled) && {
+                  borderColor: this.props.colorData.contrast,
+                  color: this.props.colorData.contrast,
+                  backgroundColor: this.props.colorData.oppositeContrast
+                }
+              }
+            >
+              <i
+                className="fas fa-random"
+                style={
+                  (!this.props.splitView || this.props.splitSreenDisabled) && {
+                    color: this.props.colorData.contrast
+                  }
+                }
+              />
+              Random
+            </div>
+
+            <div
+              className="icon-button"
+              onClick={this.props.toggleSplitView}
+              style={
+                (!this.props.splitView || this.props.splitSreenDisabled) && {
+                  borderColor: this.props.colorData.contrast,
+                  color: this.props.colorData.contrast,
+                  backgroundColor: this.props.colorData.oppositeContrast
+                }
+              }
+            >
+              <i
+                className="fas fa-columns"
+                style={
+                  (!this.props.splitView || this.props.splitSreenDisabled) && {
+                    color: this.props.colorData.contrast
+                  }
+                }
+              />
+              Split View
+            </div>
+          </div>
+          <HamburgerButton
+            className="menu-icon"
+            open={this.props.menuIsOpen}
+            action={this.props.toggleSidebar}
+            color={
+              !this.props.splitView || this.props.splitSreenDisabled
+                ? this.props.colorData.contrast
+                : "#7a7a7a"
+            }
+          />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Header;
 
 // <div
 // className="icon-button"
-// onClick={props.handleSignupClick}
+// onClick={this.props.handleSignupClick}
 // style={{
-//   borderColor: props.splitView
-//     ? props.baseColor.contrast
-//     : props.colorData.contrast,
-//   color: props.splitView
-//     ? props.baseColor.contrast
-//     : props.colorData.contrast,
-//   backgroundColor: props.splitView
-//     ? props.baseColor.oppositeContrast
-//     : props.colorData.oppositeContrast
+//   borderColor: this.props.splitView
+//     ? this.props.baseColor.contrast
+//     : this.props.colorData.contrast,
+//   color: this.props.splitView
+//     ? this.props.baseColor.contrast
+//     : this.props.colorData.contrast,
+//   backgroundColor: this.props.splitView
+//     ? this.props.baseColor.oppositeContrast
+//     : this.props.colorData.oppositeContrast
 // }}
 // >
 // <i
 //   className="fas fa-user"
 //   style={{
-//     color: props.splitView
-//       ? props.baseColor.contrast
-//       : props.colorData.contrast
+//     color: this.props.splitView
+//       ? this.props.baseColor.contrast
+//       : this.props.colorData.contrast
 //   }}
 // />
 // Sign in

@@ -1,3 +1,5 @@
+@import "../../styles/colors";
+
 #header {
   height: 5rem;
   text-align: center;
@@ -10,6 +12,8 @@
   box-sizing: border-box;
   transition: 150ms all linear;
   z-index: 2000;
+  border-bottom: 2px solid $contrast;
+  background-color: $color;
 
   * {
     transition: 150ms all linear;
@@ -32,6 +36,7 @@
     display: flex;
     align-items: center;
     cursor: default;
+    color: $contrast;
 
     .icon {
       display: grid;
@@ -85,10 +90,13 @@
     cursor: pointer;
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
-    border: 2px solid white;
+    border: 2px solid $contrast;
+    color: $contrast;
+    background-color: $opposite-contrast;
     i {
       margin-right: 10px;
       font-size: 1.4rem;
+      color: $contrast;
     }
   }
 

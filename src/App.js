@@ -34,12 +34,6 @@ class App extends Component {
         rgb: [],
         shades: []
       },
-      baseColor: {
-        color: "#222222",
-        contrast: "#7a7a7a",
-        oppositeContrast: "#181818",
-        highContrast: "#bdbdbd"
-      },
       loading: true,
       menuItems: [],
       menuIsOpen: false,
@@ -256,7 +250,6 @@ class App extends Component {
           <Header
             colorData={this.state.colorData1}
             colorDataAlt={this.state.colorData2}
-            baseColor={this.state.baseColor}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
             updateStateValues={this.updateStateValues}
@@ -265,6 +258,7 @@ class App extends Component {
             getRandomColors={this.getRandomColors}
             menuIsOpen={this.state.menuIsOpen}
             toggleSidebar={this.toggleSidebar}
+            splitScreenDisabled={this.state.splitScreenDisabled}
           />
           <Sidebar
             isOpen={this.state.menuIsOpen}
