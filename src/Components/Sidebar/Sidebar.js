@@ -139,6 +139,7 @@ class Sidebar extends Component {
               "sub-menu" +
               (this.state.menuStates.isSearchMenuOpen ? "" : " hidden")
             }
+            id="color-search-menu"
           >
             <div onClick={this.closeSubMenu} className="sub-menu-header">
               <i className="icon fas fa-arrow-left" />

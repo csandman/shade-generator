@@ -151,7 +151,10 @@ class App extends Component {
       inputValue2: random2.hex
     });
 
-    this.addMenuItem(random2.hex);
+    if (this.state.splitView) {
+      this.addMenuItem(random2.hex);
+    }
+    
     this.addMenuItem(random1.hex);
   }
 
