@@ -1,6 +1,17 @@
-* {
+@import '../../styles/reset';
+
+html {
+  font-size: 14px;
+  font-family: "Nunito", sans-serif;
+}
+
+input {
   font-size: 16px;
+}
+
+* {
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 
   &:focus {
     outline: none;
@@ -18,7 +29,6 @@
 
 button {
   font-size: 1.2rem;
-  font-family: "Nunito", sans-serif;
   padding: 0.5rem 1rem;
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid;
@@ -66,7 +76,6 @@ button {
 
 .color-name {
   font-size: 2rem;
-  font-family: "Nunito", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;

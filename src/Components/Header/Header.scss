@@ -9,7 +9,6 @@
   justify-content: space-between;
   align-items: center;
   z-index: 500;
-  box-sizing: border-box;
   transition: 150ms all linear;
   z-index: 2000;
   border-bottom: 2px solid $contrast;
@@ -27,7 +26,6 @@
   
   .title-text {
     font-size: 1.7rem;
-    font-family: 'Nunito', sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -88,7 +86,6 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
     cursor: pointer;
-    font-family: 'Nunito', sans-serif;
     font-weight: 700;
     border: 2px solid $contrast;
     color: $contrast;

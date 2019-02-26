@@ -84,7 +84,6 @@
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 2px;
-        font-family: "Nunito", sans-serif;
       }
 
       * {
@@ -132,14 +131,6 @@
         flex: 1;
         border: 0;
         font-size: 1.5rem;
-        font-family: 'Nunito';
-
-        &::-webkit-search-cancel-button {
-          cursor: pointer;
-          height: 18px;
-          width: 18px;
-          background-image: url("../../images/clear-input.svg");
-        }
       }
     }
 
@@ -158,7 +149,6 @@
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 2px;
-        font-family: "Nunito", sans-serif;
       }
 
       * {
@@ -187,7 +177,6 @@
       line-height: 2.1rem;
       font-weight: 500;
       letter-spacing: 1px;
-      font-family: 'Nunito';
       cursor: pointer;
       text-transform: uppercase;
     }
