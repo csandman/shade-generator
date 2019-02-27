@@ -82,8 +82,8 @@ class App extends Component {
           console.log(aggs.data().top);
           this.setState(
             {
-              recentColors: aggs.data().recent,
-              topColors: aggs.data().top
+              recentColors: aggs.data().recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds),
+              topColors: aggs.data().top.sort((a, b) => a.count > b.count)
             },
             () => console.log(this.state)
           );
@@ -92,14 +92,16 @@ class App extends Component {
 
     await this.props.firebase
       .colorHistory()
-      .orderBy("dateAdded", "desc")
+      .orderBy("timeAdded", "desc")
       .limit(2)
       .get()
       .then(snapshot => {
-        this.setState({
-          colorData1: getAllColorInfo(snapshot.docs[0].data().hexCode),
-          colorData2: getAllColorInfo(snapshot.docs[1].data().hexCode)
-        });
+        if (snapshot.docs.length >= 2) {
+          this.setState({
+            colorData1: getAllColorInfo(snapshot.docs[0].data().hex),
+            colorData2: getAllColorInfo(snapshot.docs[1].data().hex)
+          });
+        }
       });
     // await this.props.firebase
     //   .colorHistory()
@@ -195,7 +197,7 @@ class App extends Component {
         }
       });
 
-    this.props.firebase
+    await this.props.firebase
       .colorHistory()
       .doc(hex.toUpperCase())
       .get()
@@ -220,43 +222,47 @@ class App extends Component {
         } else {
           console.log("No such document!");
           newColor.count = 1;
-          console.log(newColor);
+          console.log("New Color", newColor);
         }
-        this.props.firebase
-          .colorHistory()
-          .doc(hex.toUpperCase())
-          .set(newColor)
-          .catch(function(error) {
-            console.log(error);
-          });
+        console.log("next");
 
-        let recent = aggs.recent.sort((a, b) => a.timeAdded < b.timeAdded);
+        let recent = aggs.recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
 
         let isRepeat = false;
         for (var i = 0; i < recent.length; i++) {
           if (recent[i].hex === newColor.hex) {
             recent[i] = newColor;
-            aggs.recent = recent;
             isRepeat = true;
             break;
           }
         }
 
         if (!isRepeat) {
-          recent[0] = newColor;
+          recent.unshift(newColor);
         }
 
-        this.props.firebase
-          .aggRef()
-          .set(aggs)
-          .catch(function(error) {
-            console.log(error);
-          });
+        aggs.recent = recent.slice(0, 100);
+        console.log(aggs);
 
-          console.log(recent);
+        console.log(recent);
       })
       .catch(function(error) {
         console.log("Error getting document:", error);
+      });
+
+    this.props.firebase
+      .colorHistory()
+      .doc(hex.toUpperCase())
+      .set(newColor)
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    this.props.firebase
+      .aggRef()
+      .set(aggs)
+      .catch(function(error) {
+        console.log(error);
       });
   }
 
