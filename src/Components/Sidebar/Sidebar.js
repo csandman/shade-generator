@@ -29,7 +29,7 @@ class Sidebar extends Component {
 
   componentDidMount() {
     this.setState({
-      colorNameList: namedColors.slice(0, 1000).map(el => {
+      colorNameList: namedColors.slice(0, 500).map(el => {
         el.contrast = getContrastColor(hexToRgb(el.hex));
         return el;
       })
@@ -47,7 +47,7 @@ class Sidebar extends Component {
               .replace(/\s/g, "")
               .indexOf(e.target.value.toLowerCase().replace(/\s/g, "")) >= 0
         )
-        .slice(0, 1000)
+        .slice(0, 500)
         .map(el => {
           el.contrast = getContrastColor(hexToRgb(el.hex));
           return el;

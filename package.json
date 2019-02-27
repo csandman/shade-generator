@@ -8,13 +8,10 @@
     "firebase": "^5.8.0",
     "nearest-color": "^0.4.4",
     "node-sass": "^4.11.0",
-    "normalize.css": "^8.0.1",
     "parse-color": "^1.0.0",
-    "radium": "^0.25.1",
     "react": "^16.7.0",
     "react-dnd": "^7.0.2",
     "react-dom": "^16.7.0",
-    "react-https-redirect": "^1.1.0",
     "react-scripts": "^2.1.5",
     "react-tippy": "^1.2.3"
   },
