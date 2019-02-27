@@ -36,6 +36,8 @@ class Firebase {
     this.auth.currentUser.updatePassword(password);
 
   colorHistory = () => this.db.collection('color-history');
+
+  aggRef = () => this.db.collection("aggregation").doc('all');
 }
 
 export default Firebase;

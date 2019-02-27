@@ -107,9 +107,9 @@ class Sidebar extends Component {
                 {this.props.menuItems.map((item, i) => {
                   return (
                     <div
-                      key={item.id}
+                      key={item.hex}
                       className="menu-item"
-                      style={{ backgroundColor: item.hexCode }}
+                      style={{ backgroundColor: item.hex }}
                       onClick={this.props.clickColor}
                       data-index={i}
                     >
@@ -118,14 +118,14 @@ class Sidebar extends Component {
                         style={{ color: item.contrastColor }}
                         data-index={i}
                       >
-                        {item.colorName}
+                        {item.name}
                       </div>
                       <div
                         className="color-name"
                         style={{ color: item.contrastColor }}
                         data-index={i}
                       >
-                        {item.hexCode}
+                        {item.hex}
                       </div>
                     </div>
                   );
@@ -146,7 +146,9 @@ class Sidebar extends Component {
               <span>Search Colors</span>
             </div>
             <div className="search-input-container">
-              <i className="icon fas fa-search" />
+              <div className="search-icon-container">
+                <i className="icon fas fa-search" />
+              </div>
               <input
                 type="search"
                 placeholder="Search..."
@@ -165,6 +167,7 @@ class Sidebar extends Component {
                       style={{ background: color.hex, color: color.contrast }}
                       onClick={() => {
                         this.props.handleColorClick(color.hex, 1);
+                        this.props.addMenuItem(color.hex);
                         this.props.closeSidebar();
                       }}
                     >
