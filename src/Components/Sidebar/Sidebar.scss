@@ -82,7 +82,7 @@
 
       span {
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: bold;
         letter-spacing: 2px;
       }
 
@@ -117,20 +117,36 @@
       display: flex;
       align-items: center;
       background-color: white;
-      padding-right: 1rem;
+      align-items: center;
+      line-height: auto;
+
+      .search-icon-container {
+        flex: 0 0 4rem;
+        text-align: center;
+      }
 
       .icon.fa-search {
-        font-size: 1.5rem;
-        width: 2rem;
+        font-size: 1.6rem;
         color: #222;
-        margin: 0 .75rem;
       }
 
       input {
         height: 100%;
         flex: 1;
         border: 0;
-        font-size: 1.5rem;
+        border-radius: 0;
+        font-size: 1.6rem;
+        padding-right: 1rem;
+        margin: 0;
+        overflow: hidden;
+        -webkit-appearance: none;
+
+        &::-webkit-search-cancel-button {
+          cursor: pointer;
+          height: 18px;
+          width: 18px;
+          background-image: url("../../images/clear-input.svg");
+        }
       }
     }
 
@@ -147,7 +163,7 @@
 
       span {
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: bold;
         letter-spacing: 2px;
       }
 
@@ -175,7 +191,7 @@
       padding: 1.5rem 1.25rem;
       font-size: 1.6rem;
       line-height: 2.1rem;
-      font-weight: 500;
+      font-weight: normal;
       letter-spacing: 1px;
       cursor: pointer;
       text-transform: uppercase;
