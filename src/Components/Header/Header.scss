@@ -90,6 +90,17 @@
     border: 2px solid $contrast;
     color: $contrast;
     background-color: $opposite-contrast;
+
+    &.active {
+      border: 2px solid $opposite-contrast;
+      color: $opposite-contrast;
+      background-color: $contrast;
+
+      i {
+        color: $opposite-contrast;
+      }
+    }
+
     i {
       margin-right: 10px;
       font-size: 1.4rem;

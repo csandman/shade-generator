@@ -89,7 +89,7 @@ class Header extends Component {
             </div>
 
             <div
-              className="icon-button"
+              className={"icon-button" + (this.props.splitView ? " active" : "")}
               onClick={this.props.toggleSplitView}
               style={
                 (!this.props.splitView || this.props.splitSreenDisabled) && {

@@ -79,52 +79,19 @@ class App extends Component {
       .get()
       .then(aggs => {
         if (aggs.exists) {
-          console.log(aggs.data().top);
-          this.setState(
-            {
-              recentColors: aggs.data().recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds),
-              topColors: aggs.data().top.sort((a, b) => a.count > b.count)
-            },
-            () => console.log(this.state)
-          );
-        }
-      });
-
-    await this.props.firebase
-      .colorHistory()
-      .orderBy("timeAdded", "desc")
-      .limit(2)
-      .get()
-      .then(snapshot => {
-        if (snapshot.docs.length >= 2) {
+          let recent = aggs.data().recent;
+          recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
+          let top = aggs.data().top;
+          top.sort((a, b) => a.count > b.count);
           this.setState({
-            colorData1: getAllColorInfo(snapshot.docs[0].data().hex),
-            colorData2: getAllColorInfo(snapshot.docs[1].data().hex)
+            recentColors: recent,
+            topColors: top,
+            colorData1: getAllColorInfo(recent[0].hex),
+            colorData2: getAllColorInfo(recent[1].hex),
+            loading: false
           });
         }
       });
-    // await this.props.firebase
-    //   .colorHistory()
-    //   .orderBy("dateAdded", "desc")
-    //   .limit(100)
-    //   .onSnapshot(querySnapshot => {
-    //     let data = querySnapshot.docs.map(doc => {
-    //       let out = doc.data();
-    //       out.id = doc.id;
-    //       return out;
-    //     });
-    //     this.setState({
-    //       menuItems: data
-    //     });
-    //     return true;
-    //   });
-    // this.props.firebase.auth.onAuthStateChanged(authUser => {
-    //   authUser
-    //     ? this.setState({ authUser })
-    //     : this.setState({ authUser: null });
-    // });
-
-    this.setState({ loading: false });
   }
 
   setSplitScreenAbility() {
@@ -153,7 +120,7 @@ class App extends Component {
   }
 
   clickColor(e) {
-    const hex = this.state.recentColors[e.target.dataset.index].hex;
+    const hex = e.target.dataset.hex;
     this.setState({
       inputValue1: hex,
       menuIsOpen: false
@@ -180,90 +147,86 @@ class App extends Component {
   }
 
   async addMenuItem(hex) {
-    const newColor = {
+    let newColor = {
       hex: hex.toUpperCase(),
       name: getColorName(hex),
       contrast: getContrastColor(parse(hex).rgb).toUpperCase(),
-      timeAdded: new Date()
+      timeAdded: new Date(),
+      timeString: new Date().toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "numeric"
+      }),
+      dateString: new Date().toLocaleDateString()
     };
 
-    let aggs = await this.props.firebase
-      .aggRef()
-      .get()
-      .then(aggs => {
-        if (aggs.exists) {
-          console.log(aggs.data());
-          return aggs.data();
-        }
-      });
+    let topColors = [];
+    let recentColors = [];
+    let colorRecord = {};
 
-    await this.props.firebase
-      .colorHistory()
-      .doc(hex.toUpperCase())
-      .get()
-      .then(function(doc) {
-        if (doc.exists) {
-          console.log("Document data:", doc.data());
-          const newCount = doc.data().count + 1;
-          newColor.count = newCount;
+    let aggsRef = this.props.firebase.aggRef();
+    let colorRef = this.props.firebase.db
+      .collection("color-history")
+      .doc(newColor.hex);
 
-          let top = aggs.sort((a, b) => a.count < b.count);
-          let isTop = false;
-          for (let i = 0; i < top.length; i++) {
-            if (newCount >= top[i].count) {
-              isTop = true;
-              break;
-            }
-          }
-          if (isTop) {
-            top[0] = newColor;
-            aggs.top = top;
-          }
+    await this.props.firebase.db
+      .runTransaction(async transaction => {
+        let aggs = await transaction.get(aggsRef);
+        colorRecord = await transaction.get(colorRef);
+
+        if (colorRecord.exists) {
+          newColor.count = (colorRecord.data().count || 0) + 1;
+          await transaction.update(colorRef, { count: newColor.count });
         } else {
-          console.log("No such document!");
           newColor.count = 1;
-          console.log("New Color", newColor);
-        }
-        console.log("next");
-
-        let recent = aggs.recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
-
-        let isRepeat = false;
-        for (var i = 0; i < recent.length; i++) {
-          if (recent[i].hex === newColor.hex) {
-            recent[i] = newColor;
-            isRepeat = true;
-            break;
-          }
+          await transaction.set(colorRef, newColor);
         }
 
-        if (!isRepeat) {
-          recent.unshift(newColor);
-        }
+        topColors = this.getMostPopularArray(aggs.data().top, newColor);
+        recentColors = this.getMostRecentArray(aggs.data().recent, newColor);
 
-        aggs.recent = recent.slice(0, 100);
-        console.log(aggs);
-
-        console.log(recent);
+        transaction.update(aggsRef, {
+          top: topColors,
+          recent: recentColors
+        });
       })
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-
-    this.props.firebase
-      .colorHistory()
-      .doc(hex.toUpperCase())
-      .set(newColor)
-      .catch(function(error) {
+      .then(() => {
+        this.setState({
+          topColors: topColors,
+          recentColors: recentColors
+        });
+      })
+      .catch(error => {
         console.log(error);
       });
+  }
 
-    this.props.firebase
-      .aggRef()
-      .set(aggs)
-      .catch(function(error) {
-        console.log(error);
-      });
+  getMostPopularArray(arr, el) {
+    let isPopular = false;
+    arr = arr.filter(color => color.hex !== el.hex);
+    arr.sort((a, b) => a.count > b.count);
+    for (let i = 0; i < arr.length; i++) {
+      if (el.count > arr[i].count) {
+        isPopular = true;
+        arr = [...arr.slice(0, i), el, ...arr.slice(i, 100)];
+        break;
+      }
+    }
+    if (!isPopular && arr.length < 100) {
+      arr.push(el);
+    }
+
+    console.log("Top Used Colors Arr");
+    console.table(arr);
+    return arr;
+  }
+
+  getMostRecentArray(arr, el) {
+    arr = arr.filter(color => color.hex !== el.hex);
+    arr.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
+    arr.unshift(el);
+    console.log("Most Recent Arr");
+    console.table(arr.slice(0, 100));
+    return arr.slice(0, 100);
   }
 
   handleEnterPress(e) {
@@ -314,7 +277,7 @@ class App extends Component {
   toggleSplitView() {
     this.setState({
       splitView: !this.state.splitView
-    });
+    }, () => console.log(this.state.splitView));
   }
 
   toggleSidebar() {
@@ -356,6 +319,7 @@ class App extends Component {
             isOpen={this.state.menuIsOpen}
             closeSidebar={this.closeSidebar}
             menuItems={this.state.recentColors}
+            topColors={this.state.topColors}
             clickColor={this.clickColor}
             baseColor={this.state.baseColor}
             handleColorClick={this.handleColorSquareClick}
@@ -395,6 +359,7 @@ class App extends Component {
                   splitView={this.state.splitView}
                   handleColorSquareClick={this.handleColorSquareClick}
                   splitScreenDisabled={this.state.splitScreenDisabled}
+                  addMenuItem={this.addMenuItem}
                 />
               </div>
             )}

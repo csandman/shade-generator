@@ -11,6 +11,7 @@ class Sidebar extends Component {
 
     this.openColorHistory = this.openColorHistory.bind(this);
     this.openColorSearch = this.openColorSearch.bind(this);
+    this.openTopColorsMenu= this.openTopColorsMenu.bind(this);
     this.closeSubMenu = this.closeSubMenu.bind(this);
     this.searchColorNames = this.searchColorNames.bind(this);
 
@@ -22,7 +23,8 @@ class Sidebar extends Component {
       menuStates: {
         isMainMenuOpen: true,
         isHistoryMenuOpen: false,
-        isSearchMenuOpen: false
+        isSearchMenuOpen: false,
+        isTopColorsMenuOpen: false
       }
     };
   }
@@ -61,6 +63,12 @@ class Sidebar extends Component {
     this.setState({ menuStates: newState });
   }
 
+  openTopColorsMenu() {
+    let newState = _.mapValues(this.state.menuStates, () => false);
+    newState.isTopColorsMenuOpen = true;
+    this.setState({ menuStates: newState });
+  }
+
   openColorSearch() {
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isSearchMenuOpen = true;
@@ -87,6 +95,10 @@ class Sidebar extends Component {
               <i className="icon fas fa-history" />
               <span>Color History</span>
             </div>
+            <div className="main-menu-item" onClick={this.openTopColorsMenu}>
+              <i className="icon fas fa-award" />
+              <span>Most Popular</span>
+            </div>
             <div className="main-menu-item" onClick={this.openColorSearch}>
               <i className="icon fas fa-search" />
               <span>Search Colors</span>
@@ -111,21 +123,27 @@ class Sidebar extends Component {
                       className="menu-item"
                       style={{ backgroundColor: item.hex }}
                       onClick={this.props.clickColor}
-                      data-index={i}
+                      data-hex={item.hex}
                     >
                       <div
                         className="color-name"
-                        style={{ color: item.contrastColor }}
-                        data-index={i}
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
                       >
                         {item.name}
                       </div>
                       <div
                         className="color-name"
-                        style={{ color: item.contrastColor }}
-                        data-index={i}
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
                       >
                         {item.hex}
+                      </div>
+                      <div className="date-field" style={{ color: item.contrast }}>
+                        {item.dateString}
+                      </div>
+                      <div className="time-field" style={{ color: item.contrast }}>
+                        {item.timeString}
                       </div>
                     </div>
                   );
@@ -133,6 +151,52 @@ class Sidebar extends Component {
               </div>
             </div>
           </div>
+
+
+          <div
+          className={
+            "sub-menu" +
+            (this.state.menuStates.isTopColorsMenuOpen ? "" : " hidden")
+          }
+        >
+          <div onClick={this.closeSubMenu} className="sub-menu-header">
+            <i className="icon fas fa-arrow-left" />
+            <span>Most Popular</span>
+          </div>
+          <div className="sub-menu-content">
+            <div className="menu-items">
+              {this.props.topColors.map((item, i) => {
+                return (
+                  <div
+                    key={item.hex + i}
+                    className="menu-item"
+                    style={{ backgroundColor: item.hex }}
+                    onClick={this.props.clickColor}
+                    data-hex={item.hex}
+                  >
+                    <div
+                      className="color-name"
+                      style={{ color: item.contrast }}
+                      data-hex={item.hex}
+                    >
+                      {item.name}
+                    </div>
+                    <div
+                      className="color-name"
+                      style={{ color: item.contrast }}
+                      data-hex={item.hex}
+                    >
+                      {item.count} X
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+
+
 
           <div
             className={

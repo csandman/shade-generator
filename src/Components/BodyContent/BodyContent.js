@@ -48,6 +48,7 @@ class BodyContent extends Component {
                 colorDataNumber={this.props.number}
                 color={color}
                 key={color + index}
+                addMenuItem={this.props.addMenuItem}
               />
             );
           })}
