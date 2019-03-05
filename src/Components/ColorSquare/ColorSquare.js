@@ -9,7 +9,6 @@ class ColorSquare extends Component {
     super(props);
     this.copyHexCode = this.copyHexCode.bind(this);
     this.copyRgb = this.copyRgb.bind(this);
-    this.clickColorTile = this.clickColorTile.bind(this);
   }
 
   copyHexCode(e) {
@@ -31,14 +30,6 @@ class ColorSquare extends Component {
     setTimeout(() => {
       button.textContent = original;
     }, 1200);
-  }
-
-  clickColorTile() {
-    this.props.handleClick(
-      this.props.color.hex,
-      this.props.colorDataNumber
-    );
-    // this.props.addMenuItem(this.props.color.hex);
   }
 
   render() {
@@ -77,7 +68,12 @@ class ColorSquare extends Component {
           <div
             style={{ backgroundColor: this.props.color.hex }}
             className="color-tile"
-            onClick={this.clickColorTile}
+            onClick={() => {
+              this.props.handleColorClick(
+                this.props.color.hex,
+                this.props.colorDataNumber
+              );
+            }}
           />
         </Tooltip>
       </div>

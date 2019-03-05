@@ -41,6 +41,7 @@ input, input:before, input:after {
 #App {
   transition: 150ms background-color ease-in-out;
   will-change: background-color;
+  background-color: #222;
 }
 
 button {

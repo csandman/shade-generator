@@ -47,7 +47,7 @@ class App extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEnterPress = this.handleEnterPress.bind(this);
-    this.clickColor = this.clickColor.bind(this);
+    this.handleColorClick = this.handleColorClick.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.openSidebar = this.openSidebar.bind(this);
     this.closeSidebar = this.closeSidebar.bind(this);
@@ -56,17 +56,9 @@ class App extends Component {
     this.toggleSplitView = this.toggleSplitView.bind(this);
     this.getRandomColors = this.getRandomColors.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
-    this.handleColorSquareClick = this.handleColorSquareClick.bind(this);
+    this.handleColorClick = this.handleColorClick.bind(this);
     this.setSplitScreenAbility = this.setSplitScreenAbility.bind(this);
     this.addMenuItem = this.addMenuItem.bind(this);
-  }
-
-  openSidebar() {
-    this.setState({ menuIsOpen: true });
-  }
-
-  closeSidebar() {
-    this.setState({ menuIsOpen: false });
   }
 
   async componentDidMount() {
@@ -107,6 +99,20 @@ class App extends Component {
     }
   }
 
+  openSidebar() {
+    this.setState({ menuIsOpen: true });
+  }
+
+  closeSidebar() {
+    this.setState({ menuIsOpen: false });
+  }
+
+  toggleSidebar() {
+    this.setState({
+      menuIsOpen: !this.state.menuIsOpen
+    });
+  }
+
   openSignUpModal() {
     this.setState({
       signupOpen: true
@@ -119,31 +125,20 @@ class App extends Component {
     });
   }
 
-  clickColor(e) {
-    const hex = e.target.dataset.hex;
+  toggleSplitView() {
     this.setState({
-      inputValue1: hex,
-      menuIsOpen: false
+      splitView: !this.state.splitView
     });
-    this.updateStateValues(hex, "inputValue1");
   }
 
   getRandomColors() {
-    const random1 = getAllColorInfo(getRandomHexColor());
-    const random2 = getAllColorInfo(getRandomHexColor());
+    const randomHex1 = getRandomHexColor();
+    this.updateStateValues(randomHex1, "inputValue1");
 
-    this.setState({
-      colorData1: random1,
-      inputValue1: random1.hex,
-      colorData2: random2,
-      inputValue2: random2.hex
-    });
-
-    if (this.state.splitView) {
-      this.addMenuItem(random2.hex);
+    if (this.state.splitView && this.state.splitScreenDisabled === false) {
+      const randomHex2 = getRandomHexColor();
+      this.updateStateValues(randomHex2, "inputValue2");
     }
-
-    this.addMenuItem(random1.hex);
   }
 
   async addMenuItem(hex) {
@@ -214,9 +209,6 @@ class App extends Component {
     if (!isPopular && arr.length < 100) {
       arr.push(el);
     }
-
-    console.log("Top Used Colors Arr");
-    console.table(arr);
     return arr;
   }
 
@@ -224,8 +216,6 @@ class App extends Component {
     arr = arr.filter(color => color.hex !== el.hex);
     arr.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
     arr.unshift(el);
-    console.log("Most Recent Arr");
-    console.table(arr.slice(0, 100));
     return arr.slice(0, 100);
   }
 
@@ -274,23 +264,8 @@ class App extends Component {
     this.addMenuItem(hex);
   }
 
-  toggleSplitView() {
-    this.setState({
-      splitView: !this.state.splitView
-    }, () => console.log(this.state.splitView));
-  }
-
-  toggleSidebar() {
-    this.setState({
-      menuIsOpen: !this.state.menuIsOpen
-    });
-  }
-
-  handleColorSquareClick(hex, dataNum) {
-    let newState = {};
-    newState["colorData" + dataNum] = getAllColorInfo(hex);
-    newState["inputValue" + dataNum] = hex.toUpperCase();
-    this.setState(newState);
+  handleColorClick(hex, dataNum) {
+    this.updateStateValues(hex, "inputValue" + dataNum);
   }
 
   render() {
@@ -320,10 +295,11 @@ class App extends Component {
             closeSidebar={this.closeSidebar}
             menuItems={this.state.recentColors}
             topColors={this.state.topColors}
-            clickColor={this.clickColor}
+            handleColorClick={this.handleColorClick}
             baseColor={this.state.baseColor}
-            handleColorClick={this.handleColorSquareClick}
             addMenuItem={this.addMenuItem}
+            getRandomColors={this.getRandomColors}
+            toggleSplitView={this.toggleSplitView}
           />
 
           <div className="page">
@@ -338,8 +314,9 @@ class App extends Component {
                 colorData={this.state.colorData1}
                 number={1}
                 splitView={this.state.splitView}
-                handleColorSquareClick={this.handleColorSquareClick}
+                handleColorClick={this.handleColorClick}
                 splitScreenDisabled={this.state.splitScreenDisabled}
+                addMenuItem={this.addMenuItem}
               />
             </div>
             {this.state.splitView && !this.state.splitScreenDisabled && (
@@ -357,7 +334,7 @@ class App extends Component {
                   colorData={this.state.colorData2}
                   number={2}
                   splitView={this.state.splitView}
-                  handleColorSquareClick={this.handleColorSquareClick}
+                  handleColorClick={this.handleColorClick}
                   splitScreenDisabled={this.state.splitScreenDisabled}
                   addMenuItem={this.addMenuItem}
                 />

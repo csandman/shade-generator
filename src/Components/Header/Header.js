@@ -28,7 +28,7 @@ class Header extends Component {
                 style={{
                   backgroundColor:
                     this.props.splitView && !this.props.splitSreenDisabled
-                      ? this.props.colorData.hex
+                      ? "#7a7a7a"
                       : this.props.colorData.shades[10].hex
                 }}
                 className="icon-dot"
@@ -37,7 +37,7 @@ class Header extends Component {
                 style={{
                   backgroundColor:
                     this.props.splitView && !this.props.splitSreenDisabled
-                      ? this.props.colorDataAlt.hex
+                      ? "#111"
                       : this.props.colorData.shades[24].hex
                 }}
                 className="icon-dot"
@@ -46,7 +46,7 @@ class Header extends Component {
                 style={{
                   backgroundColor:
                     this.props.splitView && !this.props.splitSreenDisabled
-                      ? this.props.colorDataAlt.hex
+                      ? "#181818"
                       : this.props.colorData.shades[24].hex
                 }}
                 className="icon-dot"
@@ -55,7 +55,7 @@ class Header extends Component {
                 style={{
                   backgroundColor:
                     this.props.splitView && !this.props.splitSreenDisabled
-                      ? this.props.colorData.hex
+                      ? "#7a7a7a"
                       : this.props.colorData.shades[10].hex
                 }}
                 className="icon-dot"

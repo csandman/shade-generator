@@ -11,7 +11,7 @@ class Sidebar extends Component {
 
     this.openColorHistory = this.openColorHistory.bind(this);
     this.openColorSearch = this.openColorSearch.bind(this);
-    this.openTopColorsMenu= this.openTopColorsMenu.bind(this);
+    this.openTopColorsMenu = this.openTopColorsMenu.bind(this);
     this.closeSubMenu = this.closeSubMenu.bind(this);
     this.searchColorNames = this.searchColorNames.bind(this);
 
@@ -91,6 +91,22 @@ class Sidebar extends Component {
               (this.state.menuStates.isMainMenuOpen ? "" : " hidden")
             }
           >
+          <div className="secondary-main-menu">
+              <div
+                className="main-menu-item"
+                onClick={this.props.getRandomColors}
+              >
+                <i className="icon fas fa-random" />
+                <span>Random Colors</span>
+              </div>
+              <div
+                className="main-menu-item split-view"
+                onClick={this.props.toggleSplitView}
+              >
+                <i className="icon fas fa-columns" />
+                <span>Split View</span>
+              </div>
+            </div>
             <div className="main-menu-item" onClick={this.openColorHistory}>
               <i className="icon fas fa-history" />
               <span>Color History</span>
@@ -119,10 +135,13 @@ class Sidebar extends Component {
                 {this.props.menuItems.map((item, i) => {
                   return (
                     <div
-                      key={item.hex}
+                      key={item.hex + i}
                       className="menu-item"
                       style={{ backgroundColor: item.hex }}
-                      onClick={this.props.clickColor}
+                      onClick={() => {
+                        this.props.handleColorClick(item.hex, 1);
+                        this.props.closeSidebar();
+                      }}
                       data-hex={item.hex}
                     >
                       <div
@@ -139,10 +158,16 @@ class Sidebar extends Component {
                       >
                         {item.hex}
                       </div>
-                      <div className="date-field" style={{ color: item.contrast }}>
+                      <div
+                        className="date-field"
+                        style={{ color: item.contrast }}
+                      >
                         {item.dateString}
                       </div>
-                      <div className="time-field" style={{ color: item.contrast }}>
+                      <div
+                        className="time-field"
+                        style={{ color: item.contrast }}
+                      >
                         {item.timeString}
                       </div>
                     </div>
@@ -152,51 +177,50 @@ class Sidebar extends Component {
             </div>
           </div>
 
-
           <div
-          className={
-            "sub-menu" +
-            (this.state.menuStates.isTopColorsMenuOpen ? "" : " hidden")
-          }
-        >
-          <div onClick={this.closeSubMenu} className="sub-menu-header">
-            <i className="icon fas fa-arrow-left" />
-            <span>Most Popular</span>
-          </div>
-          <div className="sub-menu-content">
-            <div className="menu-items">
-              {this.props.topColors.map((item, i) => {
-                return (
-                  <div
-                    key={item.hex + i}
-                    className="menu-item"
-                    style={{ backgroundColor: item.hex }}
-                    onClick={this.props.clickColor}
-                    data-hex={item.hex}
-                  >
+            className={
+              "sub-menu" +
+              (this.state.menuStates.isTopColorsMenuOpen ? "" : " hidden")
+            }
+          >
+            <div onClick={this.closeSubMenu} className="sub-menu-header">
+              <i className="icon fas fa-arrow-left" />
+              <span>Most Popular</span>
+            </div>
+            <div className="sub-menu-content">
+              <div className="menu-items">
+                {this.props.topColors.map((item, i) => {
+                  return (
                     <div
-                      className="color-name"
-                      style={{ color: item.contrast }}
+                      key={item.hex + i}
+                      className="menu-item"
+                      style={{ backgroundColor: item.hex }}
+                      onClick={() => {
+                        this.props.handleColorClick(item.hex, 1);
+                        this.props.closeSidebar();
+                      }}
                       data-hex={item.hex}
                     >
-                      {item.name}
+                      <div
+                        className="color-name"
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
+                      >
+                        {item.name}
+                      </div>
+                      <div
+                        className="color-name"
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
+                      >
+                        {item.count} X
+                      </div>
                     </div>
-                    <div
-                      className="color-name"
-                      style={{ color: item.contrast }}
-                      data-hex={item.hex}
-                    >
-                      {item.count} X
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-
-
-
 
           <div
             className={
@@ -231,7 +255,6 @@ class Sidebar extends Component {
                       style={{ background: color.hex, color: color.contrast }}
                       onClick={() => {
                         this.props.handleColorClick(color.hex, 1);
-                        this.props.addMenuItem(color.hex);
                         this.props.closeSidebar();
                       }}
                     >
