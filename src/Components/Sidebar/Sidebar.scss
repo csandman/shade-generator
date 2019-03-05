@@ -231,17 +231,17 @@
   }
 }
 
-.date-field, .time-field {
+.footer-left, .footer-right {
   position: absolute;
   bottom: 6px;
   font-size: 1.2rem;
   line-height: 1.2rem;
 }
 
-.time-field {
+.footer-right {
   right: 6px;
 }
 
-.date-field {
+.footer-left {
   left: 6px;
 }

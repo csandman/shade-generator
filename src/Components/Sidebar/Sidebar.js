@@ -159,13 +159,13 @@ class Sidebar extends Component {
                         {item.hex}
                       </div>
                       <div
-                        className="date-field"
+                        className="footer-left"
                         style={{ color: item.contrast }}
                       >
                         {item.dateString}
                       </div>
                       <div
-                        className="time-field"
+                        className="footer-right"
                         style={{ color: item.contrast }}
                       >
                         {item.timeString}
@@ -210,6 +210,13 @@ class Sidebar extends Component {
                       </div>
                       <div
                         className="color-name"
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
+                      >
+                        {item.hex}
+                      </div>
+                      <div
+                        className="footer-left"
                         style={{ color: item.contrast }}
                         data-hex={item.hex}
                       >
