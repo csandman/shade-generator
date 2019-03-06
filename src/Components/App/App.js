@@ -4,6 +4,10 @@ import SignUp from "../SignUp";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
+import {
+  disableBodyScroll,
+  enableBodyScroll
+} from "body-scroll-lock";
 import "./App.scss";
 
 import { withFirebase } from "../Firebase";
@@ -101,16 +105,16 @@ class App extends Component {
 
   openSidebar() {
     this.setState({ menuIsOpen: true });
+    disableBodyScroll(document.getElementById('sidebar'));
   }
 
   closeSidebar() {
     this.setState({ menuIsOpen: false });
+    enableBodyScroll(document.getElementById('sidebar'));
   }
 
   toggleSidebar() {
-    this.setState({
-      menuIsOpen: !this.state.menuIsOpen
-    });
+    this.state.menuIsOpen ? this.closeSidebar() : this.openSidebar();
   }
 
   openSignUpModal() {
