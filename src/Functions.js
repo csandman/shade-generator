@@ -99,10 +99,11 @@ const calculateIndividualColor = (color, bColor, opacity) => {
 
 export const getAllColorInfo = colorStr => {
   let colorObj = parse(colorStr);
-  colorObj.contrast = getContrastColor(colorObj.rgb);
-  colorObj.highContrast = getHighContrastColor(colorObj.rgb);
-  colorObj.lowContrast = getLowContrastColor(colorObj.rgb);
-  colorObj.oppositeContrast = getOppositeContrastColor(colorObj.rgb);
+  colorObj.hex = colorObj.hex.toUpperCase();
+  colorObj.contrast = getContrastColor(colorObj.rgb).toUpperCase();
+  colorObj.highContrast = getHighContrastColor(colorObj.rgb).toUpperCase();
+  colorObj.lowContrast = getLowContrastColor(colorObj.rgb).toUpperCase();
+  colorObj.oppositeContrast = getOppositeContrastColor(colorObj.rgb).toUpperCase();
   colorObj.name = getColorName(colorObj.hex);
   colorObj.shades = calcAllGradients(colorObj.rgb).map(childObj => {
     childObj.highContrast = getHighContrastColor(childObj.rgb);
