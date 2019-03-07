@@ -8,17 +8,17 @@ class Header extends Component {
       <div
         id="header"
         style={
-          (!this.props.splitView || this.props.splitSreenDisabled) && {
+          (!this.props.splitView || this.props.splitScreenDisabled) ? {
             borderColor: this.props.colorData.contrast,
             backgroundColor: this.props.colorData.hex
-          }
+          } : {}
         }
       >
         <div
           style={
-            (!this.props.splitView || this.props.splitSreenDisabled) && {
+            (!this.props.splitView || this.props.splitScreenDisabled) ? {
               color: this.props.colorData.contrast
-            }
+            } : {}
           }
           className="title-text"
         >
@@ -27,7 +27,7 @@ class Header extends Component {
               <div
                 style={{
                   backgroundColor:
-                    this.props.splitView && !this.props.splitSreenDisabled
+                    this.props.splitView && !this.props.splitScreenDisabled
                       ? "#7a7a7a"
                       : this.props.colorData.shades[10].hex
                 }}
@@ -36,7 +36,7 @@ class Header extends Component {
               <div
                 style={{
                   backgroundColor:
-                    this.props.splitView && !this.props.splitSreenDisabled
+                    this.props.splitView && !this.props.splitScreenDisabled
                       ? "#111"
                       : this.props.colorData.shades[24].hex
                 }}
@@ -45,7 +45,7 @@ class Header extends Component {
               <div
                 style={{
                   backgroundColor:
-                    this.props.splitView && !this.props.splitSreenDisabled
+                    this.props.splitView && !this.props.splitScreenDisabled
                       ? "#181818"
                       : this.props.colorData.shades[24].hex
                 }}
@@ -54,7 +54,7 @@ class Header extends Component {
               <div
                 style={{
                   backgroundColor:
-                    this.props.splitView && !this.props.splitSreenDisabled
+                    this.props.splitView && !this.props.splitScreenDisabled
                       ? "#7a7a7a"
                       : this.props.colorData.shades[10].hex
                 }}
@@ -70,19 +70,19 @@ class Header extends Component {
               className="icon-button"
               onClick={this.props.getRandomColors}
               style={
-                (!this.props.splitView || this.props.splitSreenDisabled) && {
+                (!this.props.splitView || this.props.splitScreenDisabled) ? {
                   borderColor: this.props.colorData.contrast,
                   color: this.props.colorData.contrast,
                   backgroundColor: this.props.colorData.oppositeContrast
-                }
+                } : {}
               }
             >
               <i
                 className="fas fa-random"
                 style={
-                  (!this.props.splitView || this.props.splitSreenDisabled) && {
+                  (!this.props.splitView || this.props.splitScreenDisabled) ? {
                     color: this.props.colorData.contrast
-                  }
+                  } : {}
                 }
               />
               Random
@@ -92,19 +92,19 @@ class Header extends Component {
               className={"icon-button" + (this.props.splitView ? " active" : "")}
               onClick={this.props.toggleSplitView}
               style={
-                (!this.props.splitView || this.props.splitSreenDisabled) && {
+                (!this.props.splitView || this.props.splitScreenDisabled) ? {
                   borderColor: this.props.colorData.contrast,
                   color: this.props.colorData.contrast,
                   backgroundColor: this.props.colorData.oppositeContrast
-                }
+                } : {}
               }
             >
               <i
                 className="fas fa-columns"
                 style={
-                  (!this.props.splitView || this.props.splitSreenDisabled) && {
+                  (!this.props.splitView || this.props.splitScreenDisabled) ? {
                     color: this.props.colorData.contrast
-                  }
+                  } : {}
                 }
               />
               Split View
@@ -115,7 +115,7 @@ class Header extends Component {
             open={this.props.menuIsOpen}
             action={this.props.toggleSidebar}
             color={
-              !this.props.splitView || this.props.splitSreenDisabled
+              !this.props.splitView || this.props.splitScreenDisabled
                 ? this.props.colorData.contrast
                 : "#7a7a7a"
             }
