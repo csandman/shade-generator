@@ -9,7 +9,6 @@
   justify-content: space-between;
   align-items: center;
   z-index: 500;
-  box-sizing: border-box;
   transition: 150ms all linear;
   z-index: 2000;
   border-bottom: 2px solid $contrast;
@@ -26,9 +25,8 @@
   }
   
   .title-text {
-    font-size: 1.7rem;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: regular;
     text-transform: uppercase;
     letter-spacing: 2px;
     text-align: center;
@@ -40,14 +38,14 @@
 
     .icon {
       display: grid;
-      grid-template-columns: 9px 9px;
+      grid-template-columns: 12px 12px;
       grid-gap: 2px;
       margin-right: .8rem;
-      padding: 3px;
+      padding: 1px;
       cursor: pointer;
 
       .icon-dot {
-        height: 9px;
+        height: 12px;
         background-color: rgba(0,0,0,0.3);
         display: flex;
         border-radius: 2px;
@@ -74,10 +72,10 @@
   }
 
   .icon-button {
-    margin-left: 1rem;
+    margin-left: .75rem;
     border-radius: 5px;
-    padding: 7px 12px;
-    font-size: 1.2rem;
+    padding: 6px 12px;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -88,11 +86,21 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
     cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     border: 2px solid $contrast;
     color: $contrast;
     background-color: $opposite-contrast;
+
+    &.active {
+      border: 2px solid $opposite-contrast;
+      color: $opposite-contrast;
+      background-color: $contrast;
+
+      i {
+        color: $opposite-contrast;
+      }
+    }
+
     i {
       margin-right: 10px;
       font-size: 1.4rem;
@@ -101,21 +109,17 @@
   }
 
   .menu-icon{
-    margin-left: 3rem;
     transition: none;
     transition: color 150ms linear;
-
-    &.fa-times {
-      font-size: 2.8rem;
-    }
   }
 
   .button-section {
     display: flex;
+    margin-right: 3rem;
   }
 
   @media only screen and (max-width: 900px) {
-    .icon-button {
+    .button-section {
       display: none;
     }
     
@@ -132,7 +136,7 @@
     .title-text {
       letter-spacing: 0;
       margin-left: 1rem;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
     }
 
     .right-content {

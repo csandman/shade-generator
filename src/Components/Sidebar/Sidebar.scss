@@ -70,6 +70,21 @@
       transform: translateX(-100%);
     }
 
+    .secondary-main-menu {
+      display: none;
+      border-bottom: 3px solid $contrast;
+
+      @media only screen and (max-width: 900px) {
+        display: block;
+      }
+
+      .split-view {
+        @media only screen and (max-width: 600px) {
+          display: none;
+        }
+      }
+    }
+
     .main-menu-item {
       padding: 1.5rem;
       cursor: pointer;
@@ -82,9 +97,8 @@
 
       span {
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: bold;
         letter-spacing: 2px;
-        font-family: "Nunito", sans-serif;
       }
 
       * {
@@ -118,26 +132,34 @@
       display: flex;
       align-items: center;
       background-color: white;
-      padding-right: 1rem;
+      align-items: center;
+      line-height: auto;
+
+      .search-icon-container {
+        flex: 0 0 4rem;
+        text-align: center;
+      }
 
       .icon.fa-search {
-        font-size: 1.5rem;
-        width: 2rem;
+        font-size: 1.6rem;
         color: #222;
-        margin: 0 .75rem;
       }
 
       input {
         height: 100%;
         flex: 1;
         border: 0;
-        font-size: 1.5rem;
-        font-family: 'Nunito';
+        border-radius: 0;
+        font-size: 1.6rem;
+        padding-right: 1rem;
+        margin: 0;
+        overflow: hidden;
+        -webkit-appearance: none;
 
         &::-webkit-search-cancel-button {
           cursor: pointer;
-          height: 18px;
-          width: 18px;
+          height: 16px;
+          width: 16px;
           background-image: url("../../images/clear-input.svg");
         }
       }
@@ -156,9 +178,8 @@
 
       span {
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: bold;
         letter-spacing: 2px;
-        font-family: "Nunito", sans-serif;
       }
 
       * {
@@ -175,6 +196,7 @@
     .sub-menu-content {
       flex: 1;
       overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
@@ -184,9 +206,8 @@
       padding: 1.5rem 1.25rem;
       font-size: 1.6rem;
       line-height: 2.1rem;
-      font-weight: 500;
+      font-weight: normal;
       letter-spacing: 1px;
-      font-family: 'Nunito';
       cursor: pointer;
       text-transform: uppercase;
     }
@@ -199,6 +220,7 @@
       align-items: center;
       cursor: pointer;
       padding: 2rem 0;
+      position: relative;
 
       .color-name {
         font-size: 1.5rem;
@@ -207,4 +229,19 @@
       }
     }
   }
+}
+
+.footer-left, .footer-right {
+  position: absolute;
+  bottom: 6px;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.footer-right {
+  right: 6px;
+}
+
+.footer-left {
+  left: 6px;
 }

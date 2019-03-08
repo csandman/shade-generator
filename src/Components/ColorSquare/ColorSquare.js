@@ -5,7 +5,6 @@ import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
 
 class ColorSquare extends Component {
-
   constructor(props) {
     super(props);
     this.copyHexCode = this.copyHexCode.bind(this);
@@ -69,7 +68,12 @@ class ColorSquare extends Component {
           <div
             style={{ backgroundColor: this.props.color.hex }}
             className="color-tile"
-            onClick={() => this.props.handleClick(this.props.color.hex, this.props.colorDataNumber)}
+            onClick={() => {
+              this.props.handleColorClick(
+                this.props.color.hex,
+                this.props.colorDataNumber
+              );
+            }}
           />
         </Tooltip>
       </div>

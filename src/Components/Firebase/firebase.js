@@ -13,13 +13,16 @@ const config = {
 
 class Firebase {
   constructor() {
-    app.initializeApp(config);
 
-    // DB setup
-    this.db = app.firestore();
-    // Add Google Login here
-    this.auth = app.auth();
+    if (navigator && navigator.onLine) {
 
+      app.initializeApp(config);
+
+      // DB setup
+      this.db = app.firestore();
+      // Add Google Login here
+      this.auth = app.auth();
+    }
   }
 
   doCreateUserWithEmailAndPassword = (email, password) =>
@@ -36,6 +39,8 @@ class Firebase {
     this.auth.currentUser.updatePassword(password);
 
   colorHistory = () => this.db.collection('color-history');
+
+  aggRef = () => this.db.collection("aggregation").doc('all');
 }
 
 export default Firebase;

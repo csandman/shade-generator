@@ -12,28 +12,33 @@
       display: flex;
 
       input {
+        display: inline-flex;
         flex: 7;
+        -webkit-flex: 7 1;
         height: 3rem;
         border: 2px solid black;
         border-right: 0;
         border-radius: 5px 0 0 5px;
-        padding: 0 1rem;
-        font-family: "Nunito", sans-serif;
+        margin: 0;
+        padding: 0 .75rem;
+        overflow: visible;
+        -webkit-appearance: none;
+        outline-offset: -2px;
 
         &::-webkit-search-cancel-button {
           cursor: pointer;
-          height: 18px;
-          width: 18px;
+          height: 16px;
+          width: 16px;
           background-image: url("../../images/clear-input.svg");
         }
       }
 
       button {
         flex: 0 0 6rem;
+        -webkit-flex: 0 0 6rem;
         cursor: pointer;
         border: 2px solid black;
         border-radius: 0 5px 5px 0;
-        font-family: "Nunito", sans-serif;
         font-weight: bold;
         display: flex;
         justify-content: center;
@@ -41,6 +46,7 @@
         font-size: 1.4rem;
         line-height: 1.4rem;
         color: #272a29;
+        margin: 0;
       }
     }
   }

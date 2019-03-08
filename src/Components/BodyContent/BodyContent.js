@@ -44,10 +44,11 @@ class BodyContent extends Component {
           {this.props.colorData.shades.map((color, index) => {
             return (
               <ColorSquare
-                handleClick={this.props.handleColorSquareClick}
+                handleColorClick={this.props.handleColorClick}
                 colorDataNumber={this.props.number}
                 color={color}
                 key={color + index}
+                addMenuItem={this.props.addMenuItem}
               />
             );
           })}

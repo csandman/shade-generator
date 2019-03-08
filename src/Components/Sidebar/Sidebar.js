@@ -11,6 +11,7 @@ class Sidebar extends Component {
 
     this.openColorHistory = this.openColorHistory.bind(this);
     this.openColorSearch = this.openColorSearch.bind(this);
+    this.openTopColorsMenu = this.openTopColorsMenu.bind(this);
     this.closeSubMenu = this.closeSubMenu.bind(this);
     this.searchColorNames = this.searchColorNames.bind(this);
 
@@ -22,14 +23,15 @@ class Sidebar extends Component {
       menuStates: {
         isMainMenuOpen: true,
         isHistoryMenuOpen: false,
-        isSearchMenuOpen: false
+        isSearchMenuOpen: false,
+        isTopColorsMenuOpen: false
       }
     };
   }
 
   componentDidMount() {
     this.setState({
-      colorNameList: namedColors.slice(0, 1000).map(el => {
+      colorNameList: namedColors.slice(0, 500).map(el => {
         el.contrast = getContrastColor(hexToRgb(el.hex));
         return el;
       })
@@ -41,9 +43,13 @@ class Sidebar extends Component {
       searchInput: e.target.value,
       colorNameList: namedColors
         .filter(
-          el => el.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+          el =>
+            el.name
+              .toLowerCase()
+              .replace(/\s/g, "")
+              .indexOf(e.target.value.toLowerCase().replace(/\s/g, "")) >= 0
         )
-        .slice(0, 1000)
+        .slice(0, 500)
         .map(el => {
           el.contrast = getContrastColor(hexToRgb(el.hex));
           return el;
@@ -54,6 +60,12 @@ class Sidebar extends Component {
   openColorHistory() {
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isHistoryMenuOpen = true;
+    this.setState({ menuStates: newState });
+  }
+
+  openTopColorsMenu() {
+    let newState = _.mapValues(this.state.menuStates, () => false);
+    newState.isTopColorsMenuOpen = true;
     this.setState({ menuStates: newState });
   }
 
@@ -79,10 +91,37 @@ class Sidebar extends Component {
               (this.state.menuStates.isMainMenuOpen ? "" : " hidden")
             }
           >
-            <div className="main-menu-item" onClick={this.openColorHistory}>
-              <i className="icon fas fa-history" />
-              <span>Color History</span>
+            <div className="secondary-main-menu">
+              <div
+                className="main-menu-item"
+                onClick={this.props.getRandomColors}
+              >
+                <i className="icon fas fa-random" />
+                <span>Random Colors</span>
+              </div>
+              <div
+                className="main-menu-item split-view"
+                onClick={this.props.toggleSplitView}
+              >
+                <i className="icon fas fa-columns" />
+                <span>Split View</span>
+              </div>
             </div>
+            {this.props.online && (
+              <div className="online-menu-items">
+                <div className="main-menu-item" onClick={this.openColorHistory}>
+                  <i className="icon fas fa-history" />
+                  <span>Color History</span>
+                </div>
+                <div
+                  className="main-menu-item"
+                  onClick={this.openTopColorsMenu}
+                >
+                  <i className="icon fas fa-award" />
+                  <span>Most Popular</span>
+                </div>
+              </div>
+            )}
             <div className="main-menu-item" onClick={this.openColorSearch}>
               <i className="icon fas fa-search" />
               <span>Search Colors</span>
@@ -103,25 +142,92 @@ class Sidebar extends Component {
                 {this.props.menuItems.map((item, i) => {
                   return (
                     <div
-                      key={item.id}
+                      key={item.hex + i}
                       className="menu-item"
-                      style={{ backgroundColor: item.hexCode }}
-                      onClick={this.props.clickColor}
-                      data-index={i}
+                      style={{ backgroundColor: item.hex }}
+                      onClick={() => {
+                        this.props.handleColorClick(item.hex, 1);
+                        this.props.closeSidebar();
+                      }}
+                      data-hex={item.hex}
                     >
                       <div
                         className="color-name"
-                        style={{ color: item.contrastColor }}
-                        data-index={i}
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
                       >
-                        {item.colorName}
+                        {item.name}
                       </div>
                       <div
                         className="color-name"
-                        style={{ color: item.contrastColor }}
-                        data-index={i}
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
                       >
-                        {item.hexCode}
+                        {item.hex}
+                      </div>
+                      <div
+                        className="footer-left"
+                        style={{ color: item.contrast }}
+                      >
+                        {item.dateString}
+                      </div>
+                      <div
+                        className="footer-right"
+                        style={{ color: item.contrast }}
+                      >
+                        {item.timeString}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={
+              "sub-menu" +
+              (this.state.menuStates.isTopColorsMenuOpen ? "" : " hidden")
+            }
+          >
+            <div onClick={this.closeSubMenu} className="sub-menu-header">
+              <i className="icon fas fa-arrow-left" />
+              <span>Most Popular</span>
+            </div>
+            <div className="sub-menu-content">
+              <div className="menu-items">
+                {this.props.topColors.map((item, i) => {
+                  return (
+                    <div
+                      key={item.hex + i}
+                      className="menu-item"
+                      style={{ backgroundColor: item.hex }}
+                      onClick={() => {
+                        this.props.handleColorClick(item.hex, 1);
+                        this.props.closeSidebar();
+                      }}
+                      data-hex={item.hex}
+                    >
+                      <div
+                        className="color-name"
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
+                      >
+                        {item.name}
+                      </div>
+                      <div
+                        className="color-name"
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
+                      >
+                        {item.hex}
+                      </div>
+                      <div
+                        className="footer-left"
+                        style={{ color: item.contrast }}
+                        data-hex={item.hex}
+                      >
+                        {item.count} X
                       </div>
                     </div>
                   );
@@ -135,13 +241,16 @@ class Sidebar extends Component {
               "sub-menu" +
               (this.state.menuStates.isSearchMenuOpen ? "" : " hidden")
             }
+            id="color-search-menu"
           >
             <div onClick={this.closeSubMenu} className="sub-menu-header">
               <i className="icon fas fa-arrow-left" />
               <span>Search Colors</span>
             </div>
             <div className="search-input-container">
-              <i className="icon fas fa-search" />
+              <div className="search-icon-container">
+                <i className="icon fas fa-search" />
+              </div>
               <input
                 type="search"
                 placeholder="Search..."

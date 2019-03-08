@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import Header from "./Components/Header";
-import SignUp from "./Components/SignUp";
-import Sidebar from "./Components/Sidebar";
-import LoadingScreen from "./Components/LoadingScreen";
-import BodyContent from "./Components/BodyContent";
+import Header from "../Header";
+import SignUp from "../SignUp";
+import Sidebar from "../Sidebar";
+import LoadingScreen from "../LoadingScreen";
+import BodyContent from "../BodyContent";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
+import "../../styles/fa/fontawesome.scss";
+import "../../styles/fa/solid.scss";
 
-import { withFirebase } from "./Components/Firebase";
+import { withFirebase } from "../Firebase";
 
 import {
-  getContrastColor,
-  getColorName,
   searchNamedColors,
   getAllColorInfo,
   getRandomHexColor
-} from "./Functions";
+} from "../../Functions";
 
 const parse = require("parse-color");
 
@@ -36,16 +37,19 @@ class App extends Component {
       },
       loading: true,
       menuItems: [],
+      recentColors: [],
+      topColors: [],
       menuIsOpen: false,
       signupOpen: false,
       splitView: false,
-      splitScreenDisabled: false
+      splitScreenDisabled: false,
+      online: true
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEnterPress = this.handleEnterPress.bind(this);
-    this.clickColor = this.clickColor.bind(this);
+    this.handleColorClick = this.handleColorClick.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.openSidebar = this.openSidebar.bind(this);
     this.closeSidebar = this.closeSidebar.bind(this);
@@ -54,16 +58,9 @@ class App extends Component {
     this.toggleSplitView = this.toggleSplitView.bind(this);
     this.getRandomColors = this.getRandomColors.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
-    this.handleColorSquareClick = this.handleColorSquareClick.bind(this);
+    this.handleColorClick = this.handleColorClick.bind(this);
     this.setSplitScreenAbility = this.setSplitScreenAbility.bind(this);
-  }
-
-  openSidebar() {
-    this.setState({ menuIsOpen: true });
-  }
-
-  closeSidebar() {
-    this.setState({ menuIsOpen: false });
+    this.addMenuItem = this.addMenuItem.bind(this);
   }
 
   async componentDidMount() {
@@ -71,39 +68,43 @@ class App extends Component {
     window.addEventListener("resize", this.setSplitScreenAbility);
     this.setSplitScreenAbility();
 
-    await this.props.firebase
-      .colorHistory()
-      .orderBy("dateAdded", "desc")
-      .limit(2)
+    if (navigator && navigator.onLine) {
+      await this.props.firebase
+      .aggRef()
       .get()
-      .then(snapshot => {
+      .then(aggs => {
+        if (aggs.exists) {
+          let recent = aggs.data().recent;
+          recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
+          let top = aggs.data().top;
+          top.sort((a, b) => a.count > b.count);
+          this.setState({
+            recentColors: recent,
+            topColors: top,
+            colorData1: getAllColorInfo(recent[0].hex),
+            colorData2: getAllColorInfo(recent[1].hex),
+            loading: false
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
         this.setState({
-          colorData1: getAllColorInfo(snapshot.docs[0].data().hexCode),
-          colorData2: getAllColorInfo(snapshot.docs[1].data().hexCode)
-        })
-      });
-    await this.props.firebase
-      .colorHistory()
-      .orderBy("dateAdded", "desc")
-      .limit(100)
-      .onSnapshot(querySnapshot => {
-        let data = querySnapshot.docs.map(doc => {
-          let out = doc.data();
-          out.id = doc.id;
-          return out;
+          colorData1: getAllColorInfo(getRandomHexColor()),
+          colorData2: getAllColorInfo(getRandomHexColor()),
+          loading: false,
+          online: false
         });
-        this.setState({
-          menuItems: data
-        });
-        return true;
       });
-    this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
-    });
-
-    this.setState({ loading: false });
+    } else {
+      console.log("offline detected")
+      this.setState({
+        colorData1: getAllColorInfo(getRandomHexColor()),
+        colorData2: getAllColorInfo(getRandomHexColor()),
+        loading: false,
+        online: false
+      });
+    }
   }
 
   setSplitScreenAbility() {
@@ -119,6 +120,20 @@ class App extends Component {
     }
   }
 
+  openSidebar() {
+    this.setState({ menuIsOpen: true });
+    disableBodyScroll(document.getElementById("sidebar"));
+  }
+
+  closeSidebar() {
+    this.setState({ menuIsOpen: false });
+    enableBodyScroll(document.getElementById("sidebar"));
+  }
+
+  toggleSidebar() {
+    this.state.menuIsOpen ? this.closeSidebar() : this.openSidebar();
+  }
+
   openSignUpModal() {
     this.setState({
       signupOpen: true
@@ -131,43 +146,98 @@ class App extends Component {
     });
   }
 
-  clickColor(e) {
-    const hex = this.state.menuItems[e.target.dataset.index].hexCode;
+  toggleSplitView() {
     this.setState({
-      inputValue1: hex,
-      menuIsOpen: false
+      splitView: !this.state.splitView
     });
-    this.updateStateValues(hex, "inputValue1");
   }
 
   getRandomColors() {
-    const random1 = getAllColorInfo(getRandomHexColor());
-    const random2 = getAllColorInfo(getRandomHexColor());
+    const randomHex1 = getRandomHexColor();
+    this.updateStateValues(randomHex1, "inputValue1");
 
-    this.setState({
-      colorData1: random1,
-      inputValue1: random1.hex,
-      colorData2: random2,
-      inputValue2: random2.hex
-    });
-
-    this.addMenuItem(random2.hex);
-    this.addMenuItem(random1.hex);
+    if (this.state.splitView && this.state.splitScreenDisabled === false) {
+      const randomHex2 = getRandomHexColor();
+      this.updateStateValues(randomHex2, "inputValue2");
+    }
   }
 
-  addMenuItem(hex) {
-    const newMenuItem = {
-      hexCode: hex,
-      colorName: getColorName(hex),
-      contrastColor: getContrastColor(parse(hex).rgb),
-      dateAdded: new Date()
-    };
+  async addMenuItem(hex) {
+    if (this.state.online) {
+      let newColor = getAllColorInfo(hex);
+      newColor.timeAdded = new Date();
+      newColor.timeString = new Date().toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "numeric"
+      });
+      newColor.dateString = new Date().toLocaleDateString();
+      delete newColor.keyword;
+      delete newColor.shades;
 
-    this.props.firebase
-      .colorHistory()
-      .doc(hex.toUpperCase())
-      .set(newMenuItem)
-      .catch(function(error) {});
+      let topColors = [];
+      let recentColors = [];
+      let colorRecord = {};
+
+      let aggsRef = this.props.firebase.aggRef();
+      let colorRef = this.props.firebase.db
+        .collection("color-history")
+        .doc(newColor.hex);
+
+      await this.props.firebase.db
+        .runTransaction(async transaction => {
+          let aggs = await transaction.get(aggsRef);
+          colorRecord = await transaction.get(colorRef);
+
+          if (colorRecord.exists) {
+            newColor.count = (colorRecord.data().count || 0) + 1;
+            await transaction.update(colorRef, { count: newColor.count });
+          } else {
+            newColor.count = 1;
+            await transaction.set(colorRef, newColor);
+          }
+
+          topColors = this.getMostPopularArray(aggs.data().top, newColor);
+          recentColors = this.getMostRecentArray(aggs.data().recent, newColor);
+
+          transaction.update(aggsRef, {
+            top: topColors,
+            recent: recentColors
+          });
+        })
+        .then(() => {
+          this.setState({
+            topColors: topColors,
+            recentColors: recentColors
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+
+  getMostPopularArray(arr, el) {
+    let isPopular = false;
+    arr = arr.filter(color => color.hex !== el.hex);
+    arr.sort((a, b) => a.count > b.count);
+    for (let i = 0; i < arr.length; i++) {
+      if (el.count > arr[i].count) {
+        isPopular = true;
+        arr = [...arr.slice(0, i), el, ...arr.slice(i, 100)];
+        break;
+      }
+    }
+    if (!isPopular && arr.length < 100) {
+      arr.push(el);
+    }
+    return arr;
+  }
+
+  getMostRecentArray(arr, el) {
+    arr = arr.filter(color => color.hex !== el.hex);
+    arr.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
+    arr.unshift(el);
+    return arr.slice(0, 100);
   }
 
   handleEnterPress(e) {
@@ -215,23 +285,8 @@ class App extends Component {
     this.addMenuItem(hex);
   }
 
-  toggleSplitView() {
-    this.setState({
-      splitView: !this.state.splitView
-    });
-  }
-
-  toggleSidebar() {
-    this.setState({
-      menuIsOpen: !this.state.menuIsOpen
-    });
-  }
-
-  handleColorSquareClick(hex, dataNum) {
-    let newState = {};
-    newState['colorData' + dataNum] = getAllColorInfo(hex);
-    newState['inputValue' + dataNum] = hex.toUpperCase();
-    this.setState(newState);
+  handleColorClick(hex, dataNum) {
+    this.updateStateValues(hex, "inputValue" + dataNum);
   }
 
   render() {
@@ -259,10 +314,14 @@ class App extends Component {
           <Sidebar
             isOpen={this.state.menuIsOpen}
             closeSidebar={this.closeSidebar}
-            menuItems={this.state.menuItems}
-            clickColor={this.clickColor}
+            menuItems={this.state.recentColors}
+            topColors={this.state.topColors}
+            handleColorClick={this.handleColorClick}
             baseColor={this.state.baseColor}
-            handleColorClick={this.handleColorSquareClick}
+            addMenuItem={this.addMenuItem}
+            getRandomColors={this.getRandomColors}
+            toggleSplitView={this.toggleSplitView}
+            online={this.state.online}
           />
 
           <div className="page">
@@ -277,11 +336,12 @@ class App extends Component {
                 colorData={this.state.colorData1}
                 number={1}
                 splitView={this.state.splitView}
-                handleColorSquareClick={this.handleColorSquareClick}
+                handleColorClick={this.handleColorClick}
                 splitScreenDisabled={this.state.splitScreenDisabled}
+                addMenuItem={this.addMenuItem}
               />
             </div>
-            {(this.state.splitView && !this.state.splitScreenDisabled) && (
+            {this.state.splitView && !this.state.splitScreenDisabled && (
               <div
                 className="content-background"
                 style={{ backgroundColor: this.state.colorData2.hex }}
@@ -296,8 +356,9 @@ class App extends Component {
                   colorData={this.state.colorData2}
                   number={2}
                   splitView={this.state.splitView}
-                  handleColorSquareClick={this.handleColorSquareClick}
+                  handleColorClick={this.handleColorClick}
                   splitScreenDisabled={this.state.splitScreenDisabled}
+                  addMenuItem={this.addMenuItem}
                 />
               </div>
             )}

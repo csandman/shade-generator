@@ -1,6 +1,8 @@
+
+
 * {
-  font-size: 16px;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 
   &:focus {
     outline: none;
@@ -11,14 +13,39 @@
   }
 }
 
+
+html {
+  font-size: 14px;
+  font-family: "Nunito", sans-serif !important;
+}
+
+input {
+  font-size: 16px;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance:none;
+}
+
+input, input:before, input:after {
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
+  user-select: initial;
+ } 
+
 #App {
   transition: 150ms background-color ease-in-out;
   will-change: background-color;
+  background-color: #222;
 }
 
 button {
   font-size: 1.2rem;
-  font-family: "Nunito", sans-serif;
   padding: 0.5rem 1rem;
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid;
@@ -26,13 +53,6 @@ button {
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
 }
 
 .button-group {
@@ -66,8 +86,7 @@ button {
 
 .color-name {
   font-size: 2rem;
-  font-family: "Nunito", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height: 2rem;

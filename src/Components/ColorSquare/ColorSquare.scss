@@ -5,6 +5,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: 150ms background-color ease-in-out;
+    background-color: #222;
   }
 
   @media only screen and (max-width: 1250px) {
@@ -46,9 +47,9 @@
 }
 
 .tooltip-title {
-  font-family: "Nunito", sans-serif;
+  font-size: 1.2rem;
   margin: 0.5rem;
-  font-weight: 700;
+  font-weight: bold;
   letter-spacing: 1px;
 }
 

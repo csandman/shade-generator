@@ -7,43 +7,33 @@ export const getRandomHexColor = () => {
   }).join('');
 }
 
-export const getContrastColor = rgb => {
+const isContrastDark = rgb => {
   const lumRgb = rgb.map(el => {
     el = el / 255.000;
     return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
   });
   const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
-  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  const isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  return isDark;
+}
+
+export const getContrastColor = rgb => {
+  const isDark = isContrastDark(rgb)
   return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
 }
 
 export const getOppositeContrastColor = rgb => {
-  const lumRgb = rgb.map(el => {
-    el = el / 255.000;
-    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
-  });
-  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
-  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  const isDark = isContrastDark(rgb)
   return rgbToHex(...calculateGradient(rgb, !isDark, 0.30));
 }
 
 export const getHighContrastColor = rgb => {
-  const lumRgb = rgb.map(el => {
-    el = el / 255.000;
-    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
-  });
-  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
-  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  const isDark = isContrastDark(rgb)
   return rgbToHex(...calculateGradient(rgb, isDark, 0.70));
 }
 
 export const getLowContrastColor = rgb => {
-  const lumRgb = rgb.map(el => {
-    el = el / 255.000;
-    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
-  });
-  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
-  let isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  const isDark = isContrastDark(rgb)
   return rgbToHex(...calculateGradient(rgb, isDark, 0.20));
 }
 
@@ -109,10 +99,11 @@ const calculateIndividualColor = (color, bColor, opacity) => {
 
 export const getAllColorInfo = colorStr => {
   let colorObj = parse(colorStr);
-  colorObj.contrast = getContrastColor(colorObj.rgb);
-  colorObj.highContrast = getHighContrastColor(colorObj.rgb);
-  colorObj.lowContrast = getLowContrastColor(colorObj.rgb);
-  colorObj.oppositeContrast = getOppositeContrastColor(colorObj.rgb);
+  colorObj.hex = colorObj.hex.toUpperCase();
+  colorObj.contrast = getContrastColor(colorObj.rgb).toUpperCase();
+  colorObj.highContrast = getHighContrastColor(colorObj.rgb).toUpperCase();
+  colorObj.lowContrast = getLowContrastColor(colorObj.rgb).toUpperCase();
+  colorObj.oppositeContrast = getOppositeContrastColor(colorObj.rgb).toUpperCase();
   colorObj.name = getColorName(colorObj.hex);
   colorObj.shades = calcAllGradients(colorObj.rgb).map(childObj => {
     childObj.highContrast = getHighContrastColor(childObj.rgb);
