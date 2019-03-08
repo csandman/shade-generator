@@ -91,7 +91,7 @@ class Sidebar extends Component {
               (this.state.menuStates.isMainMenuOpen ? "" : " hidden")
             }
           >
-          <div className="secondary-main-menu">
+            <div className="secondary-main-menu">
               <div
                 className="main-menu-item"
                 onClick={this.props.getRandomColors}
@@ -107,14 +107,21 @@ class Sidebar extends Component {
                 <span>Split View</span>
               </div>
             </div>
-            <div className="main-menu-item" onClick={this.openColorHistory}>
-              <i className="icon fas fa-history" />
-              <span>Color History</span>
-            </div>
-            <div className="main-menu-item" onClick={this.openTopColorsMenu}>
-              <i className="icon fas fa-award" />
-              <span>Most Popular</span>
-            </div>
+            {this.props.online && (
+              <div className="online-menu-items">
+                <div className="main-menu-item" onClick={this.openColorHistory}>
+                  <i className="icon fas fa-history" />
+                  <span>Color History</span>
+                </div>
+                <div
+                  className="main-menu-item"
+                  onClick={this.openTopColorsMenu}
+                >
+                  <i className="icon fas fa-award" />
+                  <span>Most Popular</span>
+                </div>
+              </div>
+            )}
             <div className="main-menu-item" onClick={this.openColorSearch}>
               <i className="icon fas fa-search" />
               <span>Search Colors</span>

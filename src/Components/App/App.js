@@ -4,11 +4,10 @@ import SignUp from "../SignUp";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
-import {
-  disableBodyScroll,
-  enableBodyScroll
-} from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
+import "../../styles/fa/fontawesome.scss";
+import "../../styles/fa/solid.scss";
 
 import { withFirebase } from "../Firebase";
 
@@ -43,7 +42,8 @@ class App extends Component {
       menuIsOpen: false,
       signupOpen: false,
       splitView: false,
-      splitScreenDisabled: false
+      splitScreenDisabled: false,
+      online: true
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -68,7 +68,8 @@ class App extends Component {
     window.addEventListener("resize", this.setSplitScreenAbility);
     this.setSplitScreenAbility();
 
-    await this.props.firebase
+    if (navigator && navigator.onLine) {
+      await this.props.firebase
       .aggRef()
       .get()
       .then(aggs => {
@@ -85,7 +86,25 @@ class App extends Component {
             loading: false
           });
         }
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          colorData1: getAllColorInfo(getRandomHexColor()),
+          colorData2: getAllColorInfo(getRandomHexColor()),
+          loading: false,
+          online: false
+        });
       });
+    } else {
+      console.log("offline detected")
+      this.setState({
+        colorData1: getAllColorInfo(getRandomHexColor()),
+        colorData2: getAllColorInfo(getRandomHexColor()),
+        loading: false,
+        online: false
+      });
+    }
   }
 
   setSplitScreenAbility() {
@@ -103,12 +122,12 @@ class App extends Component {
 
   openSidebar() {
     this.setState({ menuIsOpen: true });
-    disableBodyScroll(document.getElementById('sidebar'));
+    disableBodyScroll(document.getElementById("sidebar"));
   }
 
   closeSidebar() {
     this.setState({ menuIsOpen: false });
-    enableBodyScroll(document.getElementById('sidebar'));
+    enableBodyScroll(document.getElementById("sidebar"));
   }
 
   toggleSidebar() {
@@ -144,55 +163,57 @@ class App extends Component {
   }
 
   async addMenuItem(hex) {
-    let newColor = getAllColorInfo(hex);
-    newColor.timeAdded = new Date();
-    newColor.timeString = new Date().toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "numeric"
-    });
-    newColor.dateString = new Date().toLocaleDateString();
-    delete newColor.keyword;
-    delete newColor.shades;
-
-    let topColors = [];
-    let recentColors = [];
-    let colorRecord = {};
-
-    let aggsRef = this.props.firebase.aggRef();
-    let colorRef = this.props.firebase.db
-      .collection("color-history")
-      .doc(newColor.hex);
-
-    await this.props.firebase.db
-      .runTransaction(async transaction => {
-        let aggs = await transaction.get(aggsRef);
-        colorRecord = await transaction.get(colorRef);
-
-        if (colorRecord.exists) {
-          newColor.count = (colorRecord.data().count || 0) + 1;
-          await transaction.update(colorRef, { count: newColor.count });
-        } else {
-          newColor.count = 1;
-          await transaction.set(colorRef, newColor);
-        }
-
-        topColors = this.getMostPopularArray(aggs.data().top, newColor);
-        recentColors = this.getMostRecentArray(aggs.data().recent, newColor);
-
-        transaction.update(aggsRef, {
-          top: topColors,
-          recent: recentColors
-        });
-      })
-      .then(() => {
-        this.setState({
-          topColors: topColors,
-          recentColors: recentColors
-        });
-      })
-      .catch(error => {
-        console.log(error);
+    if (this.state.online) {
+      let newColor = getAllColorInfo(hex);
+      newColor.timeAdded = new Date();
+      newColor.timeString = new Date().toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "numeric"
       });
+      newColor.dateString = new Date().toLocaleDateString();
+      delete newColor.keyword;
+      delete newColor.shades;
+
+      let topColors = [];
+      let recentColors = [];
+      let colorRecord = {};
+
+      let aggsRef = this.props.firebase.aggRef();
+      let colorRef = this.props.firebase.db
+        .collection("color-history")
+        .doc(newColor.hex);
+
+      await this.props.firebase.db
+        .runTransaction(async transaction => {
+          let aggs = await transaction.get(aggsRef);
+          colorRecord = await transaction.get(colorRef);
+
+          if (colorRecord.exists) {
+            newColor.count = (colorRecord.data().count || 0) + 1;
+            await transaction.update(colorRef, { count: newColor.count });
+          } else {
+            newColor.count = 1;
+            await transaction.set(colorRef, newColor);
+          }
+
+          topColors = this.getMostPopularArray(aggs.data().top, newColor);
+          recentColors = this.getMostRecentArray(aggs.data().recent, newColor);
+
+          transaction.update(aggsRef, {
+            top: topColors,
+            recent: recentColors
+          });
+        })
+        .then(() => {
+          this.setState({
+            topColors: topColors,
+            recentColors: recentColors
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 
   getMostPopularArray(arr, el) {
@@ -300,6 +321,7 @@ class App extends Component {
             addMenuItem={this.addMenuItem}
             getRandomColors={this.getRandomColors}
             toggleSplitView={this.toggleSplitView}
+            online={this.state.online}
           />
 
           <div className="page">
