@@ -68,6 +68,7 @@ class ColorSquare extends Component {
           <div
             style={{ backgroundColor: this.props.color.hex }}
             className="color-tile"
+            id={"tippy-tooltip-" + this.props.squareNumber}
             onClick={() => {
               this.props.handleColorClick(
                 this.props.color.hex,

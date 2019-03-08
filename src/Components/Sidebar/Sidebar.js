@@ -251,7 +251,9 @@ class Sidebar extends Component {
               <div className="search-icon-container">
                 <i className="icon fas fa-search" />
               </div>
+              <label htmlFor={"color-search"}>Color search</label>
               <input
+                id={"color-search"}
                 type="search"
                 placeholder="Search..."
                 value={this.state.searchInput}
