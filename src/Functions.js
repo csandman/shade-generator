@@ -85,12 +85,11 @@ export const calcAllGradients = rgb => {
   return gradientArr;
 }
 
-const calculateGradient = (colorVals, isDark, opacity) => {
-  if (isDark) {
-    return colorVals.map(val => calculateIndividualColor(val,0,opacity))
-  } else {
-    return colorVals.map(val => calculateIndividualColor(val,255,opacity))
-  } 
+const calculateGradient = (rgb, isDark, opacity) => {
+  if (isDark)
+    return rgb.map(val => calculateIndividualColor(val,0,opacity));
+  else
+    return rgb.map(val => calculateIndividualColor(val,255,opacity));
 }
 
 const calculateIndividualColor = (color, bColor, opacity) => {

@@ -272,7 +272,7 @@ class App extends Component {
 
   updateStateValues(hex, inputName) {
     let colorData = getAllColorInfo(hex);
-
+    console.log(colorData);
     inputName === "inputValue1"
       ? this.setState({
           colorData1: colorData,
