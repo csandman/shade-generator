@@ -62,7 +62,7 @@ class Header extends Component {
               />
             </div>
           )}
-          Shade Generator
+          <h1>Shade Generator</h1>
         </div>
         <div className="right-content">
           <div className="button-section">

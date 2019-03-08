@@ -25,16 +25,19 @@
   }
   
   .title-text {
-    font-size: 2rem;
-    font-weight: regular;
-    text-transform: uppercase;
-    letter-spacing: 2px;
     text-align: center;
     margin-left: 3rem;
     display: flex;
     align-items: center;
     cursor: default;
     color: $contrast;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
 
     .icon {
       display: grid;
