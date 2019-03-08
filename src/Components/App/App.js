@@ -13,8 +13,6 @@ import "./App.scss";
 import { withFirebase } from "../Firebase";
 
 import {
-  getContrastColor,
-  getColorName,
   searchNamedColors,
   getAllColorInfo,
   getRandomHexColor
@@ -146,17 +144,15 @@ class App extends Component {
   }
 
   async addMenuItem(hex) {
-    let newColor = {
-      hex: hex.toUpperCase(),
-      name: getColorName(hex),
-      contrast: getContrastColor(parse(hex).rgb).toUpperCase(),
-      timeAdded: new Date(),
-      timeString: new Date().toLocaleTimeString([], {
-        hour: "numeric",
-        minute: "numeric"
-      }),
-      dateString: new Date().toLocaleDateString()
-    };
+    let newColor = getAllColorInfo(hex);
+    newColor.timeAdded = new Date();
+    newColor.timeString = new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "numeric"
+    });
+    newColor.dateString = new Date().toLocaleDateString();
+    delete newColor.keyword;
+    delete newColor.shades;
 
     let topColors = [];
     let recentColors = [];
