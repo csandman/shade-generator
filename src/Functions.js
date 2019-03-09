@@ -8,13 +8,16 @@ export const getRandomHexColor = () => {
 }
 
 const isContrastDark = rgb => {
+  const isDark = getLuminance(rgb) > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
+  return isDark;
+}
+
+const getLuminance = rgb => {
   const lumRgb = rgb.map(el => {
     el = el / 255.000;
-    return el <= 0.03928 ? el / 12.92 : Math.pow((el+0.055)/1.055, 2.4);
+    return el <= 0.03928 ? el / 12.92 : ((el+0.055)/1.055) ** 2.4;
   });
-  const lum = 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
-  const isDark = lum > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
-  return isDark;
+  return 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
 }
 
 export const getContrastColor = rgb => {
