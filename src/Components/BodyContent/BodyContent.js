@@ -12,16 +12,19 @@ class BodyContent extends Component {
       >
         <div className="input-container">
           <div className="color-input">
+            <label htmlFor={"color-input-" + this.props.number}>Color code input {this.props.number}</label>
             <input
+              id={"color-input-" + this.props.number}
               name={"inputValue" + this.props.number}
               type="search"
               placeholder="Color Code (Hex, RGB, or Name)"
               onChange={this.props.handleInputChange}
+              data-number={this.props.number}
               value={this.props.inputValue}
               style={{ borderColor: this.props.colorData.contrast }}
             />
             <button
-              onClick={this.props.handleSubmit}
+              onClick={() => this.props.handleSubmit(this.props.number)}
               name={"inputValue" + this.props.number}
               data-number={this.props.number}
               style={{
@@ -48,6 +51,7 @@ class BodyContent extends Component {
                 colorDataNumber={this.props.number}
                 color={color}
                 key={color + index}
+                squareNumber={index + 1}
                 addMenuItem={this.props.addMenuItem}
               />
             );
