@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.2",
     "body-scroll-lock": "^2.6.1",
     "clipboard-polyfill": "^2.7.0",
     "color-name-list": "^3.60.0",

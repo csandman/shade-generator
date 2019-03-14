@@ -6,8 +6,8 @@ import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
-import "../../styles/fa/fontawesome.scss";
-import "../../styles/fa/solid.scss";
+import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+import "@fortawesome/fontawesome-free/scss/solid.scss";
 
 import { withFirebase } from "../Firebase";
 
@@ -133,12 +133,10 @@ class App extends Component {
   }
 
   parseURL() {
-    console.log("parse url");
     let splitUrl = window.location.pathname
       .slice(1)
       .toUpperCase()
       .split("-");
-    console.log(window.location.pathname.slice(1).split("-"));
 
     if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
       this.updateStateValues("#" + splitUrl[0], 1);
@@ -224,7 +222,6 @@ class App extends Component {
     let newPathNameArr = this.state.splitView
       ? this.state.pathnameArr.slice(0, 1)
       : [...this.state.pathnameArr, this.state.colorData2.hex.slice(1)];
-      console.log(newPathNameArr);
     this.setState(
       {
         pathnameArr: newPathNameArr,
@@ -349,7 +346,6 @@ class App extends Component {
       parse(searchTerm).hex ||
       parse("#" + searchTerm).hex ||
       searchNamedColors(searchTerm);
-    console.log(hex);
     if (hex) {
       this.updateStateValues(hex, colorNum);
       return true;
@@ -360,10 +356,7 @@ class App extends Component {
 
   updateStateValues(hex, colorNum) {
     let colorData = getAllColorInfo(hex);
-    console.log(colorData);
-    console.log(colorNum);
     if (colorNum === 1) {
-      console.log("num is one");
       const newPNA = this.state.pathnameArr;
       newPNA[0] = colorData.hex.slice(1);
       this.setState(
