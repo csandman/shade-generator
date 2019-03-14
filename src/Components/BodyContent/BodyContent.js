@@ -19,11 +19,12 @@ class BodyContent extends Component {
               type="search"
               placeholder="Color Code (Hex, RGB, or Name)"
               onChange={this.props.handleInputChange}
+              data-number={this.props.number}
               value={this.props.inputValue}
               style={{ borderColor: this.props.colorData.contrast }}
             />
             <button
-              onClick={this.props.handleSubmit}
+              onClick={() => this.props.handleSubmit(this.props.number)}
               name={"inputValue" + this.props.number}
               data-number={this.props.number}
               style={{

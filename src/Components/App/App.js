@@ -43,7 +43,8 @@ class App extends Component {
       signupOpen: false,
       splitView: false,
       splitScreenDisabled: false,
-      online: true
+      online: true,
+      pathnameArr: []
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -68,36 +69,41 @@ class App extends Component {
     window.addEventListener("resize", this.setSplitScreenAbility);
     this.setSplitScreenAbility();
 
+    let colorData1 = {};
+    let colorData2 = {};
+
     if (navigator && navigator.onLine) {
       await this.props.firebase
-      .aggRef()
-      .get()
-      .then(aggs => {
-        if (aggs.exists) {
-          let recent = aggs.data().recent;
-          recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
-          let top = aggs.data().top;
-          top.sort((a, b) => a.count > b.count);
+        .aggRef()
+        .get()
+        .then(aggs => {
+          if (aggs.exists) {
+            let recent = aggs.data().recent;
+            recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
+            colorData1 = getAllColorInfo(recent[0].hex);
+            colorData2 = getAllColorInfo(recent[1].hex);
+            let top = aggs.data().top;
+            top.sort((a, b) => a.count > b.count);
+            this.setState({
+              recentColors: recent,
+              topColors: top,
+              colorData1,
+              colorData2,
+              loading: false
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
           this.setState({
-            recentColors: recent,
-            topColors: top,
-            colorData1: getAllColorInfo(recent[0].hex),
-            colorData2: getAllColorInfo(recent[1].hex),
-            loading: false
+            colorData1: getAllColorInfo(getRandomHexColor()),
+            colorData2: getAllColorInfo(getRandomHexColor()),
+            loading: false,
+            online: false
           });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({
-          colorData1: getAllColorInfo(getRandomHexColor()),
-          colorData2: getAllColorInfo(getRandomHexColor()),
-          loading: false,
-          online: false
         });
-      });
     } else {
-      console.log("offline detected")
+      console.log("offline detected");
       this.setState({
         colorData1: getAllColorInfo(getRandomHexColor()),
         colorData2: getAllColorInfo(getRandomHexColor()),
@@ -105,6 +111,74 @@ class App extends Component {
         online: false
       });
     }
+
+    if (window.location.pathname.slice(1)) {
+      const parseSuccessful = this.parseURL();
+      if (!parseSuccessful) {
+        this.setState(
+          {
+            pathnameArr: [colorData1.hex.slice(1)]
+          },
+          () => this.updatePathname()
+        );
+      }
+    } else {
+      this.setState(
+        {
+          pathnameArr: [colorData1.hex.slice(1)]
+        },
+        () => this.updatePathname()
+      );
+    }
+  }
+
+  parseURL() {
+    console.log("parse url");
+    let splitUrl = window.location.pathname
+      .slice(1)
+      .toUpperCase()
+      .split("-");
+    console.log(window.location.pathname.slice(1).split("-"));
+
+    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
+      this.updateStateValues("#" + splitUrl[0], 1);
+      window.history.pushState(
+        {},
+        "Shade Generator",
+        window.location.pathname.slice(1)
+      );
+      return true;
+    } else if (
+      splitUrl.length === 2 &&
+      splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
+      splitUrl[1].match(/^[0-9a-f]{6}$/i)
+    ) {
+      this.updateStateValues("#" + splitUrl[0], 1);
+      this.updateStateValues("#" + splitUrl[1], 2);
+      this.setState(
+        {
+          pathnameArr: splitUrl
+        },
+        () => this.updatePathname()
+      );
+      this.setState(
+        {
+          splitView: true,
+          pathnameArr: splitUrl
+        },
+        () => this.updatePathname()
+      );
+      return true;
+    }
+    return false;
+  }
+
+  updatePathname() {
+    window.history.pushState(
+      {},
+      "Shade Generator",
+      this.state.pathnameArr.join("-")
+    );
   }
 
   setSplitScreenAbility() {
@@ -147,18 +221,26 @@ class App extends Component {
   }
 
   toggleSplitView() {
-    this.setState({
-      splitView: !this.state.splitView
-    });
+    let newPathNameArr = this.state.splitView
+      ? this.state.pathnameArr.slice(0, 1)
+      : [...this.state.pathnameArr, this.state.colorData2.hex.slice(1)];
+      console.log(newPathNameArr);
+    this.setState(
+      {
+        pathnameArr: newPathNameArr,
+        splitView: !this.state.splitView
+      },
+      () => this.updatePathname()
+    );
   }
 
   getRandomColors() {
     const randomHex1 = getRandomHexColor();
-    this.updateStateValues(randomHex1, "inputValue1");
+    this.updateStateValues(randomHex1, 1);
 
     if (this.state.splitView && this.state.splitScreenDisabled === false) {
       const randomHex2 = getRandomHexColor();
-      this.updateStateValues(randomHex2, "inputValue2");
+      this.updateStateValues(randomHex2, 2);
     }
   }
 
@@ -242,7 +324,7 @@ class App extends Component {
 
   handleEnterPress(e) {
     if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
-      this.handleSubmit({ target: { name: document.activeElement.name } });
+      this.handleSubmit(parseInt(e.target.dataset.number));
     }
     if (e.keyCode === 27) {
       this.setState({
@@ -258,8 +340,8 @@ class App extends Component {
     this.setState(newState);
   }
 
-  handleSubmit(e) {
-    const searchTerm = this.state[e.target.name]
+  handleSubmit(colorNum) {
+    const searchTerm = this.state["inputValue" + colorNum]
       .toLowerCase()
       .replace(/\s/g, "");
 
@@ -267,26 +349,46 @@ class App extends Component {
       parse(searchTerm).hex ||
       parse("#" + searchTerm).hex ||
       searchNamedColors(searchTerm);
-    if (hex) this.updateStateValues(hex, e.target.name);
+    console.log(hex);
+    if (hex) {
+      this.updateStateValues(hex, colorNum);
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  updateStateValues(hex, inputName) {
+  updateStateValues(hex, colorNum) {
     let colorData = getAllColorInfo(hex);
     console.log(colorData);
-    inputName === "inputValue1"
-      ? this.setState({
+    console.log(colorNum);
+    if (colorNum === 1) {
+      console.log("num is one");
+      const newPNA = this.state.pathnameArr;
+      newPNA[0] = colorData.hex.slice(1);
+      this.setState(
+        {
           colorData1: colorData,
-          inputValue1: colorData.hex
-        })
-      : this.setState({
+          inputValue1: colorData.hex,
+          pathnameArr: newPNA
+        },
+        () => this.updatePathname()
+      );
+    } else if (colorNum === 2) {
+      this.setState(
+        {
           colorData2: colorData,
-          inputValue2: colorData.hex
-        });
+          inputValue2: colorData.hex,
+          pathnameArr: [this.state.pathnameArr[0], colorData.hex.slice(1)]
+        },
+        () => this.updatePathname()
+      );
+    }
     this.addMenuItem(hex);
   }
 
   handleColorClick(hex, dataNum) {
-    this.updateStateValues(hex, "inputValue" + dataNum);
+    this.updateStateValues(hex, dataNum);
   }
 
   render() {
@@ -303,7 +405,6 @@ class App extends Component {
             colorDataAlt={this.state.colorData2}
             openSidebar={this.openSidebar}
             handleSignupClick={this.openSignUpModal}
-            updateStateValues={this.updateStateValues}
             splitView={this.state.splitView}
             toggleSplitView={this.toggleSplitView}
             getRandomColors={this.getRandomColors}
