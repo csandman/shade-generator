@@ -73,9 +73,11 @@ class Sidebar extends Component {
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isSearchMenuOpen = true;
     this.setState({ menuStates: newState });
+    setTimeout(() => document.getElementById("color-search").focus(), 100);
   }
 
   closeSubMenu() {
+    document.activeElement.blur();
     let newState = _.mapValues(this.state.menuStates, () => false);
     newState.isMainMenuOpen = true;
     this.setState({ menuStates: newState });
@@ -253,7 +255,7 @@ class Sidebar extends Component {
               </div>
               <label htmlFor={"color-search"}>Color search</label>
               <input
-                id={"color-search"}
+                id="color-search"
                 type="search"
                 placeholder="Search..."
                 value={this.state.searchInput}

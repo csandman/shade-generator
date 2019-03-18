@@ -4,7 +4,7 @@ import SignUp from "../SignUp";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+// import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 import "@fortawesome/fontawesome-free/scss/solid.scss";
@@ -49,7 +49,7 @@ class App extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEnterPress = this.handleEnterPress.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleColorClick = this.handleColorClick.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.openSidebar = this.openSidebar.bind(this);
@@ -65,7 +65,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    document.addEventListener("keydown", this.handleEnterPress, false);
+    document.addEventListener("keydown", this.handleKeyPress, false);
     window.addEventListener("resize", this.setSplitScreenAbility);
     this.setSplitScreenAbility();
 
@@ -194,12 +194,12 @@ class App extends Component {
 
   openSidebar() {
     this.setState({ menuIsOpen: true });
-    disableBodyScroll(document.getElementById("sidebar"));
+    // disableBodyScroll(document.getElementById("sidebar"));
   }
 
   closeSidebar() {
     this.setState({ menuIsOpen: false });
-    enableBodyScroll(document.getElementById("sidebar"));
+    // enableBodyScroll(document.getElementById("sidebar"));
   }
 
   toggleSidebar() {
@@ -319,10 +319,16 @@ class App extends Component {
     return arr.slice(0, 100);
   }
 
-  handleEnterPress(e) {
+  handleKeyPress(e) {
+    // enter press
     if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
-      this.handleSubmit(parseInt(e.target.dataset.number));
+      console.log(document.activeElement.id);
+      if (document.activeElement.id !== "color-search") {
+        this.handleSubmit(parseInt(e.target.dataset.number));
+      }
+      document.activeElement.blur();
     }
+    // esc press
     if (e.keyCode === 27) {
       this.setState({
         menuIsOpen: false,
