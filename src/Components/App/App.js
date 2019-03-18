@@ -322,7 +322,6 @@ class App extends Component {
   handleKeyPress(e) {
     // enter press
     if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
-      console.log(document.activeElement.id);
       if (document.activeElement.id !== "color-search") {
         this.handleSubmit(parseInt(e.target.dataset.number));
       }
