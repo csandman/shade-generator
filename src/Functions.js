@@ -7,6 +7,32 @@ export const getRandomHexColor = () => {
   }).join('');
 }
 
+export const getContrastColor = rgb => {
+  let contrastIsDark = isContrastDark(rgb);
+  let i = 0.01;
+  const minContrastRatio = 4.5;
+  let contrastRgb = [];
+  let contrastRatio = 0;
+  while (contrastRatio < minContrastRatio && i < 1) {
+    contrastRgb = calculateGradient(rgb, contrastIsDark, i);
+    contrastRatio = getContrastRatio(rgb, contrastRgb, contrastIsDark);
+    i += 0.01;
+  }
+  // console.log("contrast ratio", contrastRatio);
+  // console.log("background rgb", rgb);
+  // console.log("foreground rgb", contrastRgb);
+  // console.log("contrast opacity", i);
+  return rgbToHex(contrastRgb);
+}
+
+const getContrastRatio = (rgb1, rgb2, contrastIsDark) => {
+  if (contrastIsDark) {
+    return (getLuminance(rgb1) + 0.05) / (getLuminance(rgb2) + 0.05);
+  } else {
+    return (getLuminance(rgb2) + 0.05) / (getLuminance(rgb1) + 0.05);
+  }
+}
+
 const isContrastDark = rgb => {
   const isDark = getLuminance(rgb) > Math.sqrt(1.05 * 0.05) - 0.05; // ~= 0.179
   return isDark;
@@ -20,24 +46,24 @@ const getLuminance = rgb => {
   return 0.2126 * lumRgb[0] + 0.7152 * lumRgb[1] + 0.0722 * lumRgb[2];
 }
 
-export const getContrastColor = rgb => {
-  const isDark = isContrastDark(rgb)
-  return rgbToHex(...calculateGradient(rgb, isDark, 0.40));
-}
+// export const getContrastColor = rgb => {
+//   const isDark = isContrastDark(rgb)
+//   return rgbToHex(calculateGradient(rgb, isDark, 0.40));
+// }
 
 export const getOppositeContrastColor = rgb => {
   const isDark = isContrastDark(rgb)
-  return rgbToHex(...calculateGradient(rgb, !isDark, 0.30));
+  return rgbToHex(calculateGradient(rgb, !isDark, 0.30));
 }
 
 export const getHighContrastColor = rgb => {
   const isDark = isContrastDark(rgb)
-  return rgbToHex(...calculateGradient(rgb, isDark, 0.70));
+  return rgbToHex(calculateGradient(rgb, isDark, 0.70));
 }
 
 export const getLowContrastColor = rgb => {
   const isDark = isContrastDark(rgb)
-  return rgbToHex(...calculateGradient(rgb, isDark, 0.20));
+  return rgbToHex(calculateGradient(rgb, isDark, 0.20));
 }
 
 export const searchNamedColors = searchTerm => {
@@ -57,7 +83,8 @@ export const getColorName = hex => {
   return nearest(hex).name;
 }
 
-export const rgbToHex = (r, g, b) => {
+export const rgbToHex = rgb => {
+  const [r, g, b] = rgb;
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
     
@@ -80,10 +107,10 @@ const parse = require('parse-color');
 export const calcAllGradients = rgb => {
   let gradientArr = [];
   for (let opac = 90; opac >= 5; opac-=5) {
-    gradientArr.push(parse(rgbToHex(...calculateGradient(rgb,false,opac/100))));
+    gradientArr.push(parse(rgbToHex(calculateGradient(rgb,false,opac/100))));
   }
   for (let opac = 5; opac <= 90; opac+=5) {
-    gradientArr.push(parse(rgbToHex(...calculateGradient(rgb,true,opac/100))));
+    gradientArr.push(parse(rgbToHex(calculateGradient(rgb,true,opac/100))));
   }
   return gradientArr;
 }
