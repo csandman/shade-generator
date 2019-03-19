@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import namedColors from "color-name-list";
 import "./Sidebar.scss";
@@ -14,9 +14,7 @@ const Sidebar = props => {
   };
 
   const [searchInput, updateSearchInput] = useState("");
-  const [colorNameList, updateColorNameList] = useState(
-    getInitialColorNameList()
-  );
+  const [colorNameList, updateColorNameList] = useState([]);
   const [menuStates, updateMenuStates] = useState({
     isMainMenuOpen: true,
     isHistoryMenuOpen: false,
@@ -24,23 +22,29 @@ const Sidebar = props => {
     isTopColorsMenuOpen: false
   });
 
+  useEffect(() => updateColorNameList(getInitialColorNameList()), []);
+
   const searchColorNames = e => {
     updateSearchInput(e.target.value);
-    updateColorNameList(
-      namedColors
-        .filter(
-          el =>
-            el.name
-              .toLowerCase()
-              .replace(/\s/g, "")
-              .indexOf(e.target.value.toLowerCase().replace(/\s/g, "")) >= 0
-        )
-        .slice(0, 500)
-        .map(el => {
-          el.contrast = getContrastColor(hexToRgb(el.hex));
-          return el;
-        })
-    );
+    let newColorArr = [];
+    let index = 0;
+    while (newColorArr.length < 500 && index < namedColors.length) {
+      if (
+        namedColors[index]
+          .name
+          .replace(/\s/g, "")
+          .toLowerCase()
+          .indexOf(e.target.value.replace(/\s/g, "").toLowerCase()) >= 0
+      ) {
+        newColorArr.push(namedColors[index]);
+      }
+      index++;
+    }
+    newColorArr.map(el => {
+      el.contrast = getContrastColor(hexToRgb(el.hex));
+      return el;
+    });
+    updateColorNameList(newColorArr);
   };
 
   const openColorHistory = () => {
