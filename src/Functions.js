@@ -18,10 +18,6 @@ export const getContrastColor = rgb => {
     contrastRatio = getContrastRatio(rgb, contrastRgb, contrastIsDark);
     i += 0.01;
   }
-  // console.log("contrast ratio", contrastRatio);
-  // console.log("background rgb", rgb);
-  // console.log("foreground rgb", contrastRgb);
-  // console.log("contrast opacity", i);
   return rgbToHex(contrastRgb);
 }
 
