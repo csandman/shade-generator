@@ -71,14 +71,13 @@ const Header = props => {
       <div className="right-content">
         <div className="button-section">
           <div
-            className="icon-button"
+            className="icon-button random-button"
             onClick={props.getRandomColors}
             style={
               !props.splitView || props.splitScreenDisabled
                 ? {
                     borderColor: props.colorData.contrast,
-                    color: props.colorData.contrast,
-                    backgroundColor: props.colorData.oppositeContrast
+                    color: props.colorData.contrast
                   }
                 : {}
             }
@@ -93,18 +92,31 @@ const Header = props => {
                   : {}
               }
             />
-            Random
+            <span
+              className="random-button-text"
+              style={
+                !props.splitView || props.splitScreenDisabled
+                  ? {
+                      borderColor: props.colorData.contrast,
+                      color: props.colorData.contrast
+                    }
+                  : {}
+              }
+            >
+              Random
+            </span>
           </div>
 
           <div
-            className={"icon-button" + (props.splitView ? " active" : "")}
+            className={
+              "icon-button split-button" + (props.splitView ? " active" : "")
+            }
             onClick={props.toggleSplitView}
             style={
               !props.splitView || props.splitScreenDisabled
                 ? {
                     borderColor: props.colorData.contrast,
-                    color: props.colorData.contrast,
-                    backgroundColor: props.colorData.oppositeContrast
+                    color: props.colorData.contrast
                   }
                 : {}
             }
@@ -119,7 +131,18 @@ const Header = props => {
                   : {}
               }
             />
-            Split View
+            <span
+              style={
+                !props.splitView || props.splitScreenDisabled
+                  ? {
+                      borderColor: props.colorData.contrast,
+                      color: props.colorData.contrast
+                    }
+                  : {}
+              }
+            >
+              Split View
+            </span>
           </div>
         </div>
         <HamburgerButton

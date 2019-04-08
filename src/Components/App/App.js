@@ -48,20 +48,6 @@ class App extends Component {
       pathnameArr: []
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleColorClick = this.handleColorClick.bind(this);
-    this.openSignUpModal = this.openSignUpModal.bind(this);
-    this.openSidebar = this.openSidebar.bind(this);
-    this.closeSidebar = this.closeSidebar.bind(this);
-    this.closeSignUpModal = this.closeSignUpModal.bind(this);
-    this.updateStateValues = this.updateStateValues.bind(this);
-    this.toggleSplitView = this.toggleSplitView.bind(this);
-    this.getRandomColors = this.getRandomColors.bind(this);
-    this.toggleSidebar = this.toggleSidebar.bind(this);
-    this.handleColorClick = this.handleColorClick.bind(this);
-    this.setSplitScreenAbility = this.setSplitScreenAbility.bind(this);
     this.addMenuItem = this.addMenuItem.bind(this);
   }
 
@@ -133,115 +119,6 @@ class App extends Component {
     }
   }
 
-  parseURL() {
-    let splitUrl = window.location.pathname
-      .slice(1)
-      .toUpperCase()
-      .split("-");
-
-    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
-      this.updateStateValues("#" + splitUrl[0], 1);
-      window.history.pushState(
-        {},
-        "Shade Generator",
-        window.location.pathname.slice(1)
-      );
-      return true;
-    } else if (
-      splitUrl.length === 2 &&
-      splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
-      splitUrl[1].match(/^[0-9a-f]{6}$/i)
-    ) {
-      this.updateStateValues("#" + splitUrl[0], 1);
-      this.updateStateValues("#" + splitUrl[1], 2);
-      this.setState(
-        {
-          pathnameArr: splitUrl
-        },
-        () => this.updatePathname()
-      );
-      this.setState(
-        {
-          splitView: true,
-          pathnameArr: splitUrl
-        },
-        () => this.updatePathname()
-      );
-      return true;
-    }
-    return false;
-  }
-
-  updatePathname() {
-    window.history.pushState(
-      {},
-      "Shade Generator",
-      this.state.pathnameArr.join("-")
-    );
-  }
-
-  setSplitScreenAbility() {
-    const width = window.innerWidth;
-    if (width <= 600) {
-      this.setState({
-        splitScreenDisabled: true
-      });
-    } else {
-      this.setState({
-        splitScreenDisabled: false
-      });
-    }
-  }
-
-  openSidebar() {
-    this.setState({ menuIsOpen: true });
-    // disableBodyScroll(document.getElementById("sidebar"));
-  }
-
-  closeSidebar() {
-    this.setState({ menuIsOpen: false });
-    // enableBodyScroll(document.getElementById("sidebar"));
-  }
-
-  toggleSidebar() {
-    this.state.menuIsOpen ? this.closeSidebar() : this.openSidebar();
-  }
-
-  openSignUpModal() {
-    this.setState({
-      signupOpen: true
-    });
-  }
-
-  closeSignUpModal() {
-    this.setState({
-      signupOpen: false
-    });
-  }
-
-  toggleSplitView() {
-    let newPathNameArr = this.state.splitView
-      ? this.state.pathnameArr.slice(0, 1)
-      : [...this.state.pathnameArr, this.state.colorData2.hex.slice(1)];
-    this.setState(
-      {
-        pathnameArr: newPathNameArr,
-        splitView: !this.state.splitView
-      },
-      () => this.updatePathname()
-    );
-  }
-
-  getRandomColors() {
-    const randomHex1 = getRandomHexColor();
-    this.updateStateValues(randomHex1, 1);
-
-    if (this.state.splitView && this.state.splitScreenDisabled === false) {
-      const randomHex2 = getRandomHexColor();
-      this.updateStateValues(randomHex2, 2);
-    }
-  }
-
   async addMenuItem(hex) {
     if (this.state.online) {
       let newColor = getAllColorInfo(hex);
@@ -296,7 +173,116 @@ class App extends Component {
     }
   }
 
-  getMostPopularArray(arr, el) {
+  parseURL = () => {
+    let splitUrl = window.location.pathname
+      .slice(1)
+      .toUpperCase()
+      .split("-");
+
+    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
+      this.updateStateValues("#" + splitUrl[0], 1);
+      window.history.pushState(
+        {},
+        "Shade Generator",
+        window.location.pathname.slice(1)
+      );
+      return true;
+    } else if (
+      splitUrl.length === 2 &&
+      splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
+      splitUrl[1].match(/^[0-9a-f]{6}$/i)
+    ) {
+      this.updateStateValues("#" + splitUrl[0], 1);
+      this.updateStateValues("#" + splitUrl[1], 2);
+      this.setState(
+        {
+          pathnameArr: splitUrl
+        },
+        () => this.updatePathname()
+      );
+      this.setState(
+        {
+          splitView: true,
+          pathnameArr: splitUrl
+        },
+        () => this.updatePathname()
+      );
+      return true;
+    }
+    return false;
+  };
+
+  updatePathname = () => {
+    window.history.pushState(
+      {},
+      "Shade Generator",
+      this.state.pathnameArr.join("-")
+    );
+  };
+
+  setSplitScreenAbility = () => {
+    const width = window.innerWidth;
+    if (width <= 600) {
+      this.setState({
+        splitScreenDisabled: true
+      });
+    } else {
+      this.setState({
+        splitScreenDisabled: false
+      });
+    }
+  };
+
+  openSidebar = () => {
+    this.setState({ menuIsOpen: true });
+    // disableBodyScroll(document.getElementById("sidebar"));
+  };
+
+  closeSidebar = () => {
+    this.setState({ menuIsOpen: false });
+    // enableBodyScroll(document.getElementById("sidebar"));
+  };
+
+  toggleSidebar = () => {
+    this.state.menuIsOpen ? this.closeSidebar() : this.openSidebar();
+  };
+
+  openSignUpModal = () => {
+    this.setState({
+      signupOpen: true
+    });
+  };
+
+  closeSignUpModal = () => {
+    this.setState({
+      signupOpen: false
+    });
+  };
+
+  toggleSplitView = () => {
+    let newPathNameArr = this.state.splitView
+      ? this.state.pathnameArr.slice(0, 1)
+      : [...this.state.pathnameArr, this.state.colorData2.hex.slice(1)];
+    this.setState(
+      {
+        pathnameArr: newPathNameArr,
+        splitView: !this.state.splitView
+      },
+      () => this.updatePathname()
+    );
+  };
+
+  getRandomColors = () => {
+    const randomHex1 = getRandomHexColor();
+    this.updateStateValues(randomHex1, 1);
+
+    if (this.state.splitView && this.state.splitScreenDisabled === false) {
+      const randomHex2 = getRandomHexColor();
+      this.updateStateValues(randomHex2, 2);
+    }
+  };
+
+  getMostPopularArray = (arr, el) => {
     let isPopular = false;
     arr = arr.filter(color => color.hex !== el.hex);
     arr.sort((a, b) => a.count > b.count);
@@ -311,16 +297,16 @@ class App extends Component {
       arr.push(el);
     }
     return arr;
-  }
+  };
 
-  getMostRecentArray(arr, el) {
+  getMostRecentArray = (arr, el) => {
     arr = arr.filter(color => color.hex !== el.hex);
     arr.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
     arr.unshift(el);
     return arr.slice(0, 100);
-  }
+  };
 
-  handleKeyPress(e) {
+  handleKeyPress = e => {
     // enter press
     if (e.keyCode === 13 && document.activeElement.tagName === "INPUT") {
       if (document.activeElement.id !== "color-search") {
@@ -335,15 +321,15 @@ class App extends Component {
         signupOpen: false
       });
     }
-  }
+  };
 
-  handleInputChange(event) {
+  handleInputChange = event => {
     let newState = {};
     newState[event.target.name] = event.target.value;
     this.setState(newState);
-  }
+  };
 
-  handleSubmit(colorNum) {
+  handleSubmit = colorNum => {
     const searchTerm = this.state["inputValue" + colorNum]
       .toLowerCase()
       .replace(/\s/g, "");
@@ -358,9 +344,9 @@ class App extends Component {
     } else {
       return false;
     }
-  }
+  };
 
-  updateStateValues(hex, colorNum) {
+  updateStateValues = (hex, colorNum) => {
     let colorData = getAllColorInfo(hex);
     if (colorNum === 1) {
       const newPNA = this.state.pathnameArr;
@@ -384,11 +370,11 @@ class App extends Component {
       );
     }
     this.addMenuItem(hex);
-  }
+  };
 
-  handleColorClick(hex, dataNum) {
+  handleColorClick = (hex, dataNum) => {
     this.updateStateValues(hex, dataNum);
-  }
+  };
 
   render() {
     return (

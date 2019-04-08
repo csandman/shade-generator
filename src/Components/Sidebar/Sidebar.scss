@@ -74,14 +74,8 @@
       display: none;
       border-bottom: 3px solid $contrast;
 
-      @media only screen and (max-width: 900px) {
+      @media only screen and (max-width: 900px) and (min-width: 600px) {
         display: block;
-      }
-
-      .split-view {
-        @media only screen and (max-width: 600px) {
-          display: none;
-        }
       }
     }
 

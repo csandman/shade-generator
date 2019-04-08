@@ -88,10 +88,6 @@ const Sidebar = props => {
           }
         >
           <div className="secondary-main-menu">
-            <div className="main-menu-item" onClick={props.getRandomColors}>
-              <i className="icon fas fa-random" />
-              <span>Random Colors</span>
-            </div>
             <div
               className="main-menu-item split-view"
               onClick={props.toggleSplitView}

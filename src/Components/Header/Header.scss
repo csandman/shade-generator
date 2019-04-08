@@ -92,7 +92,6 @@
     font-weight: 600;
     border: 2px solid $contrast;
     color: $contrast;
-    background-color: $opposite-contrast;
 
     &.active {
       color: $opposite-contrast;
@@ -104,9 +103,12 @@
     }
 
     i {
-      margin-right: 10px;
       font-size: 1.4rem;
       color: $contrast;
+    }
+
+    span {
+      margin-left: 10px;
     }
   }
 
@@ -121,13 +123,9 @@
   }
 
   @media only screen and (max-width: 900px) {
-    .button-section {
+    .split-button {
       display: none;
-    }
-
-    .bars.big.icon {
-      margin-left: 0;
-    }
+    }    
   }
 
   @media only screen and (max-width: 650px) {
@@ -151,6 +149,37 @@
       display: inline-flex;
       align-items: center;
       margin-right: 1rem;
+
+      .button-section {
+        margin-right: 1rem;
+      }
+  
+      .bars.big.icon {
+        margin-left: 0;
+      }
+  
+      .icon-button {
+        margin: 0;
+        padding: 6px 7px;
+
+        .random-button-text {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 370px) {
+    .left-content {
+      .icon {
+        display: none;
+      }
+    }
+
+    .right-content {
+      .button-section {
+        margin-right: .5rem;
+      }
     }
   }
 }
