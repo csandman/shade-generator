@@ -34,10 +34,10 @@
     right: 0;
     top: 5rem;
     bottom: 0;
-    width: 24rem;
+    width: 30rem;
     max-width: 100vw;
     z-index: 1500;
-    transform: translateX();
+    transform: none;
     transition: 300ms ease-out transform;
     will-change: tranform;
 
@@ -61,7 +61,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    transform: translateX(0);
+    transform: none;
     display: flex;
     flex-direction: column;
     background-color: $color;
@@ -244,4 +244,40 @@
 
 .footer-left {
   left: 6px;
+}
+
+.footer-row {
+  height: 6rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  
+  .icon {
+    font-size: 3rem;
+    color: $high-contrast;
+    transition: 300ms color linear;
+    cursor: pointer;
+
+    &:hover {
+      color: $contrast;
+    }
+  }
+}
+
+.help-menu-content {
+  color: $high-contrast;
+  padding: 0 1.25rem;
+
+  h4 {
+    font-size: 1.8rem;
+    margin: 2rem 0 .5rem 0;
+  }
+
+  p {
+    margin: 0 0 1rem 0;
+    font-size: 1.4rem;
+  }
 }

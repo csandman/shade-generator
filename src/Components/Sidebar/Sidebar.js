@@ -19,7 +19,8 @@ const Sidebar = props => {
     isMainMenuOpen: true,
     isHistoryMenuOpen: false,
     isSearchMenuOpen: false,
-    isTopColorsMenuOpen: false
+    isTopColorsMenuOpen: false,
+    isHelpMenuOpen: false
   });
 
   useEffect(() => updateColorNameList(getInitialColorNameList()), []);
@@ -30,8 +31,7 @@ const Sidebar = props => {
     let index = 0;
     while (newColorArr.length < 500 && index < namedColors.length) {
       if (
-        namedColors[index]
-          .name
+        namedColors[index].name
           .replace(/\s/g, "")
           .toLowerCase()
           .indexOf(e.target.value.replace(/\s/g, "").toLowerCase()) >= 0
@@ -64,6 +64,12 @@ const Sidebar = props => {
     newState.isSearchMenuOpen = true;
     updateMenuStates(newState);
     setTimeout(() => document.getElementById("color-search").focus(), 100);
+  };
+
+  const openHelpMenu = () => {
+    let newState = _.mapValues(menuStates, () => false);
+    newState.isHelpMenuOpen = true;
+    updateMenuStates(newState);
   };
 
   const closeSubMenu = () => {
@@ -109,6 +115,19 @@ const Sidebar = props => {
           <div className="main-menu-item" onClick={openColorSearch}>
             <i className="icon fas fa-search" />
             <span>Search Colors</span>
+          </div>
+          <div className="main-menu-item" onClick={openHelpMenu}>
+            <i className="icon fas fa-question-circle" />
+            <span>Help</span>
+          </div>
+          <div className="footer-row">
+            <a
+              href="https://github.com/csandman/shade-generator"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <i className="icon fab fa-github" />
+            </a>
           </div>
         </div>
         <div
@@ -260,6 +279,86 @@ const Sidebar = props => {
                 );
               })}
             </div>
+          </div>
+        </div>
+
+        <div
+          className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}
+          id="color-search-menu"
+        >
+          <div onClick={closeSubMenu} className="sub-menu-header">
+            <i className="icon fas fa-arrow-left" />
+            <span>Help</span>
+          </div>
+
+          <div className="sub-menu-content">
+            <section className="help-menu-content">
+              <h4>What is this?</h4>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
+              <h4>What is this?</h4>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
+              <h4>What is this?</h4>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
+              <h4>What is this?</h4>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
+              <h4>What is this?</h4>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
+            </section>
           </div>
         </div>
       </div>
