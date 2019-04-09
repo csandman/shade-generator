@@ -4,6 +4,7 @@ import SignUp from "../SignUp";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
+import ReactGA from 'react-ga';
 // import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
@@ -52,6 +53,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+    ReactGA.event({
+      category: 'Connection',
+      action: 'Connected to Shade Generator'
+    });
+
     document.addEventListener("keydown", this.handleKeyPress, false);
     window.addEventListener("resize", this.setSplitScreenAbility);
     this.setSplitScreenAbility();
@@ -235,11 +242,19 @@ class App extends Component {
 
   openSidebar = () => {
     this.setState({ menuIsOpen: true });
+    ReactGA.event({
+      category: 'Button Press',
+      action: 'Open sidebar'
+    });
     // disableBodyScroll(document.getElementById("sidebar"));
   };
 
   closeSidebar = () => {
     this.setState({ menuIsOpen: false });
+    ReactGA.event({
+      category: 'Button Press',
+      action: 'Close sidebar'
+    });
     // enableBodyScroll(document.getElementById("sidebar"));
   };
 
@@ -273,6 +288,10 @@ class App extends Component {
   };
 
   getRandomColors = () => {
+    ReactGA.event({
+      category: 'Button Press',
+      action: 'Random color button'
+    });
     const randomHex1 = getRandomHexColor();
     this.updateStateValues(randomHex1, 1);
 
