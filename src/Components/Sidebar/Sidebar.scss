@@ -50,7 +50,7 @@
       width: 100vw;
     }
 
-    * {
+    > * {
       transition: 300ms ease-out transform;
     }
   }
@@ -252,7 +252,7 @@
   .icon {
     font-size: 3rem;
     color: $high-contrast;
-    transition: 300ms color linear;
+    transition: 60ms color linear;
     cursor: pointer;
 
     &:hover {
@@ -270,8 +270,21 @@
     margin: 2rem 0 .5rem 0;
   }
 
+  h5 {
+    font-size: 1.5rem;
+    margin: 1.2rem 0 .25rem 0;
+  }
+
   p {
     margin: 0 0 1rem 0;
     font-size: 1.4rem;
+  }
+
+  a {
+    color: $high-contrast;
+  }
+
+  ul {
+    padding-left: 1.4rem;
   }
 }
