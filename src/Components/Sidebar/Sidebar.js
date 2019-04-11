@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import namedColors from "color-name-list";
+import PlusButton from "../PlusButton";
 import "./Sidebar.scss";
 
 import { getContrastColor, hexToRgb } from "../../Functions";
@@ -23,7 +24,25 @@ const Sidebar = props => {
     isHelpMenuOpen: false
   });
 
+  const [accordianStates, updateAccordianStates] = useState({
+    colorParserOpen: false,
+    copyToClipboardOpen: false,
+    colorNamesOpen: false,
+    randomColorsOpen: false,
+    colorHistoryOpen: false,
+    offlineCapabilityOpen: false,
+    splitScreenOpen: false
+  });
+
   useEffect(() => updateColorNameList(getInitialColorNameList()), []);
+
+  const toggleAccordianState = accordianID => {
+    let newAccordianStates = accordianStates;
+    newAccordianStates[accordianID + "Open"] = !accordianStates[
+      accordianID + "Open"
+    ];
+    updateAccordianStates(newAccordianStates);
+  };
 
   const searchColorNames = e => {
     updateSearchInput(e.target.value);
@@ -320,7 +339,6 @@ const Sidebar = props => {
                 </a>
                 . I immediately realized calculating the colors I wanted was
                 possible with this very simple formula...
-                
               </p>
               <p className="italic">to be continued...</p>
               <h4>Features</h4>
@@ -329,40 +347,60 @@ const Sidebar = props => {
                 adding in some cool additional features. Some served a purpose,
                 some just for fun.
               </p>
-              <h5>Color Parser</h5>
-              <p>
-                One of the first things I added was the NPM package{" "}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://www.npmjs.com/package/parse-color"
-                >
-                  parse-color
-                </a>
-                . It takes a string and parses it for its color values in many
-                different formats. It can parse colors from hex values, rgb
-                values, css named colors, and cymk formats. The result is an
-                object that has the following components:
-              </p>
-              <ul>
-                <li>rgb - an array of [ red, green, blue ]</li>
-                <li>hsl - an array of [ hue, saturation, luminosity ]</li>
-                <li>hsv - an array of [ hue, saturation, value ]</li>
-                <li>cmyk - an array of [ cyan, magenta, yellow, blac(k) ]</li>
-                <li>keyword - the name of the color, if known</li>
-                <li>hex - the hex rgb string #rrggbb</li>
-                <li>rgba - rgb plus an alpha value</li>
-                <li>hsla - hsl plus an alpha value</li>
-                <li>hsva - hsv plus an alpha value</li>
-                <li>cmyka - cmyk plus an alpha value</li>
-              </ul>
-              <p>
-                This was useful, not only to interpret input from the user but
-                also for providing hex and rgb values, both of which are
-                important to this app's functionality. After scrubbing the user
-                input before passing it to this function, it does a great job of
-                matching everything you'd expect it to!
-              </p>
+              <h5
+                id="colorParser"
+                onClick={e => {
+                  console.log("click", e.target.id);
+                  toggleAccordianState(e.target.id);
+                  console.log(accordianStates);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.colorParserOpen}
+                />
+                Color Parser
+              </h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.colorParserOpen ? "" : " closed")
+                }
+              >
+                <p>
+                  One of the first things I added was the NPM package{" "}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.npmjs.com/package/parse-color"
+                  >
+                    parse-color
+                  </a>
+                  . It takes a string and parses it for its color values in many
+                  different formats. It can parse colors from hex values, rgb
+                  values, css named colors, and cymk formats. The result is an
+                  object that has the following components:
+                </p>
+                <ul>
+                  <li>rgb - an array of [ red, green, blue ]</li>
+                  <li>hsl - an array of [ hue, saturation, luminosity ]</li>
+                  <li>hsv - an array of [ hue, saturation, value ]</li>
+                  <li>cmyk - an array of [ cyan, magenta, yellow, blac(k) ]</li>
+                  <li>keyword - the name of the color, if known</li>
+                  <li>hex - the hex rgb string #rrggbb</li>
+                  <li>rgba - rgb plus an alpha value</li>
+                  <li>hsla - hsl plus an alpha value</li>
+                  <li>hsva - hsv plus an alpha value</li>
+                  <li>cmyka - cmyk plus an alpha value</li>
+                </ul>
+                <p>
+                  This was useful, not only to interpret input from the user but
+                  also for providing hex and rgb values, both of which are
+                  important to this app's functionality. After scrubbing the
+                  user input before passing it to this function, it does a great
+                  job of matching everything you'd expect it to!
+                </p>
+              </div>
               <h5>Copy to Clipboard</h5>
               <p>
                 The next main thing I added was the option to click to copy
@@ -383,7 +421,10 @@ const Sidebar = props => {
                 copying would work on all devices and browser the clipboard is
                 accessible in!
               </p>
-              <h5>Color Names</h5>
+              <h5>
+                <PlusButton color="#bdbdbd" />
+                Color Names
+              </h5>
               <p>
                 Now that the basic features were in place, it was time to have
                 some fun! I decided that the page was a little too plain so I

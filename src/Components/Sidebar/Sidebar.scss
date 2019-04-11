@@ -273,11 +273,23 @@
   h5 {
     font-size: 1.5rem;
     margin: 1.2rem 0 .25rem 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
   }
 
   p {
     margin: 0 0 1rem 0;
     font-size: 1.4rem;
+  }
+
+  .feature-container {
+    height: auto;
+    overflow: hidden;
+
+    &.closed {
+      height: 0;
+    }
   }
 
   a {
@@ -296,5 +308,9 @@
     font-size: 1.3rem;
     background-color: $opposite-contrast;
     padding: .1rem .3rem;
+  }
+
+  .plus-button {
+    margin-right: 1rem;
   }
 }

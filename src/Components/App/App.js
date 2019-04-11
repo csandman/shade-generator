@@ -417,12 +417,12 @@ class App extends Component {
             splitScreenDisabled={this.state.splitScreenDisabled}
           />
           <Sidebar
+            colorData={this.state.colorData1}
             isOpen={this.state.menuIsOpen}
             closeSidebar={this.closeSidebar}
             menuItems={this.state.recentColors}
             topColors={this.state.topColors}
             handleColorClick={this.handleColorClick}
-            baseColor={this.state.baseColor}
             addMenuItem={this.addMenuItem}
             getRandomColors={this.getRandomColors}
             toggleSplitView={this.toggleSplitView}
