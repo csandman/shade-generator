@@ -1,18 +1,15 @@
-
-
 * {
   box-sizing: border-box;
   font-family: "Nunito", sans-serif;
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
+*:focus {
+  outline: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
 
 html {
   font-size: 14px;
@@ -27,7 +24,7 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration,
 input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance:none;
+  -webkit-appearance: none;
 }
 
 input, input:before, input:after {
@@ -36,7 +33,7 @@ input, input:before, input:after {
   -moz-user-select: initial;
   -ms-user-select: initial;
   user-select: initial;
- } 
+}
 
 #App {
   transition: 150ms background-color ease-in-out;
@@ -58,22 +55,23 @@ button {
 .button-group {
   margin: 1rem !important;
   display: flex !important;
-  > * {
-    margin: 0 !important;
-    border-radius: 0 !important;
-    border-width: 2px 0 2px 2px !important;
+}
 
-    &:first-child {
-      border-top-left-radius: 5px !important;
-      border-bottom-left-radius: 5px !important;
-    }
+.button-group > * {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border-width: 2px 0 2px 2px !important;
+}
 
-    &:last-child {
-      border-top-right-radius: 5px !important;
-      border-bottom-right-radius: 5px !important;
-      border-right-width: 2px !important;
-    }
-  }
+.button-group > *:first-child {
+  border-top-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+}
+
+.button-group > *:last-child {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+  border-right-width: 2px !important;
 }
 
 .page {
@@ -122,7 +120,6 @@ label {
   .page {
     padding-top: 4rem;
   }
-
   .content-background {
     min-height: calc(100vh - 4rem);
   }
