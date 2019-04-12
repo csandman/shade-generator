@@ -37,11 +37,9 @@ const Sidebar = props => {
   useEffect(() => updateColorNameList(getInitialColorNameList()), []);
 
   const toggleAccordianState = accordianID => {
-    let newAccordianStates = accordianStates;
-    newAccordianStates[accordianID + "Open"] = !accordianStates[
-      accordianID + "Open"
-    ];
-    updateAccordianStates(newAccordianStates);
+    let newState = {}
+    newState[`${accordianID}Open`] = !accordianStates[`${accordianID}Open`];
+    updateAccordianStates({...accordianStates, ...newState });
   };
 
   const searchColorNames = e => {
