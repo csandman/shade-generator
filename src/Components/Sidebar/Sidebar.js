@@ -65,35 +65,25 @@ const Sidebar = props => {
   };
 
   const openColorHistory = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isHistoryMenuOpen = true;
-    updateMenuStates(newState);
+    updateMenuStates({...menuStates, isHistoryMenuOpen: true});
   };
 
   const openTopColorsMenu = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isTopColorsMenuOpen = true;
-    updateMenuStates(newState);
+    updateMenuStates({...menuStates, isTopColorsMenuOpen: true});
   };
 
   const openColorSearch = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isSearchMenuOpen = true;
-    updateMenuStates(newState);
+    updateMenuStates({...menuStates, isSearchMenuOpen: true});
     setTimeout(() => document.getElementById("color-search").focus(), 100);
   };
 
   const openHelpMenu = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isHelpMenuOpen = true;
-    updateMenuStates(newState);
+    updateMenuStates({...menuStates, isHelpMenuOpen: true});
   };
 
   const closeSubMenu = () => {
     document.activeElement.blur();
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isMainMenuOpen = true;
-    updateMenuStates(newState);
+    updateMenuStates({menuStates, isMainMenuOpen: true});
   };
 
   return (
