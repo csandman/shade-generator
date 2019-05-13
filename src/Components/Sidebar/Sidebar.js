@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
 import namedColors from "color-name-list";
 import PlusButton from "../PlusButton";
 import "./Sidebar.scss";
@@ -37,11 +36,10 @@ const Sidebar = props => {
   useEffect(() => updateColorNameList(getInitialColorNameList()), []);
 
   const toggleAccordianState = accordianID => {
-    let newAccordianStates = accordianStates;
-    newAccordianStates[accordianID + "Open"] = !accordianStates[
-      accordianID + "Open"
-    ];
-    updateAccordianStates(newAccordianStates);
+    let newState = {}
+    Object.keys(accordianStates).forEach(key => newState[key] = accordianStates[key])
+    newState[`${accordianID}Open`] = !accordianStates[`${accordianID}Open`];
+    updateAccordianStates(newState);
   };
 
   const searchColorNames = e => {
@@ -67,35 +65,29 @@ const Sidebar = props => {
   };
 
   const openColorHistory = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isHistoryMenuOpen = true;
-    updateMenuStates(newState);
+    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
+    updateMenuStates({...newMenuStates, isHistoryMenuOpen: true});
   };
 
   const openTopColorsMenu = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isTopColorsMenuOpen = true;
-    updateMenuStates(newState);
+    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
+    updateMenuStates({...newMenuStates, isTopColorsMenuOpen: true});
   };
 
   const openColorSearch = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isSearchMenuOpen = true;
-    updateMenuStates(newState);
+    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
+    updateMenuStates({...newMenuStates, isSearchMenuOpen: true});
     setTimeout(() => document.getElementById("color-search").focus(), 100);
   };
 
   const openHelpMenu = () => {
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isHelpMenuOpen = true;
-    updateMenuStates(newState);
+    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
+    updateMenuStates({...newMenuStates, isHelpMenuOpen: true});
   };
 
   const closeSubMenu = () => {
     document.activeElement.blur();
-    let newState = _.mapValues(menuStates, () => false);
-    newState.isMainMenuOpen = true;
-    updateMenuStates(newState);
+    updateMenuStates({menuStates, isMainMenuOpen: true});
   };
 
   return (
