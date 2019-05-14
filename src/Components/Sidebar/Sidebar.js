@@ -36,8 +36,11 @@ const Sidebar = props => {
   useEffect(() => updateColorNameList(getInitialColorNameList()), []);
 
   const toggleAccordianState = accordianID => {
-    let newState = {}
-    Object.keys(accordianStates).forEach(key => newState[key] = accordianStates[key])
+    console.log("toggle accordian state", accordianID);
+    let newState = {};
+    Object.keys(accordianStates).forEach(
+      key => (newState[key] = accordianStates[key])
+    );
     newState[`${accordianID}Open`] = !accordianStates[`${accordianID}Open`];
     updateAccordianStates(newState);
   };
@@ -65,29 +68,37 @@ const Sidebar = props => {
   };
 
   const openColorHistory = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
-    updateMenuStates({...newMenuStates, isHistoryMenuOpen: true});
+    const newMenuStates = Object.keys(menuStates).forEach(
+      key => (menuStates[key] = false)
+    );
+    updateMenuStates({ ...newMenuStates, isHistoryMenuOpen: true });
   };
 
   const openTopColorsMenu = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
-    updateMenuStates({...newMenuStates, isTopColorsMenuOpen: true});
+    const newMenuStates = Object.keys(menuStates).forEach(
+      key => (menuStates[key] = false)
+    );
+    updateMenuStates({ ...newMenuStates, isTopColorsMenuOpen: true });
   };
 
   const openColorSearch = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
-    updateMenuStates({...newMenuStates, isSearchMenuOpen: true});
+    const newMenuStates = Object.keys(menuStates).forEach(
+      key => (menuStates[key] = false)
+    );
+    updateMenuStates({ ...newMenuStates, isSearchMenuOpen: true });
     setTimeout(() => document.getElementById("color-search").focus(), 100);
   };
 
   const openHelpMenu = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(key => menuStates[key] = false)
-    updateMenuStates({...newMenuStates, isHelpMenuOpen: true});
+    const newMenuStates = Object.keys(menuStates).forEach(
+      key => (menuStates[key] = false)
+    );
+    updateMenuStates({ ...newMenuStates, isHelpMenuOpen: true });
   };
 
   const closeSubMenu = () => {
     document.activeElement.blur();
-    updateMenuStates({menuStates, isMainMenuOpen: true});
+    updateMenuStates({ menuStates, isMainMenuOpen: true });
   };
 
   return (
@@ -342,9 +353,8 @@ const Sidebar = props => {
               <h5
                 id="colorParser"
                 onClick={e => {
-                  console.log("click", e.target.id);
-                  toggleAccordianState(e.target.id);
-                  console.log(accordianStates);
+                  console.log(e);
+                  toggleAccordianState(e.currentTarget.id);
                 }}
               >
                 <PlusButton
@@ -393,75 +403,125 @@ const Sidebar = props => {
                   job of matching everything you'd expect it to!
                 </p>
               </div>
-              <h5>Copy to Clipboard</h5>
-              <p>
-                The next main thing I added was the option to click to copy
-                either the hex code or the rgb code to your clipboard. The first
-                two things I tried were{" "}
-                <code>document.execCommand("copy")</code> and{" "}
-                <code>navigator.clipboard.write())</code>. Both of these options
-                worked but I ran into issued with them working on all devices. I
-                soon stumbled upon a nice small NPM package called{" "}
-                <a
-                  href="https://www.npmjs.com/package/clipboard-polyfill"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  clipboard-polyfill
-                </a>
-                . It is nice and compact and gave me a convenient way to ensure
-                copying would work on all devices and browser the clipboard is
-                accessible in!
-              </p>
-              <h5>
-                <PlusButton color="#bdbdbd" />
+              <h5
+                id="copyToClipboard"
+                onClick={e => {
+                  toggleAccordianState(e.currentTarget.id);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.copyToClipboardOpen}
+                />
+                Copy to Clipboard
+              </h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.copyToClipboardOpen ? "" : " closed")
+                }
+              >
+                <p>
+                  The next main thing I added was the option to click to copy
+                  either the hex code or the rgb code to your clipboard. The
+                  first two things I tried were{" "}
+                  <code>document.execCommand("copy")</code> and{" "}
+                  <code>navigator.clipboard.write()</code>. Both of these
+                  options worked but I ran into issued with them working on all
+                  devices. I soon stumbled upon a nice small NPM package called{" "}
+                  <a
+                    href="https://www.npmjs.com/package/clipboard-polyfill"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    clipboard-polyfill
+                  </a>
+                  . It is nice and compact and gave me a convenient way to
+                  ensure copying would work on all devices and browser the
+                  clipboard is accessible in!
+                </p>
+              </div>
+              <h5
+                id="colorNames"
+                onClick={e => {
+                  toggleAccordianState(e.currentTarget.id);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.colorNamesOpen}
+                />
                 Color Names
               </h5>
-              <p>
-                Now that the basic features were in place, it was time to have
-                some fun! I decided that the page was a little too plain so I
-                thought I would add some names for the colors. The first library
-                I added for this is called{" "}
-                <a
-                  href="https://www.npmjs.com/package/color-namer"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  color-namer
-                </a>
-                . It appealed to me because of the fact that it offered a
-                combination of multiple lists of colors including CSS colors,
-                X11, Pantone, and NTC.
-              </p>
-              <p>
-                After running into some problems with this package (I can't
-                quite remember what) I decided to keep looking around. Somehow I
-                missed the amazing package{" "}
-                <a
-                  href="https://www.npmjs.com/package/color-name-list"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  color-name-list
-                </a>
-                . It contains a whopping 18,000+ (and growing) color list which
-                combines over 15 different sources of color names along with
-                thousands of user submission. While this list is massive, it
-                still only contains 0.11% of the total possible RGB combinations
-                so in order to match all colors so in order to match it to an
-                input color, I used the package{" "}
-                <a
-                  href="https://www.npmjs.com/package/nearest-color"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  nearest-color
-                </a>
-                . This matches the color the user enters with the closest color
-                from the list, and due to the magnitude of color-name-list, it's
-                usually pretty damn close!
-              </p>
-              <h5>Random Colors</h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.colorNamesOpen ? "" : " closed")
+                }
+              >
+                <p>
+                  Now that the basic features were in place, it was time to have
+                  some fun! I decided that the page was a little too plain so I
+                  thought I would add some names for the colors. The first
+                  library I added for this is called{" "}
+                  <a
+                    href="https://www.npmjs.com/package/color-namer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    color-namer
+                  </a>
+                  . It appealed to me because of the fact that it offered a
+                  combination of multiple lists of colors including CSS colors,
+                  X11, Pantone, and NTC.
+                </p>
+                <p>
+                  After running into some problems with this package (I can't
+                  quite remember what) I decided to keep looking around. Somehow
+                  I missed the amazing package{" "}
+                  <a
+                    href="https://www.npmjs.com/package/color-name-list"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    color-name-list
+                  </a>
+                  . It contains a whopping 18,000+ (and growing) color list
+                  which combines over 15 different sources of color names along
+                  with thousands of user submission. While this list is massive,
+                  it still only contains 0.11% of the total possible RGB
+                  combinations so in order to match all colors so in order to
+                  match it to an input color, I used the package{" "}
+                  <a
+                    href="https://www.npmjs.com/package/nearest-color"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    nearest-color
+                  </a>
+                  . This matches the color the user enters with the closest
+                  color from the list, and due to the magnitude of
+                  color-name-list, it's usually pretty damn close!
+                </p>
+              </div>
+              <h5
+                id="randomColors"
+                onClick={e => {
+                  toggleAccordianState(e.currentTarget.id);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.randomColorsOpen}
+                />
+                Random Colors
+              </h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.randomColorsOpen ? "" : " closed")
+                }
+              >
               <p>
                 So now I have the main functionality I want and a little
                 pizzazz, I realized I needed a faster way to test the app. So I
@@ -474,7 +534,25 @@ const Sidebar = props => {
                 something stands out to me. And I still get a kick out some of
                 these names.
               </p>
-              <h5>Color History</h5>
+              </div>
+              <h5
+                id="colorHistory"
+                onClick={e => {
+                  toggleAccordianState(e.currentTarget.id);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.colorHistoryOpen}
+                />
+                Color History
+              </h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.colorHistoryOpen ? "" : " closed")
+                }
+              >
               <p>
                 This was a feature that I added more for the experience than an
                 it actually providing much value. I had been wanting to mess
@@ -497,10 +575,47 @@ const Sidebar = props => {
                 bootstrapping a project that requires storing data, I highly
                 recommend giving Firebase a shot
               </p>
-              <h5>Offline Capability</h5>
+              </div>
+              <h5
+                id="offlineCapability"
+                onClick={e => {
+                  toggleAccordianState(e.currentTarget.id);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.offlineCapabilityOpen}
+                />
+                Offline Capability
+              </h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.offlineCapabilityOpen ? "" : " closed")
+                }
+              >
               <p className="italic">work in progress...</p>
-              <h5>Split Screen</h5>
+              </div>
+              <h5
+                id="splitScreen"
+                onClick={e => {
+                  toggleAccordianState(e.currentTarget.id);
+                }}
+              >
+                <PlusButton
+                  color="#bdbdbd"
+                  open={accordianStates.splitScreenOpen}
+                />
+                Split Screen
+              </h5>
+              <div
+                className={
+                  "feature-container" +
+                  (accordianStates.splitScreenOpen ? "" : " closed")
+                }
+              >
               <p className="italic">work in progress...</p>
+              </div>
             </section>
           </div>
         </div>
