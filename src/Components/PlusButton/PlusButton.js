@@ -2,7 +2,6 @@ import React from "react";
 import "./PlusButton.scss";
 
 const PlusButton = props => {
-  console.log(props);
 
   return (
     <div

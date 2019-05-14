@@ -4,7 +4,7 @@ import SignUp from "../SignUp";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga";
 // import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
@@ -52,71 +52,73 @@ class App extends Component {
     this.addMenuItem = this.addMenuItem.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     ReactGA.initialize(process.env.REACT_APP_GA_CODE);
     ReactGA.event({
-      category: 'Connection',
-      action: 'Connected to Shade Generator'
+      category: "Connection",
+      action: "Connected to Shade Generator"
     });
 
     document.addEventListener("keydown", this.handleKeyPress, false);
     window.addEventListener("resize", this.setSplitScreenAbility);
     this.setSplitScreenAbility();
 
-    let colorData1 = {};
-    let colorData2 = {};
-
     if (navigator && navigator.onLine) {
-      await this.props.firebase
-        .aggRef()
-        .get()
-        .then(aggs => {
-          if (aggs.exists) {
-            let recent = aggs.data().recent;
-            recent.sort((a, b) => a.timeAdded.seconds > b.timeAdded.seconds);
-            colorData1 = getAllColorInfo(recent[0].hex);
-            colorData2 = getAllColorInfo(recent[1].hex);
-            let top = aggs.data().top;
-            top.sort((a, b) => a.count > b.count);
-            this.setState({
-              recentColors: recent,
-              topColors: top,
-              colorData1,
-              colorData2,
-              loading: false
-            });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          this.setState({
-            colorData1: getAllColorInfo(getRandomHexColor()),
-            colorData2: getAllColorInfo(getRandomHexColor()),
-            loading: false,
-            online: false
+      this.props.firebase
+        .colorHistory()
+        .orderBy("timeAdded", "desc")
+        .limit(100)
+        .onSnapshot(querySnapshot => {
+          let data = querySnapshot.docs.map(doc => {
+            let out = doc.data();
+            out.id = doc.id;
+            return out;
           });
+          this.setState({
+            recentColors: data,
+            loading: false
+          });
+          return true;
+        });
+
+      this.props.firebase
+        .colorHistory()
+        .orderBy("count", "desc")
+        .limit(100)
+        .onSnapshot(querySnapshot => {
+          let data = querySnapshot.docs.map(doc => {
+            let out = doc.data();
+            out.id = doc.id;
+            return out;
+          });
+          this.setState({
+            topColors: data
+          });
+          return true;
         });
     } else {
       console.log("offline detected");
       this.setState({
-        colorData1: getAllColorInfo(getRandomHexColor()),
-        colorData2: getAllColorInfo(getRandomHexColor()),
         loading: false,
         online: false
       });
     }
 
+    const colorData1 = getAllColorInfo(getRandomHexColor());
+    const colorData2 = getAllColorInfo(getRandomHexColor());
+    this.setState({
+      colorData1,
+      colorData2,
+      pathnameArr: [colorData1.hex.slice(1)]
+    });
+
+    let parseSuccessful = false;
+
     if (window.location.pathname.slice(1)) {
-      const parseSuccessful = this.parseURL();
-      if (!parseSuccessful) {
-        this.setState(
-          {
-            pathnameArr: [colorData1.hex.slice(1)]
-          },
-          () => this.updatePathname()
-        );
-      }
-    } else {
+      parseSuccessful = this.parseURL();
+    }
+
+    if (!parseSuccessful) {
       this.setState(
         {
           pathnameArr: [colorData1.hex.slice(1)]
@@ -126,7 +128,7 @@ class App extends Component {
     }
   }
 
-  async addMenuItem(hex) {
+  addMenuItem(hex) {
     if (this.state.online) {
       let newColor = getAllColorInfo(hex);
       newColor.timeAdded = new Date();
@@ -138,45 +140,19 @@ class App extends Component {
       delete newColor.keyword;
       delete newColor.shades;
 
-      let topColors = [];
-      let recentColors = [];
-      let colorRecord = {};
-
-      let aggsRef = this.props.firebase.aggRef();
       let colorRef = this.props.firebase.db
         .collection("color-history")
         .doc(newColor.hex);
 
-      await this.props.firebase.db
-        .runTransaction(async transaction => {
-          let aggs = await transaction.get(aggsRef);
-          colorRecord = await transaction.get(colorRef);
-
-          if (colorRecord.exists) {
-            newColor.count = (colorRecord.data().count || 0) + 1;
-            await transaction.update(colorRef, { count: newColor.count });
-          } else {
-            newColor.count = 1;
-            await transaction.set(colorRef, newColor);
-          }
-
-          topColors = this.getMostPopularArray(aggs.data().top, newColor);
-          recentColors = this.getMostRecentArray(aggs.data().recent, newColor);
-
-          transaction.update(aggsRef, {
-            top: topColors,
-            recent: recentColors
-          });
-        })
-        .then(() => {
-          this.setState({
-            topColors: topColors,
-            recentColors: recentColors
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      colorRef.get().then(colorRecord => {
+        if (colorRecord.exists) {
+          newColor.count = (colorRecord.data().count || 0) + 1;
+          colorRef.update({ ...newColor, count: newColor.count });
+        } else {
+          newColor.count = 1;
+          colorRef.set(newColor);
+        }
+      });
     }
   }
 
@@ -243,8 +219,8 @@ class App extends Component {
   openSidebar = () => {
     this.setState({ menuIsOpen: true });
     ReactGA.event({
-      category: 'Button Press',
-      action: 'Open sidebar'
+      category: "Button Press",
+      action: "Open sidebar"
     });
     // disableBodyScroll(document.getElementById("sidebar"));
   };
@@ -252,8 +228,8 @@ class App extends Component {
   closeSidebar = () => {
     this.setState({ menuIsOpen: false });
     ReactGA.event({
-      category: 'Button Press',
-      action: 'Close sidebar'
+      category: "Button Press",
+      action: "Close sidebar"
     });
     // enableBodyScroll(document.getElementById("sidebar"));
   };
@@ -289,8 +265,8 @@ class App extends Component {
 
   getRandomColors = () => {
     ReactGA.event({
-      category: 'Button Press',
-      action: 'Random color button'
+      category: "Button Press",
+      action: "Random color button"
     });
     const randomHex1 = getRandomHexColor();
     this.updateStateValues(randomHex1, 1);
