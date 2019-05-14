@@ -2,11 +2,11 @@
 
 Shade Generator aims to provide a quick and easy way to generate the shades and tints of the colors you use in all of your web development and design projects.
 
-It's very easy to use.  Just enter the color you would like to get shades for and the site does the rest.  Hover over the shade you want the color code for (tap on mobile) and click on the format you would like to copy to your clipboard.  If you want some inspiration, check out the sidebar where you can see the most popularly used colors as well as a the most recent.  You can also view the list of named colors to get a broad range of color inspiration.
+It's very easy to use.  Just enter the color you would like to get shades for (accepts hex, css names, rgb, and more) and the site does the rest.  Hover over the shade you want the color code for (tap on mobile) and click on the format you would like to copy to your clipboard.  If you want some inspiration, check out the sidebar where you can see the most popularly used colors as well as a the most recent.  You can also view the list of named colors to get a broad range of color inspiration.
 
 ![](github/demo_small.gif)
 
-## The Story behind Shade Generator (AKA the boring part)
+## The Story behind Shade Generator (a.k.a. the boring part)
 Shade generator is a project that started as a codepen a couple years ago. The idea behind it was simple, when you overlap a color with a transparent white or black section, you end up with a tint or shade of that color. As many people do in web development, I would often use this trick to create a contrasting color effect for button hovers or element borders. This got annoying because in order to make the effect work, I would need two elements on the screen for the overlap where I often only needed one. So, I decided to make a little tool to help me find the color codes for this resulting shade by giving me a variety of overlapping icons with the color I was plannibg on using as the background. However it was still not the most convenient because I had to use a chrome plugin called ColorZilla to get the actual code of the resulting color, however I could not think of a better way. Finally, after using this tool hundreds of times I finally thought, there must be some way to calculate this resulting color!
 
 After a quick google search, I found this link. I immediately realized calculating the colors I wanted was possible with this very simple formula...
