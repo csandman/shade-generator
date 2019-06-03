@@ -3,19 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.8.1",
+    "@fortawesome/fontawesome-free": "^5.8.2",
     "body-scroll-lock": "^2.6.1",
-    "clipboard-polyfill": "^2.8.0",
-    "color-name-list": "^4.2.0",
-    "firebase": "^5.9.3",
+    "clipboard-polyfill": "^2.8.1",
+    "color-name-list": "^4.7.1",
+    "firebase": "^6.1.0",
     "nearest-color": "^0.4.4",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "parse-color": "^1.0.0",
     "react": "^16.8.6",
     "react-dnd": "^7.4.5",
     "react-dom": "^16.8.6",
     "react-ga": "^2.5.7",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "^3.0.1",
     "react-tippy": "^1.2.3"
   },
   "scripts": {
@@ -32,5 +32,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^3.5.1"
+  }
 }
