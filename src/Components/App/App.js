@@ -5,7 +5,6 @@ import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
 import ReactGA from "react-ga";
-// import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "./App.scss";
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 import "@fortawesome/fontawesome-free/scss/solid.scss";

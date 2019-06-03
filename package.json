@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
-    "body-scroll-lock": "^2.6.1",
     "clipboard-polyfill": "^2.8.1",
     "color-name-list": "^4.7.1",
     "firebase": "^6.1.0",
