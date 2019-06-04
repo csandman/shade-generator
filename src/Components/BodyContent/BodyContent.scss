@@ -1,3 +1,13 @@
+.content-background {
+  min-height: calc(100vh - 5rem);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms linear;
+  will-change: background-color;
+}
+
 .body-content {
   .input-container {
     width: 100%;

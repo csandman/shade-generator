@@ -5,15 +5,18 @@ import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
 
 const ColorSquare = props => {
+
+  const { rgb, hex } = props.color;
+  const rgbStr = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
   const copyHexCode = e => {
-    const output = props.color.hex;
+    const output = hex.toUpperCase();
     clipboard.writeText(output);
     changeButtonText(e.target, "Copied!");
   };
 
   const copyRgb = e => {
-    const rgb = props.color.rgb;
-    const output = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+    const output = rgbStr;
     clipboard.writeText(output);
     changeButtonText(e.target, "Copied!");
   };
@@ -41,29 +44,23 @@ const ColorSquare = props => {
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">
               <button onClick={copyHexCode}>
-                {props.color.hex.toUpperCase()}
+                {hex.toUpperCase()}
               </button>
             </div>
             <div className="popup-button">
               <button onClick={copyRgb}>
-                {"rgb: (" +
-                  props.color.rgb[0] +
-                  ", " +
-                  props.color.rgb[1] +
-                  ", " +
-                  props.color.rgb[2] +
-                  ")"}
+                {rgbStr}
               </button>
             </div>
           </div>
         }
       >
         <div
-          style={{ backgroundColor: props.color.hex }}
+          style={{ backgroundColor: hex }}
           className="color-tile"
           id={"tippy-tooltip-" + props.squareNumber}
           onClick={() => {
-            props.handleColorClick(props.color.hex, props.colorDataNumber);
+            props.handleColorClick(hex, props.bodyNum);
           }}
         />
       </Tooltip>

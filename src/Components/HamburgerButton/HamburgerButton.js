@@ -18,4 +18,4 @@ const HamburgerButton = props => {
   );
 };
 
-export default HamburgerButton;
+export default React.memo(HamburgerButton);

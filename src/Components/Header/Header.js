@@ -7,7 +7,7 @@ const Header = props => {
     <div
       id="header"
       style={
-        !props.splitView || props.splitScreenDisabled
+        !props.splitView || props.splitViewDisabled
           ? {
               borderColor: props.colorData.contrast,
               backgroundColor: props.colorData.hex
@@ -21,7 +21,7 @@ const Header = props => {
             <div
               style={{
                 backgroundColor:
-                  props.splitView && !props.splitScreenDisabled
+                  props.splitView && !props.splitViewDisabled
                     ? "#7a7a7a"
                     : props.colorData.shades[10].hex
               }}
@@ -30,7 +30,7 @@ const Header = props => {
             <div
               style={{
                 backgroundColor:
-                  props.splitView && !props.splitScreenDisabled
+                  props.splitView && !props.splitViewDisabled
                     ? "#000"
                     : props.colorData.shades[24].hex
               }}
@@ -39,7 +39,7 @@ const Header = props => {
             <div
               style={{
                 backgroundColor:
-                  props.splitView && !props.splitScreenDisabled
+                  props.splitView && !props.splitViewDisabled
                     ? "#000"
                     : props.colorData.shades[24].hex
               }}
@@ -48,7 +48,7 @@ const Header = props => {
             <div
               style={{
                 backgroundColor:
-                  props.splitView && !props.splitScreenDisabled
+                  props.splitView && !props.splitViewDisabled
                     ? "#7a7a7a"
                     : props.colorData.shades[10].hex
               }}
@@ -58,7 +58,7 @@ const Header = props => {
         )}
         <h1
           style={
-            !props.splitView || props.splitScreenDisabled
+            !props.splitView || props.splitViewDisabled
               ? {
                   color: props.colorData.contrast
                 }
@@ -74,7 +74,7 @@ const Header = props => {
             className="icon-button random-button"
             onClick={props.getRandomColors}
             style={
-              !props.splitView || props.splitScreenDisabled
+              !props.splitView || props.splitViewDisabled
                 ? {
                     borderColor: props.colorData.contrast,
                     color: props.colorData.contrast
@@ -85,7 +85,7 @@ const Header = props => {
             <i
               className="fas fa-random"
               style={
-                !props.splitView || props.splitScreenDisabled
+                !props.splitView || props.splitViewDisabled
                   ? {
                       color: props.colorData.contrast
                     }
@@ -95,7 +95,7 @@ const Header = props => {
             <span
               className="random-button-text"
               style={
-                !props.splitView || props.splitScreenDisabled
+                !props.splitView || props.splitViewDisabled
                   ? {
                       borderColor: props.colorData.contrast,
                       color: props.colorData.contrast
@@ -113,7 +113,7 @@ const Header = props => {
             }
             onClick={props.toggleSplitView}
             style={
-              !props.splitView || props.splitScreenDisabled
+              !props.splitView || props.splitViewDisabled
                 ? {
                     borderColor: props.colorData.contrast,
                     color: props.colorData.contrast
@@ -124,7 +124,7 @@ const Header = props => {
             <i
               className="fas fa-columns"
               style={
-                !props.splitView || props.splitScreenDisabled
+                !props.splitView || props.splitViewDisabled
                   ? {
                       color: props.colorData.contrast
                     }
@@ -133,7 +133,7 @@ const Header = props => {
             />
             <span
               style={
-                !props.splitView || props.splitScreenDisabled
+                !props.splitView || props.splitViewDisabled
                   ? {
                       borderColor: props.colorData.contrast,
                       color: props.colorData.contrast
@@ -150,7 +150,7 @@ const Header = props => {
           open={props.menuIsOpen}
           action={props.toggleSidebar}
           color={
-            !props.splitView || props.splitScreenDisabled
+            !props.splitView || props.splitViewDisabled
               ? props.colorData.contrast
               : "#7a7a7a"
           }

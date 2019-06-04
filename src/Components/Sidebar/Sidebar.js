@@ -30,7 +30,7 @@ const Sidebar = props => {
     randomColorsOpen: false,
     colorHistoryOpen: false,
     offlineCapabilityOpen: false,
-    splitScreenOpen: false
+    splitViewOpen: false
   });
 
   useEffect(() => updateColorNameList(getInitialColorNameList()), []);
@@ -597,21 +597,21 @@ const Sidebar = props => {
               <p className="italic">work in progress...</p>
               </div>
               <h5
-                id="splitScreen"
+                id="splitView"
                 onClick={e => {
                   toggleAccordianState(e.currentTarget.id);
                 }}
               >
                 <PlusButton
                   color="#bdbdbd"
-                  open={accordianStates.splitScreenOpen}
+                  open={accordianStates.splitViewOpen}
                 />
                 Split Screen
               </h5>
               <div
                 className={
                   "feature-container" +
-                  (accordianStates.splitScreenOpen ? "" : " closed")
+                  (accordianStates.splitViewOpen ? "" : " closed")
                 }
               >
               <p className="italic">work in progress...</p>

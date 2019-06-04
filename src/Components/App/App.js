@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useCallback
+} from "react";
 import { useEventListener } from "../../Hooks";
 import { useOnline } from "react-browser-hooks";
 import Header from "../Header";
@@ -21,7 +26,7 @@ import {
 
 const parse = require("parse-color");
 
-function isSplitScreenDisabled() {
+function issplitViewDisabled() {
   const width = window.innerWidth;
   if (width <= 600) {
     return true;
@@ -31,25 +36,25 @@ function isSplitScreenDisabled() {
 }
 
 const App = props => {
-  console.log('app')
+  console.log("app");
 
-  const [inputVals, setInputVals] = useState({
-    inputValue1: '',
-    inputValue2: ''
-  });
   const [colorData1, setColorData1] = useState(
     getAllColorInfo(getRandomHexColor())
   );
   const [colorData2, setColorData2] = useState(
     getAllColorInfo(getRandomHexColor())
   );
+  const [inputVals, setInputVals] = useState({
+    inputValue1: "",
+    inputValue2: ""
+  });
   const [loading, setLoading] = useState(true);
   const [recentColors, setRecentColors] = useState([]);
   const [topColors, setTopColors] = useState([]);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [splitView, setSplitView] = useState(false);
-  const [splitScreenDisabled, setSplitScreenDisabled] = useState(
-    isSplitScreenDisabled()
+  const [splitViewDisabled, setsplitViewDisabled] = useState(
+    issplitViewDisabled()
   );
   const online = useOnline();
   const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
@@ -100,17 +105,16 @@ const App = props => {
       parseSuccessful = parseURL();
     }
     if (!parseSuccessful) {
-      setPathnameArr([colorData1.hex.slice(1)])
+      setPathnameArr([colorData1.hex.slice(1)]);
     }
   }, []);
 
   const handleResize = useCallback(
     ({ clientX, clientY }) => {
-      setSplitScreenDisabled(isSplitScreenDisabled());
+      setsplitViewDisabled(issplitViewDisabled());
     },
-    [setSplitScreenDisabled]
+    [setsplitViewDisabled]
   );
-
 
   function handleKeyPress(e) {
     if (e.code === "Enter" && document.activeElement.tagName === "INPUT") {
@@ -122,10 +126,10 @@ const App = props => {
     if (e.code === "Escape") {
       setMenuIsOpen(false);
     }
-  };
+  }
 
   useEventListener("resize", handleResize);
-  useEventListener("keypress", handleKeyPress);
+  // useEventListener("keypress", handleKeyPress);
 
   function addMenuItem(hex) {
     if (online) {
@@ -177,11 +181,11 @@ const App = props => {
       updateStateValues("#" + splitUrl[0], 1);
       updateStateValues("#" + splitUrl[1], 2);
       setSplitView(true);
-      setPathnameArr(splitUrl)
+      setPathnameArr(splitUrl);
       return true;
     }
     return false;
-  };
+  }
 
   useLayoutEffect(() => {
     window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
@@ -223,7 +227,7 @@ const App = props => {
     const randomHex1 = getRandomHexColor();
     updateStateValues(randomHex1, 1);
 
-    if (splitView && splitScreenDisabled === false) {
+    if (splitView && splitViewDisabled === false) {
       const randomHex2 = getRandomHexColor();
       updateStateValues(randomHex2, 2);
     }
@@ -236,7 +240,7 @@ const App = props => {
     setInputVals({
       ...inputVals,
       ...newState
-    })
+    });
   };
 
   //TODO
@@ -273,7 +277,7 @@ const App = props => {
       setInputVals({
         ...inputVals,
         inputValue2: colorData.hex
-      })
+      });
       setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
     }
     addMenuItem(hex);
@@ -294,7 +298,7 @@ const App = props => {
           getRandomColors={getRandomColors}
           menuIsOpen={menuIsOpen}
           toggleSidebar={toggleSidebar}
-          splitScreenDisabled={splitScreenDisabled}
+          splitViewDisabled={splitViewDisabled}
         />
         <Sidebar
           isOpen={menuIsOpen}
@@ -307,42 +311,30 @@ const App = props => {
         />
 
         <div className="page">
-          <div
-            className="content-background"
-            style={{ backgroundColor: colorData1.hex }}
-          >
+          <BodyContent
+            handleInputChange={handleInputChange}
+            inputValue={inputVals.inputValue1}
+            handleSubmit={handleSubmit}
+            colorData={colorData1}
+            bodyNum={1}
+            splitView={splitView}
+            handleColorClick={handleColorClick}
+            splitViewDisabled={splitViewDisabled}
+          />
+          {splitView && !splitViewDisabled && (
             <BodyContent
+              style={{
+                borderLeft: "2px solid" + colorData1.contrast
+              }}
               handleInputChange={handleInputChange}
-              inputValue={inputVals.inputValue1}
+              inputValue={inputVals.inputValue2}
               handleSubmit={handleSubmit}
-              colorData={colorData1}
-              number={1}
+              colorData={colorData2}
+              bodyNum={2}
               splitView={splitView}
               handleColorClick={handleColorClick}
-              splitScreenDisabled={splitScreenDisabled}
-              addMenuItem={addMenuItem}
+              splitViewDisabled={splitViewDisabled}
             />
-          </div>
-          {splitView && !splitScreenDisabled && (
-            <div
-              className="content-background"
-              style={{ backgroundColor: colorData2.hex }}
-            >
-              <BodyContent
-                style={{
-                  borderLeft: "2px solid" + colorData1.contrast
-                }}
-                handleInputChange={handleInputChange}
-                inputValue={inputVals.inputValue2}
-                handleSubmit={handleSubmit}
-                colorData={colorData2}
-                number={2}
-                splitView={splitView}
-                handleColorClick={handleColorClick}
-                splitScreenDisabled={splitScreenDisabled}
-                addMenuItem={addMenuItem}
-              />
-            </div>
           )}
         </div>
       </div>
