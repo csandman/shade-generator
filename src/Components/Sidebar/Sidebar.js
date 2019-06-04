@@ -7,7 +7,7 @@ import { getContrastColor, hexToRgb } from "../../Functions";
 
 const Sidebar = props => {
   const getInitialColorNameList = () => {
-    return namedColors.slice(0, 500).map(el => {
+    return namedColors.slice(0, 200).map(el => {
       el.contrast = getContrastColor(hexToRgb(el.hex));
       return el;
     });
@@ -49,7 +49,7 @@ const Sidebar = props => {
     updateSearchInput(e.target.value);
     let newColorArr = [];
     let index = 0;
-    while (newColorArr.length < 500 && index < namedColors.length) {
+    while (newColorArr.length < 200 && index < namedColors.length) {
       if (
         namedColors[index].name
           .replace(/\s/g, "")

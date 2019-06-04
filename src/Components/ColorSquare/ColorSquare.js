@@ -71,4 +71,4 @@ const ColorSquare = props => {
   );
 };
 
-export default ColorSquare;
+export default React.memo(ColorSquare);

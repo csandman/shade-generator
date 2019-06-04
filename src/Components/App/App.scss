@@ -112,6 +112,7 @@ label {
   align-items: center;
   justify-content: center;
   transition: background-color 200ms linear;
+  will-change: background-color;
 }
 
 .italic {
