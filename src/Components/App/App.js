@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useLayoutEffect,
   useCallback
 } from "react";
 import { useEventListener } from "../../Hooks";
@@ -49,8 +48,7 @@ const App = props => {
     inputValue2: ""
   });
   const [loading, setLoading] = useState(true);
-  const [recentColors, setRecentColors] = useState([]);
-  const [topColors, setTopColors] = useState([]);
+  
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [splitView, setSplitView] = useState(false);
   const [splitViewDisabled, setsplitViewDisabled] = useState(
@@ -67,34 +65,7 @@ const App = props => {
         action: "Connected to Shade Generator"
       });
 
-      props.firebase
-        .colorHistory()
-        .orderBy("timeAdded", "desc")
-        .limit(40)
-        .onSnapshot(querySnapshot => {
-          let data = querySnapshot.docs.map(doc => {
-            let out = doc.data();
-            out.id = doc.id;
-            return out;
-          });
-          setRecentColors(data);
-          setLoading(false);
-          return true;
-        });
-
-      props.firebase
-        .colorHistory()
-        .orderBy("count", "desc")
-        .limit(40)
-        .onSnapshot(querySnapshot => {
-          let data = querySnapshot.docs.map(doc => {
-            let out = doc.data();
-            out.id = doc.id;
-            return out;
-          });
-          setTopColors(data);
-          return true;
-        });
+      
     } else {
       console.log("offline detected");
       setLoading(false);
@@ -107,6 +78,7 @@ const App = props => {
     if (!parseSuccessful) {
       setPathnameArr([colorData1.hex.slice(1)]);
     }
+    setLoading(false);
   }, []);
 
   const handleResize = useCallback(
@@ -129,7 +101,7 @@ const App = props => {
   }
 
   useEventListener("resize", handleResize);
-  // useEventListener("keypress", handleKeyPress);
+  useEventListener("keypress", handleKeyPress);
 
   function addMenuItem(hex) {
     if (online) {
@@ -187,9 +159,11 @@ const App = props => {
     return false;
   }
 
-  useLayoutEffect(() => {
+
+
+  useEffect(() => {
     window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
-  }, [pathnameArr]);
+  }, [pathnameArr, pathnameArr[0]]);
 
   const openSidebar = () => {
     setMenuIsOpen(true);
@@ -303,11 +277,8 @@ const App = props => {
         <Sidebar
           isOpen={menuIsOpen}
           closeSidebar={closeSidebar}
-          menuItems={recentColors}
-          topColors={topColors}
           handleColorClick={handleColorClick}
           toggleSplitView={toggleSplitView}
-          online={online}
         />
 
         <div className="page">
