@@ -1,7 +1,9 @@
 import React, {
   useState,
   useEffect,
-  useCallback
+  useCallback,
+  useContext,
+  useMemo
 } from "react";
 import { useEventListener } from "../../Hooks";
 import { useOnline } from "react-browser-hooks";
@@ -14,8 +16,8 @@ import "./App.scss";
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 import "@fortawesome/fontawesome-free/scss/solid.scss";
 import "@fortawesome/fontawesome-free/scss/brands.scss";
-
 import { withFirebase } from "../Firebase";
+import InputUpdater from '../InputUpdater/InputUpdater';
 
 import {
   searchNamedColors,
@@ -35,7 +37,6 @@ function issplitViewDisabled() {
 }
 
 const App = props => {
-  console.log("app");
 
   const [colorData1, setColorData1] = useState(
     getAllColorInfo(getRandomHexColor())
@@ -43,10 +44,6 @@ const App = props => {
   const [colorData2, setColorData2] = useState(
     getAllColorInfo(getRandomHexColor())
   );
-  const [inputVals, setInputVals] = useState({
-    inputValue1: "",
-    inputValue2: ""
-  });
   const [loading, setLoading] = useState(true);
   
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -56,6 +53,9 @@ const App = props => {
   );
   const online = useOnline();
   const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
+
+  const [curInputNum, setCurInputNum] = useState(1);
+  const [curInputVal, setCurInputVal] = useState(colorData1.hex);
 
   useEffect(() => {
     if (online) {
@@ -89,12 +89,6 @@ const App = props => {
   );
 
   function handleKeyPress(e) {
-    if (e.code === "Enter" && document.activeElement.tagName === "INPUT") {
-      if (document.activeElement.id !== "color-search") {
-        handleSubmit(parseInt(e.target.dataset.number));
-      }
-      document.activeElement.blur();
-    }
     if (e.code === "Escape") {
       setMenuIsOpen(false);
     }
@@ -207,19 +201,9 @@ const App = props => {
     }
   };
 
-  // TODO
-  const handleInputChange = event => {
-    let newState = {};
-    newState[event.target.name] = event.target.value;
-    setInputVals({
-      ...inputVals,
-      ...newState
-    });
-  };
-
   //TODO
-  const handleSubmit = colorNum => {
-    const searchTerm = inputVals["inputValue" + colorNum]
+  const handleSubmit = (inputNum, inputVal) => {
+    const searchTerm = inputVal
       .toLowerCase()
       .replace(/\s/g, "");
 
@@ -228,7 +212,7 @@ const App = props => {
       parse("#" + searchTerm).hex ||
       searchNamedColors(searchTerm);
     if (hex) {
-      updateStateValues(hex, colorNum);
+      updateStateValues(hex, inputNum);
       return true;
     } else {
       return false;
@@ -241,19 +225,15 @@ const App = props => {
       const newPNA = pathnameArr;
       newPNA[0] = colorData.hex.slice(1);
       setColorData1(colorData);
-      setInputVals({
-        ...inputVals,
-        inputValue1: colorData.hex
-      });
       setPathnameArr(newPNA);
     } else if (colorNum === 2) {
       setColorData2(colorData);
-      setInputVals({
-        ...inputVals,
-        inputValue2: colorData.hex
-      });
       setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
     }
+    // TODO
+    // useInputUpdate(colorNum, hex);
+    setCurInputVal(hex);
+    setCurInputNum(colorNum);
     addMenuItem(hex);
   };
 
@@ -263,6 +243,7 @@ const App = props => {
 
   return (
     <div id="App" style={{ backgroundColor: colorData1.hex }}>
+      <InputUpdater inputNum={curInputNum} inputValue={curInputVal} />
       <LoadingScreen show={loading} />
       <div>
         <Header
@@ -283,8 +264,6 @@ const App = props => {
 
         <div className="page">
           <BodyContent
-            handleInputChange={handleInputChange}
-            inputValue={inputVals.inputValue1}
             handleSubmit={handleSubmit}
             colorData={colorData1}
             bodyNum={1}
@@ -297,8 +276,6 @@ const App = props => {
               style={{
                 borderLeft: "2px solid" + colorData1.contrast
               }}
-              handleInputChange={handleInputChange}
-              inputValue={inputVals.inputValue2}
               handleSubmit={handleSubmit}
               colorData={colorData2}
               bodyNum={2}

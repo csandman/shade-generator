@@ -1,5 +1,6 @@
 import React from "react";
 import ColorSquare from "../ColorSquare";
+import ColorInput from "../ColorInput";
 import "./BodyContent.scss";
 
 const BodyContent = props => {
@@ -16,32 +17,13 @@ const BodyContent = props => {
         }
       >
         <div className="input-container">
-          <div className="color-input">
-            <label htmlFor={"color-input-" + props.bodyNum}>
-              Color code input {props.bodyNum}
-            </label>
-            <input
-              name={"inputValue" + props.bodyNum}
-              type="search"
-              placeholder="Color Code (Hex, RGB, or Name)"
-              onChange={props.handleInputChange}
-              data-number={props.bodyNum}
-              value={props.inputValue}
-              style={{ borderColor: props.colorData.contrast }}
-            />
-            <button
-              onClick={() => props.handleSubmit(props.bodyNum)}
-              name={"inputValue" + props.bodyNum}
-              data-number={props.bodyNum}
-              style={{
-                borderColor: props.colorData.contrast,
-                backgroundColor: props.colorData.contrast,
-                color: props.colorData.oppositeContrast
-              }}
-            >
-              GO
-            </button>
-          </div>
+          <ColorInput 
+            handleInputChange={props.handleInputChange}
+            handleSubmit={props.handleSubmit}
+            inputValue={props.inputValue}
+            bodyNum={props.bodyNum}
+            contrast={props.colorData.contrast}
+            oppositeContrast={props.colorData.oppositeContrast} />
           <div
             className="color-name"
             style={{ color: props.colorData.contrast }}

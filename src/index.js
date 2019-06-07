@@ -4,10 +4,14 @@ import "./index.css";
 import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./Components/Firebase";
+import InputProvider from './Components/InputProvider';
+
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
-    <App />
+    <InputProvider>  
+      <App />
+    </InputProvider>
   </FirebaseContext.Provider>,
   document.getElementById("root")
 );
