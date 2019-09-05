@@ -3,19 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.8.2",
+    "@fortawesome/fontawesome-free": "^5.10.2",
     "clipboard-polyfill": "^2.8.6",
     "color-name-list": "^4.10.0",
     "firebase": "^6.5.0",
     "nearest-color": "^0.4.4",
     "node-sass": "^4.12.0",
     "parse-color": "^1.0.0",
-    "react": "^16.8.6",
+    "react": "^16.9.0",
     "react-browser-hooks": "^2.2.3",
-    "react-dnd": "^7.4.5",
+    "react-dnd": "^9.3.4",
     "react-dom": "^16.9.0",
-    "react-ga": "^2.5.7",
-    "react-scripts": "^3.0.1",
+    "react-ga": "^2.6.0",
+    "react-scripts": "^3.1.1",
     "react-tippy": "^1.2.3"
   },
   "scripts": {
@@ -34,6 +34,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "typescript": "^3.5.1"
+    "typescript": "^3.6.2"
   }
 }
