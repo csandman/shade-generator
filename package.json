@@ -5,7 +5,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
     "clipboard-polyfill": "^2.8.1",
-    "color-name-list": "^4.7.1",
+    "color-name-list": "^4.10.0",
     "firebase": "^6.5.0",
     "nearest-color": "^0.4.4",
     "node-sass": "^4.12.0",
