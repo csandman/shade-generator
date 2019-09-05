@@ -1,4 +1,8 @@
-# [shade-generator](https://www.shadegenerator.com)
+<p align="center" style="color: #343a40">
+  <a href="https://slicemap.com" target="_blank"><img src="./public/icons/android-chrome-192x192.png" alt="shade generator logo" height="150"></a>
+  <h1 align="center"><a href="https://www.shadegenerator.com" target="_blank">shade-generator</a></h1>
+</p>
+<p align="center" style="font-size: 1.2rem;">Generate shades... AND tints of your favorite colors</p>
 
 Shade Generator aims to provide a quick and easy way to generate the shades and tints of the colors you use in all of your web development and design projects.
 

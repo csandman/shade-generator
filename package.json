@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
-    "clipboard-polyfill": "^2.8.1",
+    "clipboard-polyfill": "^2.8.6",
     "color-name-list": "^4.10.0",
     "firebase": "^6.5.0",
     "nearest-color": "^0.4.4",
@@ -13,7 +13,7 @@
     "react": "^16.8.6",
     "react-browser-hooks": "^2.2.3",
     "react-dnd": "^7.4.5",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.9.0",
     "react-ga": "^2.5.7",
     "react-scripts": "^3.0.1",
     "react-tippy": "^1.2.3"
