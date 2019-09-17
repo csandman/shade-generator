@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./Components/Firebase";
-import InputProvider from './Components/InputProvider';
+import { InputProvider } from './Contexts/InputContext';
 
 
 ReactDOM.render(

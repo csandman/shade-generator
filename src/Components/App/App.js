@@ -14,7 +14,7 @@ import BodyContent from "../BodyContent";
 import ReactGA from "react-ga";
 import "./App.scss";
 import { withFirebase } from "../Firebase";
-import InputUpdater from '../InputUpdater/InputUpdater';
+import { InputUpdater } from '../../Contexts/InputContext';
 
 import {
   searchNamedColors,
