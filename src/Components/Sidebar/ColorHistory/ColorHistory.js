@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
+import SidebarContext from '../../../Contexts/SidebarContext';
 
 
 const ColorHistory = props => {
+
+  const { closeMenu } = useContext(SidebarContext);
+
   const online = useOnline();
   const [recentColors, setRecentColors] = useState([]);
 
@@ -39,7 +43,7 @@ const ColorHistory = props => {
           style={{ backgroundColor: item.hex }}
           onClick={() => {
             props.handleColorClick(item.hex, 1);
-            props.closeSidebar();
+            closeMenu();
           }}
           data-hex={item.hex}
         >

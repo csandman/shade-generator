@@ -4,14 +4,16 @@ import "./index.css";
 import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./Components/Firebase";
-import { InputProvider } from './Contexts/InputContext';
-
+import { InputProvider } from "./Contexts/InputContext";
+import { SidebarProvider } from "./Contexts/SidebarContext";
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
-    <InputProvider>  
-      <App />
-    </InputProvider>
+    <SidebarProvider>
+      <InputProvider>
+        <App />
+      </InputProvider>
+    </SidebarProvider>
   </FirebaseContext.Provider>,
   document.getElementById("root")
 );

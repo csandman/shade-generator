@@ -15,11 +15,7 @@ const HelpMenu = () => {
   });
 
   const toggleAccordianState = accordianID => {
-    console.log("toggle accordian state", accordianID);
-    let newState = {};
-    Object.keys(accordianStates).forEach(
-      key => (newState[key] = accordianStates[key])
-    );
+    let newState = {...accordianStates};
     newState[`${accordianID}Open`] = !accordianStates[`${accordianID}Open`];
     updateAccordianStates(newState);
   };

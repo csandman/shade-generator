@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback
-} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useEventListener } from "../../Hooks";
 import { useOnline } from "react-browser-hooks";
 import Header from "../Header";
@@ -17,7 +13,8 @@ import { InputUpdater } from '../../Contexts/InputContext';
 import {
   searchNamedColors,
   getAllColorInfo,
-  getRandomHexColor
+  getRandomHexColor,
+  getCopy
 } from "../../Functions";
 
 const parse = require("parse-color");
@@ -32,7 +29,6 @@ const issplitViewDisabled = () => {
 }
 
 const App = props => {
-
   const [colorData1, setColorData1] = useState(
     getAllColorInfo(getRandomHexColor())
   );
@@ -40,15 +36,12 @@ const App = props => {
     getAllColorInfo(getRandomHexColor())
   );
   const [loading, setLoading] = useState(true);
-  
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [splitView, setSplitView] = useState(false);
   const [splitViewDisabled, setsplitViewDisabled] = useState(
     issplitViewDisabled()
   );
   const online = useOnline();
   const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
-
   const [curInputNum, setCurInputNum] = useState(1);
   const [curInputVal, setCurInputVal] = useState(colorData1.hex);
 
@@ -59,8 +52,6 @@ const App = props => {
         category: "Connection",
         action: "Connected to Shade Generator"
       });
-
-      
     } else {
       console.log("offline detected");
       setLoading(false);
@@ -73,7 +64,7 @@ const App = props => {
     if (!parseSuccessful) {
       setPathnameArr([colorData1.hex.slice(1)]);
     }
-    setLoading(false);
+    setTimeout(() => setLoading(false), 200);
   }, []);
 
   const handleResize = useCallback(
@@ -83,41 +74,29 @@ const App = props => {
     [setsplitViewDisabled]
   );
 
-  function handleKeyPress(e) {
-    if (e.code === "Escape") {
-      setMenuIsOpen(false);
-    }
-  }
-
   useEventListener("resize", handleResize);
-  useEventListener("keypress", handleKeyPress);
 
-  function addMenuItem(hex) {
-    if (online) {
-      let newColor = getAllColorInfo(hex);
-      newColor.timeAdded = new Date();
-      newColor.timeString = new Date().toLocaleTimeString([], {
-        hour: "numeric",
-        minute: "numeric"
-      });
-      newColor.dateString = new Date().toLocaleDateString();
-      delete newColor.keyword;
-      delete newColor.shades;
+  function addMenuItem(newColor) {
+    newColor.timeAdded = new Date();
+    newColor.timeString = new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "numeric"
+    });
+    newColor.dateString = new Date().toLocaleDateString();
 
-      let colorRef = props.firebase.db
-        .collection("color-history")
-        .doc(newColor.hex);
+    let colorRef = props.firebase.db
+      .collection("color-history")
+      .doc(newColor.hex);
 
-      colorRef.get().then(colorRecord => {
-        if (colorRecord.exists) {
-          newColor.count = (colorRecord.data().count || 0) + 1;
-          colorRef.update({ ...newColor });
-        } else {
-          newColor.count = 1;
-          colorRef.set(newColor);
-        }
-      });
-    }
+    colorRef.get().then(colorRecord => {
+      if (colorRecord.exists) {
+        newColor.count = (colorRecord.data().count || 0) + 1;
+        colorRef.update({ ...newColor });
+      } else {
+        newColor.count = 1;
+        colorRef.set(newColor);
+      }
+    });
   }
 
   function parseURL() {
@@ -148,31 +127,9 @@ const App = props => {
     return false;
   }
 
-
-
   useEffect(() => {
     window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
   }, [pathnameArr, pathnameArr[0]]);
-
-  const openSidebar = () => {
-    setMenuIsOpen(true);
-    ReactGA.event({
-      category: "Button Press",
-      action: "Open sidebar"
-    });
-  };
-
-  const closeSidebar = () => {
-    setMenuIsOpen(false);
-    ReactGA.event({
-      category: "Button Press",
-      action: "Close sidebar"
-    });
-  };
-
-  const toggleSidebar = () => {
-    menuIsOpen ? closeSidebar() : openSidebar();
-  };
 
   const toggleSplitView = () => {
     let newPathNameArr = splitView
@@ -198,9 +155,7 @@ const App = props => {
 
   //TODO
   const handleSubmit = (inputNum, inputVal) => {
-    const searchTerm = inputVal
-      .toLowerCase()
-      .replace(/\s/g, "");
+    const searchTerm = inputVal.toLowerCase().replace(/\s/g, "");
 
     let hex =
       parse(searchTerm).hex ||
@@ -216,6 +171,7 @@ const App = props => {
 
   const updateStateValues = (hex, colorNum) => {
     let colorData = getAllColorInfo(hex);
+    delete colorData.keyword;
     if (colorNum === 1) {
       const newPNA = pathnameArr;
       newPNA[0] = colorData.hex.slice(1);
@@ -229,7 +185,7 @@ const App = props => {
     // useInputUpdate(colorNum, hex);
     setCurInputVal(hex);
     setCurInputNum(colorNum);
-    addMenuItem(hex);
+    if (online) addMenuItem(getCopy(colorData));
   };
 
   const handleColorClick = (hex, dataNum) => {
@@ -246,13 +202,9 @@ const App = props => {
           splitView={splitView}
           toggleSplitView={toggleSplitView}
           getRandomColors={getRandomColors}
-          menuIsOpen={menuIsOpen}
-          toggleSidebar={toggleSidebar}
           splitViewDisabled={splitViewDisabled}
         />
         <Sidebar
-          isOpen={menuIsOpen}
-          closeSidebar={closeSidebar}
           handleColorClick={handleColorClick}
           toggleSplitView={toggleSplitView}
         />

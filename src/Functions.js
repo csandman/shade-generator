@@ -116,14 +116,14 @@ const parse = require("parse-color");
 export const calcAllGradients = rgb => {
     let gradientArr = [];
     for (let opac = 90; opac >= 5; opac -= 5) {
-        gradientArr.push(
-            parse(rgbToHex(calculateGradient(rgb, false, opac / 100)))
-        );
+        let newColor = { rgb: calculateGradient(rgb, false, opac / 100) };
+        newColor.hex = rgbToHex(newColor.rgb);
+        gradientArr.push(newColor);
     }
     for (let opac = 5; opac <= 90; opac += 5) {
-        gradientArr.push(
-            parse(rgbToHex(calculateGradient(rgb, true, opac / 100)))
-        );
+        let newColor = { rgb: calculateGradient(rgb, true, opac / 100) };
+        newColor.hex = rgbToHex(newColor.rgb);
+        gradientArr.push(newColor);
     }
     return gradientArr;
 };
@@ -149,11 +149,15 @@ export const getAllColorInfo = colorStr => {
     ).toUpperCase();
     colorObj.name = getColorName(colorObj.hex);
     colorObj.shades = calcAllGradients(colorObj.rgb).map(childObj => {
-        childObj.highContrast = getHighContrastColor(childObj.rgb);
-        childObj.contrast = getContrastColor(childObj.rgb);
-        childObj.lowContrast = getLowContrastColor(childObj.rgb);
-        childObj.oppositeContrast = getOppositeContrastColor(childObj.rgb);
+        // childObj.highContrast = getHighContrastColor(childObj.rgb);
+        // childObj.contrast = getContrastColor(childObj.rgb);
+        // childObj.lowContrast = getLowContrastColor(childObj.rgb);
+        // childObj.oppositeContrast = getOppositeContrastColor(childObj.rgb);
         return childObj;
     });
     return colorObj;
+};
+
+export const getCopy = obj => {
+    return JSON.parse(JSON.stringify(obj));
 };

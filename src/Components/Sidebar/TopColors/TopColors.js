@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import SidebarContext from '../../../Contexts/SidebarContext';
 import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
 
 const TopColors = props => {
+
+  const { closeMenu } = useContext(SidebarContext);
+
   const online = useOnline();
   const [topColors, setTopColors] = useState([]);
   const { firebase } = props;
@@ -36,7 +40,7 @@ const TopColors = props => {
             className="menu-item"
             style={{ backgroundColor: item.hex }}
             onClick={() => {
-              props.closeSidebar();
+              closeMenu();
               props.handleColorClick(item.hex, 1);
             }}
             data-hex={item.hex}

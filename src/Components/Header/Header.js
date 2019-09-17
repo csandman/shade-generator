@@ -147,8 +147,6 @@ const Header = props => {
         </div>
         <HamburgerButton
           className="menu-icon"
-          open={props.menuIsOpen}
-          action={props.toggleSidebar}
           color={
             !props.splitView || props.splitViewDisabled
               ? props.colorData.contrast
@@ -161,29 +159,3 @@ const Header = props => {
 };
 
 export default React.memo(Header);
-
-// <div
-// className="icon-button"
-// onClick={props.handleSignupClick}
-// style={{
-//   borderColor: props.splitView
-//     ? props.baseColor.contrast
-//     : props.colorData.contrast,
-//   color: props.splitView
-//     ? props.baseColor.contrast
-//     : props.colorData.contrast,
-//   backgroundColor: props.splitView
-//     ? props.baseColor.oppositeContrast
-//     : props.colorData.oppositeContrast
-// }}
-// >
-// <i
-//   className="fas fa-user"
-//   style={{
-//     color: props.splitView
-//       ? props.baseColor.contrast
-//       : props.colorData.contrast
-//   }}
-// />
-// Sign in
-// </div>

@@ -1,28 +1,26 @@
-import React, { useState } from "react";
-import namedColors from "color-name-list";
+import React, { useState, useContext } from "react";
 import HelpMenu from "./HelpMenu/HelpMenu";
 import ColorHistory from "./ColorHistory/ColorHistory";
 import TopColors from "./TopColors/TopColors";
 import KofiButton from "../KofiButton";
+import ColorNameMenu from "./ColorNameMenu/ColorNameMenu";
 import { useOnline } from "react-browser-hooks";
 import "./Sidebar.scss";
-
-import { getContrastColor, hexToRgb } from "../../Functions";
+import SidebarContext from "../../Contexts/SidebarContext";
+import { useEventListener } from "../../Hooks";
 
 const Sidebar = props => {
+  const { isMenuOpen, closeMenu } = useContext(SidebarContext);
+
+  function handleKeyPress(e) {
+    console.log(e)
+    if (e.code === "Escape") {
+      closeMenu();
+    }
+  }
+  useEventListener("keydown", handleKeyPress);
+
   const online = useOnline();
-
-  const getInitialColorNameList = () => {
-    return namedColors.slice(0, 200).map(el => {
-      el.contrast = getContrastColor(hexToRgb(el.hex));
-      return el;
-    });
-  };
-
-  const [searchInput, updateSearchInput] = useState("");
-  const [colorNameList, updateColorNameList] = useState(
-    getInitialColorNameList()
-  );
   const [menuStates, updateMenuStates] = useState({
     isMainMenuOpen: true,
     isHistoryMenuOpen: false,
@@ -31,64 +29,26 @@ const Sidebar = props => {
     isHelpMenuOpen: false
   });
 
-  const searchColorNames = e => {
-    updateSearchInput(e.target.value);
-    let newColorArr = [];
-    let index = 0;
-    while (newColorArr.length < 200 && index < namedColors.length) {
-      if (
-        namedColors[index].name
-          .replace(/\s/g, "")
-          .toLowerCase()
-          .indexOf(e.target.value.replace(/\s/g, "").toLowerCase()) >= 0
-      ) {
-        newColorArr.push(namedColors[index]);
-      }
-      index++;
+  const openMenu = menuId => {
+    const newMenuStates = {};
+    for (const key in menuStates) {
+      newMenuStates[key] = false;
     }
-    newColorArr.map(el => {
-      el.contrast = getContrastColor(hexToRgb(el.hex));
-      return el;
-    });
-    updateColorNameList(newColorArr);
-  };
-
-  const openColorHistory = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(
-      key => (menuStates[key] = false)
-    );
-    updateMenuStates({ ...newMenuStates, isHistoryMenuOpen: true });
-  };
-
-  const openTopColorsMenu = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(
-      key => (menuStates[key] = false)
-    );
-    updateMenuStates({ ...newMenuStates, isTopColorsMenuOpen: true });
-  };
-
-  const openColorSearch = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(
-      key => (menuStates[key] = false)
-    );
-    updateMenuStates({ ...newMenuStates, isSearchMenuOpen: true });
-    setTimeout(() => document.getElementById("color-search").focus(), 100);
-  };
-
-  const openHelpMenu = () => {
-    const newMenuStates = Object.keys(menuStates).forEach(
-      key => (menuStates[key] = false)
-    );
-    updateMenuStates({ ...newMenuStates, isHelpMenuOpen: true });
+    newMenuStates[`is${menuId}Open`] = true;
+    updateMenuStates({...newMenuStates});
   };
 
   const closeSubMenu = () => {
     document.activeElement.blur();
-    updateMenuStates({ menuStates, isMainMenuOpen: true });
+    const newMenuStates = {};
+    for (const key in menuStates) {
+      newMenuStates[key] = false;
+    }
+    updateMenuStates({ ...newMenuStates, isMainMenuOpen: true });
   };
 
   return (
-    <div id="sidebar" className={props.isOpen ? "" : "hidden"}>
+    <div id="sidebar" className={isMenuOpen ? "" : "hidden"}>
       <div className="sidebar-content">
         <div
           className={
@@ -106,21 +66,37 @@ const Sidebar = props => {
           </div>
           {online && (
             <div className="online-menu-items">
-              <div className="main-menu-item" onClick={openColorHistory}>
+              <div
+                className="main-menu-item"
+                id="HistoryMenu"
+                onClick={e => openMenu(e.currentTarget.id)}
+              >
                 <i className="icon fas fa-history" />
                 <span>Color History</span>
               </div>
-              <div className="main-menu-item" onClick={openTopColorsMenu}>
+              <div
+                className="main-menu-item"
+                id="TopColorsMenu"
+                onClick={e => openMenu(e.currentTarget.id)}
+              >
                 <i className="icon fas fa-award" />
                 <span>Most Popular</span>
               </div>
             </div>
           )}
-          <div className="main-menu-item" onClick={openColorSearch}>
+          <div
+            className="main-menu-item"
+            id="SearchMenu"
+            onClick={e => openMenu(e.currentTarget.id)}
+          >
             <i className="icon fas fa-search" />
             <span>Search Colors</span>
           </div>
-          <div className="main-menu-item" onClick={openHelpMenu}>
+          <div
+            className="main-menu-item"
+            id="HelpMenu"
+            onClick={e => openMenu(e.currentTarget.id)}
+          >
             <i className="icon fas fa-question-circle" />
             <span>What is this?</span>
           </div>
@@ -129,7 +105,7 @@ const Sidebar = props => {
               href="https://github.com/csandman/shade-generator"
               rel="noopener noreferrer"
               target="_blank"
-              aria-label="Link to github repository">
+              aria-label="Link to github repository"
             >
               <i className="icon fab fa-github" />
             </a>
@@ -139,7 +115,7 @@ const Sidebar = props => {
               target="_blank"
               aria-label="Support me on Ko-fi"
             >
-              <KofiButton className="icon " height="42"></KofiButton>
+              <KofiButton className="icon " height="42" />
             </a>
           </div>
         </div>
@@ -187,39 +163,10 @@ const Sidebar = props => {
             <i className="icon fas fa-arrow-left" />
             <span>Search Colors</span>
           </div>
-          <div className="search-input-container">
-            <div className="search-icon-container">
-              <i className="icon fas fa-search" />
-            </div>
-            <label htmlFor={"color-search"}>Color search</label>
-            <input
-              id="color-search"
-              type="search"
-              placeholder="Search..."
-              value={searchInput}
-              onChange={searchColorNames}
-            />
-          </div>
-
-          <div className="sub-menu-content">
-            <div className="menu-items">
-              {colorNameList.map((color, i) => {
-                return (
-                  <div
-                    key={color + i}
-                    className="color-result-item"
-                    style={{ background: color.hex, color: color.contrast }}
-                    onClick={() => {
-                      props.handleColorClick(color.hex, 1);
-                      props.closeSidebar();
-                    }}
-                  >
-                    {color.name}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <ColorNameMenu
+            handleColorClick={props.handleColorClick}
+            closeSidebar={props.closeSidebar}
+          />
         </div>
 
         <div className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}>
@@ -233,7 +180,7 @@ const Sidebar = props => {
           </div>
         </div>
       </div>
-      <div className="background" onClick={props.closeSidebar} />
+      <div className="background" onClick={closeMenu} />
     </div>
   );
 };

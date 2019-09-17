@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./HamburgerButton.scss";
+import SidebarContext from "../../Contexts/SidebarContext";
 
-const HamburgerButton = props => {
+const HamburgerButton = ({ color, className }) => {
+  const { isMenuOpen, toggleMenu } = useContext(SidebarContext);
+
   return (
     <div
-      className={
-        "hamburger-button " +
-        props.className +
-        (props.open ? " close" : "")
-      }
-      onClick={props.action}
+      className={"hamburger-button " + className + (isMenuOpen ? " close" : "")}
+      onClick={toggleMenu}
     >
-      <span className="line" style={{ backgroundColor: props.color }} />
-      <span className="line" style={{ backgroundColor: props.color }} />
-      <span className="line" style={{ backgroundColor: props.color }} />
+      <span className="line" style={{ backgroundColor: color }} />
+      <span className="line" style={{ backgroundColor: color }} />
+      <span className="line" style={{ backgroundColor: color }} />
     </div>
   );
 };
