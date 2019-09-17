@@ -129,6 +129,7 @@ const Sidebar = props => {
               href="https://github.com/csandman/shade-generator"
               rel="noopener noreferrer"
               target="_blank"
+              aria-label="Link to github repository">
             >
               <i className="icon fab fa-github" />
             </a>
@@ -136,6 +137,7 @@ const Sidebar = props => {
               href="https://ko-fi.com/D1D513LDD"
               rel="noopener noreferrer"
               target="_blank"
+              aria-label="Support me on Ko-fi"
             >
               <KofiButton className="icon " height="42"></KofiButton>
             </a>
@@ -220,10 +222,7 @@ const Sidebar = props => {
           </div>
         </div>
 
-        <div
-          className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}
-          id="color-search-menu"
-        >
+        <div className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}>
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
             <span>What is this?</span>
