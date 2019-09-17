@@ -13,9 +13,6 @@ import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
 import ReactGA from "react-ga";
 import "./App.scss";
-import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-import "@fortawesome/fontawesome-free/scss/solid.scss";
-import "@fortawesome/fontawesome-free/scss/brands.scss";
 import { withFirebase } from "../Firebase";
 import InputUpdater from '../InputUpdater/InputUpdater';
 
