@@ -1,9 +1,7 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
-  useContext,
-  useMemo
+  useCallback
 } from "react";
 import { useEventListener } from "../../Hooks";
 import { useOnline } from "react-browser-hooks";
@@ -24,7 +22,7 @@ import {
 
 const parse = require("parse-color");
 
-function issplitViewDisabled() {
+const issplitViewDisabled = () => {
   const width = window.innerWidth;
   if (width <= 600) {
     return true;
@@ -79,7 +77,7 @@ const App = props => {
   }, []);
 
   const handleResize = useCallback(
-    ({ clientX, clientY }) => {
+    () => {
       setsplitViewDisabled(issplitViewDisabled());
     },
     [setsplitViewDisabled]
