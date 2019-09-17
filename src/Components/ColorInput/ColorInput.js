@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import InputContext from '../../Contexts/InputContext';
 
-const ColorInput = props => {
-  const { bodyNum } = props;
-
+const ColorInput = ({
+  bodyNum,
+  handleSubmit,
+  contrast,
+  oppositeContrast
+ }) => {
 
   const inputValue = useContext(InputContext)[`inputValue${bodyNum}`];
   const { updateInputValue } = useContext(InputContext);
@@ -12,7 +15,7 @@ const ColorInput = props => {
     console.log(e, e.key)
     if (e.key === "Enter") {
       if (document.activeElement.id !== "color-search") {
-        props.handleSubmit(bodyNum, inputValue);
+        handleSubmit(bodyNum, inputValue);
       }
     }
   }
@@ -20,11 +23,12 @@ const ColorInput = props => {
 
   return (
     <div className="color-input">
-      <label htmlFor={"color-input-" + bodyNum}>
+      <label htmlFor={`color-input-${bodyNum}`}>
         Color code input {bodyNum}
       </label>
       <input
         name={"inputValue" + bodyNum}
+        id={`color-input-${bodyNum}`}
         type="search"
         placeholder="Color Code (Hex, RGB, or Name)"
         onChange={e => {
@@ -32,18 +36,18 @@ const ColorInput = props => {
         }}
         onKeyPress={handleKeyPress}
         value={inputValue}
-        style={{ borderColor: props.contrast }}
+        style={{ borderColor: contrast }}
       />
       <button
         onClick={() => {
           console.log(inputValue, bodyNum)
-          props.handleSubmit(bodyNum, inputValue)
+          handleSubmit(bodyNum, inputValue)
         }}
         name={"inputValue" + bodyNum}
         style={{
-          borderColor: props.contrast,
-          backgroundColor: props.contrast,
-          color: props.oppositeContrast
+          borderColor: contrast,
+          backgroundColor: contrast,
+          color: oppositeContrast
         }}
       >
         GO
