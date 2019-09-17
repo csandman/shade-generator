@@ -11,8 +11,6 @@ function getRandomRgbColor(){
   return Array(3).fill().map(() => Math.floor(Math.random() * 255));
 }
 
-console.log(getRandomRgbColor());
-
 export const getContrastColor = rgb => {
     let contrastIsDark = isContrastDark(rgb);
     let i = 0.01;

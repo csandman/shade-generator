@@ -1,66 +1,42 @@
 import React from "react";
+import HeaderIcon from "./HeaderIcon/HeaderIcon";
+import HeaderButton from "./HeaderButton/HeaderButton";
 import HamburgerButton from "../HamburgerButton";
 import "./Header.scss";
 
-const Header = props => {
+const Header = ({
+  splitView,
+  splitViewDisabled,
+  colorData,
+  getRandomColors,
+  toggleSplitView
+}) => {
   return (
     <div
       id="header"
       style={
-        !props.splitView || props.splitViewDisabled
+        !splitView || splitViewDisabled
           ? {
-              borderColor: props.colorData.contrast,
-              backgroundColor: props.colorData.hex
+              borderColor: colorData.contrast,
+              backgroundColor: colorData.hex
             }
           : {}
       }
     >
       <div className="left-content">
-        {props.colorData.shades.length && (
-          <div className="icon" onClick={props.getRandomColors}>
-            <div
-              style={{
-                backgroundColor:
-                  props.splitView && !props.splitViewDisabled
-                    ? "#7a7a7a"
-                    : props.colorData.shades[10].hex
-              }}
-              className="icon-dot"
-            />
-            <div
-              style={{
-                backgroundColor:
-                  props.splitView && !props.splitViewDisabled
-                    ? "#000"
-                    : props.colorData.shades[24].hex
-              }}
-              className="icon-dot"
-            />
-            <div
-              style={{
-                backgroundColor:
-                  props.splitView && !props.splitViewDisabled
-                    ? "#000"
-                    : props.colorData.shades[24].hex
-              }}
-              className="icon-dot"
-            />
-            <div
-              style={{
-                backgroundColor:
-                  props.splitView && !props.splitViewDisabled
-                    ? "#7a7a7a"
-                    : props.colorData.shades[10].hex
-              }}
-              className="icon-dot"
-            />
-          </div>
+        {colorData.shades.length && (
+          <HeaderIcon
+            getRandomColors={getRandomColors}
+            splitViewDisabled={splitViewDisabled}
+            splitView={splitView}
+            colorData={colorData}
+          />
         )}
         <h1
           style={
-            !props.splitView || props.splitViewDisabled
+            !splitView || splitViewDisabled
               ? {
-                  color: props.colorData.contrast
+                  color: colorData.contrast
                 }
               : {}
           }
@@ -70,87 +46,30 @@ const Header = props => {
       </div>
       <div className="right-content">
         <div className="button-section">
-          <div
-            className="icon-button random-button"
-            onClick={props.getRandomColors}
-            style={
-              !props.splitView || props.splitViewDisabled
-                ? {
-                    borderColor: props.colorData.contrast,
-                    color: props.colorData.contrast
-                  }
-                : {}
-            }
-          >
-            <i
-              className="fas fa-random"
-              style={
-                !props.splitView || props.splitViewDisabled
-                  ? {
-                      color: props.colorData.contrast
-                    }
-                  : {}
-              }
-            />
-            <span
-              className="random-button-text"
-              style={
-                !props.splitView || props.splitViewDisabled
-                  ? {
-                      borderColor: props.colorData.contrast,
-                      color: props.colorData.contrast
-                    }
-                  : {}
-              }
-            >
-              Random
-            </span>
-          </div>
-
-          <div
-            className={
-              "icon-button split-button" + (props.splitView ? " active" : "")
-            }
-            onClick={props.toggleSplitView}
-            style={
-              !props.splitView || props.splitViewDisabled
-                ? {
-                    borderColor: props.colorData.contrast,
-                    color: props.colorData.contrast
-                  }
-                : {}
-            }
-          >
-            <i
-              className="fas fa-columns"
-              style={
-                !props.splitView || props.splitViewDisabled
-                  ? {
-                      color: props.colorData.contrast
-                    }
-                  : {}
-              }
-            />
-            <span
-              style={
-                !props.splitView || props.splitViewDisabled
-                  ? {
-                      borderColor: props.colorData.contrast,
-                      color: props.colorData.contrast
-                    }
-                  : {}
-              }
-            >
-              Split View
-            </span>
-          </div>
+          <HeaderButton 
+            action={getRandomColors}
+            className="random-button"
+            splitViewDisabled={splitViewDisabled}
+            splitView={splitView}
+            colorData={colorData}
+            buttonText="Random"
+            iconClassName="fas fa-random"
+            textClassName="random-button-text"
+          />
+          <HeaderButton 
+            action={toggleSplitView}
+            className={`split-button ${splitView ? " active" : ""}`}
+            splitViewDisabled={splitViewDisabled}
+            splitView={splitView}
+            colorData={colorData}
+            buttonText="Split View"
+            iconClassName="fas fa-columns"
+          />
         </div>
         <HamburgerButton
           className="menu-icon"
           color={
-            !props.splitView || props.splitViewDisabled
-              ? props.colorData.contrast
-              : "#7a7a7a"
+            !splitView || splitViewDisabled ? colorData.contrast : "#7a7a7a"
           }
         />
       </div>

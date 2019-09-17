@@ -129,7 +129,7 @@ const App = props => {
 
   useEffect(() => {
     window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
-  }, [pathnameArr, pathnameArr[0]]);
+  }, [pathnameArr]);
 
   const toggleSplitView = () => {
     let newPathNameArr = splitView
