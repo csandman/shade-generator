@@ -247,16 +247,22 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   
   .icon {
     font-size: 3rem;
     color: $high-contrast;
-    transition: 60ms color linear;
     cursor: pointer;
+    fill: $high-contrast;
+    margin: 1rem;
 
     &:hover {
       color: $contrast;
+      fill: $contrast;
+    }
+
+    &.kofi-icon {
+      margin-bottom: .5rem;
     }
   }
 }

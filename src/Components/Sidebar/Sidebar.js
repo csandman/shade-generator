@@ -3,6 +3,7 @@ import namedColors from "color-name-list";
 import HelpMenu from "./HelpMenu/HelpMenu";
 import ColorHistory from "./ColorHistory/ColorHistory";
 import TopColors from "./TopColors/TopColors";
+import KofiButton from "../KofiButton";
 import { useOnline } from "react-browser-hooks";
 import "./Sidebar.scss";
 
@@ -130,6 +131,13 @@ const Sidebar = props => {
               target="_blank"
             >
               <i className="icon fab fa-github" />
+            </a>
+            <a
+              href="https://ko-fi.com/D1D513LDD"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <KofiButton className="icon " height="42"></KofiButton>
             </a>
           </div>
         </div>
