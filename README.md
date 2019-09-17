@@ -3,7 +3,7 @@
   <h1 align="center"><a href="https://www.shadegenerator.com" target="_blank">shade-generator</a></h1>
 </p>
 <p align="center" style="font-size: 1.2rem;">Generate shades... AND tints of your favorite colors</p>
-<p align="center"><a href="https://ko-fi.com/D1D513LDD" target="_blank"><img src="./github/ko-fi.png" alt="Support me on Ko-fi" height="30"></a></p>
+<p align="center"><a href="https://ko-fi.com/D1D513LDD" target="_blank"><img src="./github/ko-fi.png" alt="Support me on Ko-fi" height="35"></a></p>
 
 Shade Generator aims to provide a quick and easy way to generate the shades and tints of the colors you use in all of your web development and design projects.
 
