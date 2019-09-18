@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useEventListener } from "../../Hooks";
+import React, { useState, useEffect, useContext } from "react";
 import { useOnline } from "react-browser-hooks";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
@@ -8,7 +7,8 @@ import BodyContent from "../BodyContent";
 import ReactGA from "react-ga";
 import "./App.scss";
 import { withFirebase } from "../Firebase";
-import { InputUpdater } from '../../Contexts/InputContext';
+import { InputUpdater } from "../../Contexts/InputContext";
+import SplitViewContext from "../../Contexts/SplitViewContext";
 
 import {
   searchNamedColors,
@@ -19,15 +19,6 @@ import {
 
 const parse = require("parse-color");
 
-const issplitViewDisabled = () => {
-  const width = window.innerWidth;
-  if (width <= 600) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 const App = props => {
   const [colorData1, setColorData1] = useState(
     getAllColorInfo(getRandomHexColor())
@@ -36,14 +27,14 @@ const App = props => {
     getAllColorInfo(getRandomHexColor())
   );
   const [loading, setLoading] = useState(true);
-  const [splitView, setSplitView] = useState(false);
-  const [splitViewDisabled, setsplitViewDisabled] = useState(
-    issplitViewDisabled()
-  );
   const online = useOnline();
   const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
   const [curInputNum, setCurInputNum] = useState(1);
   const [curInputVal, setCurInputVal] = useState(colorData1.hex);
+  const {
+    splitView,
+    splitViewDisabled
+  } = useContext(SplitViewContext);
 
   useEffect(() => {
     if (online) {
@@ -57,24 +48,15 @@ const App = props => {
       setLoading(false);
     }
 
-    let parseSuccessful = false;
-    if (window.location.pathname.slice(1)) {
-      parseSuccessful = parseURL();
-    }
-    if (!parseSuccessful) {
-      setPathnameArr([colorData1.hex.slice(1)]);
-    }
+    // let parseSuccessful = false;
+    // if (window.location.pathname.slice(1)) {
+    //   parseSuccessful = parseURL();
+    // }
+    // if (!parseSuccessful) {
+    //   setPathnameArr([colorData1.hex.slice(1)]);
+    // }
     setTimeout(() => setLoading(false), 200);
   }, []);
-
-  const handleResize = useCallback(
-    () => {
-      setsplitViewDisabled(issplitViewDisabled());
-    },
-    [setsplitViewDisabled]
-  );
-
-  useEventListener("resize", handleResize);
 
   function addMenuItem(newColor) {
     newColor.timeAdded = new Date();
@@ -99,45 +81,47 @@ const App = props => {
     });
   }
 
-  function parseURL() {
-    let splitUrl = window.location.pathname
-      .slice(1)
-      .toUpperCase()
-      .split("-");
+  //TODO: Add URL parsing/setting back into the app
 
-    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
-      updateStateValues("#" + splitUrl[0], 1);
-      window.history.pushState(
-        {},
-        "Shade Generator",
-        window.location.pathname.slice(1)
-      );
-      return true;
-    } else if (
-      splitUrl.length === 2 &&
-      splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
-      splitUrl[1].match(/^[0-9a-f]{6}$/i)
-    ) {
-      updateStateValues("#" + splitUrl[0], 1);
-      updateStateValues("#" + splitUrl[1], 2);
-      setSplitView(true);
-      setPathnameArr(splitUrl);
-      return true;
-    }
-    return false;
-  }
+  // function parseURL() {
+  //   let splitUrl = window.location.pathname
+  //     .slice(1)
+  //     .toUpperCase()
+  //     .split("-");
 
-  useEffect(() => {
-    window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
-  }, [pathnameArr]);
+  //   if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
+  //     updateStateValues("#" + splitUrl[0], 1);
+  //     window.history.pushState(
+  //       {},
+  //       "Shade Generator",
+  //       window.location.pathname.slice(1)
+  //     );
+  //     return true;
+  //   } else if (
+  //     splitUrl.length === 2 &&
+  //     splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
+  //     splitUrl[1].match(/^[0-9a-f]{6}$/i)
+  //   ) {
+  //     updateStateValues("#" + splitUrl[0], 1);
+  //     updateStateValues("#" + splitUrl[1], 2);
+  //     setSplitView(true);
+  //     setPathnameArr(splitUrl);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  const toggleSplitView = () => {
-    let newPathNameArr = splitView
-      ? pathnameArr.slice(0, 1)
-      : [...pathnameArr, colorData2.hex.slice(1)];
-    setPathnameArr(newPathNameArr);
-    setSplitView(!splitView);
-  };
+  // useEffect(() => {
+  //   window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
+  // }, [pathnameArr]);
+
+
+  // useEffect(() => {
+  //   let newPathNameArr = splitView
+  //     ? pathnameArr.slice(0, 1)
+  //     : [...pathnameArr, colorData2.hex.slice(1)];
+  //   setPathnameArr(newPathNameArr);
+  // }, [splitView, pathnameArr, setPathnameArr]);
 
   const getRandomColors = () => {
     ReactGA.event({
@@ -153,7 +137,6 @@ const App = props => {
     }
   };
 
-  //TODO
   const handleSubmit = (inputNum, inputVal) => {
     const searchTerm = inputVal.toLowerCase().replace(/\s/g, "");
 
@@ -181,8 +164,6 @@ const App = props => {
       setColorData2(colorData);
       setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
     }
-    // TODO
-    // useInputUpdate(colorNum, hex);
     setCurInputVal(hex);
     setCurInputNum(colorNum);
     if (online) addMenuItem(getCopy(colorData));
@@ -199,14 +180,10 @@ const App = props => {
       <div>
         <Header
           colorData={colorData1}
-          splitView={splitView}
-          toggleSplitView={toggleSplitView}
           getRandomColors={getRandomColors}
-          splitViewDisabled={splitViewDisabled}
         />
         <Sidebar
           handleColorClick={handleColorClick}
-          toggleSplitView={toggleSplitView}
         />
 
         <div className="page">
@@ -214,9 +191,7 @@ const App = props => {
             handleSubmit={handleSubmit}
             colorData={colorData1}
             bodyNum={1}
-            splitView={splitView}
             handleColorClick={handleColorClick}
-            splitViewDisabled={splitViewDisabled}
           />
           {splitView && !splitViewDisabled && (
             <BodyContent
@@ -226,9 +201,7 @@ const App = props => {
               handleSubmit={handleSubmit}
               colorData={colorData2}
               bodyNum={2}
-              splitView={splitView}
               handleColorClick={handleColorClick}
-              splitViewDisabled={splitViewDisabled}
             />
           )}
         </div>

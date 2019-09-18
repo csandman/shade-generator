@@ -7,10 +7,13 @@ import ColorNameMenu from "./ColorNameMenu/ColorNameMenu";
 import { useOnline } from "react-browser-hooks";
 import "./Sidebar.scss";
 import SidebarContext from "../../Contexts/SidebarContext";
+import SplitViewContext from "../../Contexts/SplitViewContext";
 import { useEventListener } from "../../Hooks";
 
 const Sidebar = props => {
   const { isMenuOpen, closeMenu } = useContext(SidebarContext);
+  const { toggleSplitView } = useContext(SplitViewContext);
+
 
   function handleKeyPress(e) {
     console.log(e)
@@ -58,7 +61,7 @@ const Sidebar = props => {
           <div className="secondary-main-menu">
             <div
               className="main-menu-item split-view"
-              onClick={props.toggleSplitView}
+              onClick={toggleSplitView}
             >
               <i className="icon fas fa-columns" />
               <span>Split View</span>
@@ -131,7 +134,6 @@ const Sidebar = props => {
           <div className="sub-menu-content">
             <ColorHistory
               handleColorClick={props.handleColorClick}
-              closeSidebar={props.closeSidebar}
             />
           </div>
         </div>

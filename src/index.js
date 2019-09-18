@@ -6,13 +6,16 @@ import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./Components/Firebase";
 import { InputProvider } from "./Contexts/InputContext";
 import { SidebarProvider } from "./Contexts/SidebarContext";
+import { SplitViewProvider } from "./Contexts/SplitViewContext";
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <SidebarProvider>
-      <InputProvider>
-        <App />
-      </InputProvider>
+      <SplitViewProvider>
+        <InputProvider>
+          <App />
+        </InputProvider>
+      </SplitViewProvider>
     </SidebarProvider>
   </FirebaseContext.Provider>,
   document.getElementById("root")

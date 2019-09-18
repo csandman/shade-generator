@@ -4,14 +4,16 @@ import { useOnline } from "react-browser-hooks";
 import SidebarContext from '../../../Contexts/SidebarContext';
 
 
-const ColorHistory = props => {
+const ColorHistory = ({
+  firebase,
+  handleColorClick
+ }) => {
 
   const { closeMenu } = useContext(SidebarContext);
 
   const online = useOnline();
   const [recentColors, setRecentColors] = useState([]);
 
-  const { firebase } = props;
 
   useEffect(() => {
     if (online) {
@@ -42,7 +44,7 @@ const ColorHistory = props => {
           className="menu-item"
           style={{ backgroundColor: item.hex }}
           onClick={() => {
-            props.handleColorClick(item.hex, 1);
+            handleColorClick(item.hex, 1);
             closeMenu();
           }}
           data-hex={item.hex}

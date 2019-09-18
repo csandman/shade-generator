@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import HeaderIcon from "./HeaderIcon/HeaderIcon";
 import HeaderButton from "./HeaderButton/HeaderButton";
 import HamburgerButton from "../HamburgerButton";
+import SplitViewContext from "../../Contexts/SplitViewContext";
 import "./Header.scss";
 
 const Header = ({
-  splitView,
-  splitViewDisabled,
   colorData,
-  getRandomColors,
-  toggleSplitView
+  getRandomColors
 }) => {
+
+  const {splitView, splitViewDisabled, toggleSplitView} = useContext(SplitViewContext)
+
   return (
     <div
       id="header"
@@ -27,8 +28,6 @@ const Header = ({
         {colorData.shades.length && (
           <HeaderIcon
             getRandomColors={getRandomColors}
-            splitViewDisabled={splitViewDisabled}
-            splitView={splitView}
             colorData={colorData}
           />
         )}
@@ -49,8 +48,6 @@ const Header = ({
           <HeaderButton 
             action={getRandomColors}
             className="random-button"
-            splitViewDisabled={splitViewDisabled}
-            splitView={splitView}
             colorData={colorData}
             buttonText="Random"
             iconClassName="fas fa-random"
@@ -59,8 +56,6 @@ const Header = ({
           <HeaderButton 
             action={toggleSplitView}
             className={`split-button ${splitView ? " active" : ""}`}
-            splitViewDisabled={splitViewDisabled}
-            splitView={splitView}
             colorData={colorData}
             buttonText="Split View"
             iconClassName="fas fa-columns"

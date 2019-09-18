@@ -1,43 +1,45 @@
-import React from "react";
+import React, { useContext } from "react";
 import ColorSquare from "../ColorSquare";
 import ColorInput from "../ColorInput";
+import SplitViewContext from "../../Contexts/SplitViewContext";
 import "./BodyContent.scss";
 
-const BodyContent = props => {
+const BodyContent = ({
+  handleSubmit,
+  bodyNum,
+  colorData,
+  handleColorClick
+}) => {
+  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+
   return (
     <div
       className="content-background"
-      style={{ backgroundColor: props.colorData.hex }}
+      style={{ backgroundColor: colorData.hex }}
     >
       <div
-        className={
-          props.splitView & !props.splitViewDisabled
-            ? "body-content split"
-            : "body-content"
-        }
+        className={`body-content ${
+          splitView & !splitViewDisabled ? "split" : ""
+        }`}
       >
         <div className="input-container">
-          <ColorInput 
-            handleInputChange={props.handleInputChange}
-            handleSubmit={props.handleSubmit}
-            inputValue={props.inputValue}
-            bodyNum={props.bodyNum}
-            contrast={props.colorData.contrast}
-            oppositeContrast={props.colorData.oppositeContrast} />
-          <div
-            className="color-name"
-            style={{ color: props.colorData.contrast }}
-          >
-            {props.colorData.name}
+          <ColorInput
+            handleSubmit={handleSubmit}
+            bodyNum={bodyNum}
+            contrast={colorData.contrast}
+            oppositeContrast={colorData.oppositeContrast}
+          />
+          <div className="color-name" style={{ color: colorData.contrast }}>
+            {colorData.name}
           </div>
         </div>
         <div className="container">
-          {props.colorData.shades.map((color, index) => {
+          {colorData.shades.map((color, index) => {
             return (
               <ColorSquare
                 hex={color.hex}
-                handleColorClick={props.handleColorClick}
-                bodyNum={props.bodyNum}
+                handleColorClick={handleColorClick}
+                bodyNum={bodyNum}
                 color={color}
                 key={color + index}
                 squareNumber={index + 1}

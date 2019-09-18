@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import namedColors from "color-name-list";
-import SidebarContext from '../../../Contexts/SidebarContext';
+import SidebarContext from "../../../Contexts/SidebarContext";
 
 import { getContrastColor, hexToRgb } from "../../../Functions";
 
-const ColorNameMenu = props => {
-
+const ColorNameMenu = ({ handleColorClick }) => {
   const { closeMenu } = useContext(SidebarContext);
 
   useEffect(() => {
     updateColorNameList(getInitialColorNameList());
-  },[])
+  }, []);
 
   const getInitialColorNameList = () => {
     return namedColors.slice(0, 200).map(el => {
@@ -71,7 +70,7 @@ const ColorNameMenu = props => {
                 className="color-result-item"
                 style={{ background: color.hex, color: color.contrast }}
                 onClick={() => {
-                  props.handleColorClick(color.hex, 1);
+                  handleColorClick(color.hex, 1);
                   closeMenu();
                 }}
               >

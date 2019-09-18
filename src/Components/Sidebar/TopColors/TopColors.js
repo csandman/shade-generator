@@ -3,13 +3,15 @@ import SidebarContext from '../../../Contexts/SidebarContext';
 import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
 
-const TopColors = props => {
+const TopColors = ({
+  firebase,
+  handleColorClick
+ }) => {
 
   const { closeMenu } = useContext(SidebarContext);
 
   const online = useOnline();
   const [topColors, setTopColors] = useState([]);
-  const { firebase } = props;
 
   useEffect(() => {
     if (online) {
@@ -41,7 +43,7 @@ const TopColors = props => {
             style={{ backgroundColor: item.hex }}
             onClick={() => {
               closeMenu();
-              props.handleColorClick(item.hex, 1);
+              handleColorClick(item.hex, 1);
             }}
             data-hex={item.hex}
           >
