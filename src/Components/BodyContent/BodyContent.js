@@ -1,64 +1,52 @@
-import React from "react";
+import React, { useContext } from "react";
 import ColorSquare from "../ColorSquare";
+import ColorInput from "../ColorInput";
+import SplitViewContext from "../../Contexts/SplitViewContext";
 import "./BodyContent.scss";
 
-const BodyContent = props => {
+const BodyContent = ({
+  handleSubmit,
+  bodyNum,
+  colorData,
+  handleColorClick
+}) => {
+  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+
   return (
     <div
-      className={
-        props.splitView & !props.splitScreenDisabled
-          ? "body-content split"
-          : "body-content"
-      }
+      className="content-background"
+      style={{ backgroundColor: colorData.hex }}
     >
-      <div className="input-container">
-        <div className="color-input">
-          <label htmlFor={"color-input-" + props.number}>
-            Color code input {props.number}
-          </label>
-          <input
-            id={"color-input-" + props.number}
-            name={"inputValue" + props.number}
-            type="search"
-            placeholder="Color Code (Hex, RGB, or Name)"
-            onChange={props.handleInputChange}
-            data-number={props.number}
-            value={props.inputValue}
-            style={{ borderColor: props.colorData.contrast }}
+      <div
+        className={`body-content ${
+          splitView & !splitViewDisabled ? "split" : ""
+        }`}
+      >
+        <div className="input-container">
+          <ColorInput
+            handleSubmit={handleSubmit}
+            bodyNum={bodyNum}
+            contrast={colorData.contrast}
+            oppositeContrast={colorData.oppositeContrast}
           />
-          <button
-            onClick={() => props.handleSubmit(props.number)}
-            name={"inputValue" + props.number}
-            data-number={props.number}
-            style={{
-              borderColor: props.colorData.contrast,
-              backgroundColor: props.colorData.contrast,
-              color: props.colorData.oppositeContrast
-            }}
-          >
-            GO
-          </button>
+          <div className="color-name" style={{ color: colorData.contrast }}>
+            {colorData.name}
+          </div>
         </div>
-        <div
-          className="color-name"
-          style={{ color: props.colorData.contrast }}
-        >
-          {props.colorData.name}
+        <div className="container">
+          {colorData.shades.map((color, index) => {
+            return (
+              <ColorSquare
+                hex={color.hex}
+                handleColorClick={handleColorClick}
+                bodyNum={bodyNum}
+                color={color}
+                key={`${index}-${color.hex}`}
+                squareNumber={index + 1}
+              />
+            );
+          })}
         </div>
-      </div>
-      <div className="container">
-        {props.colorData.shades.map((color, index) => {
-          return (
-            <ColorSquare
-              handleColorClick={props.handleColorClick}
-              colorDataNumber={props.number}
-              color={color}
-              key={color + index}
-              squareNumber={index + 1}
-              addMenuItem={props.addMenuItem}
-            />
-          );
-        })}
       </div>
     </div>
   );

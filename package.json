@@ -3,19 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.8.1",
-    "body-scroll-lock": "^2.6.1",
-    "clipboard-polyfill": "^2.8.0",
-    "color-name-list": "^4.2.0",
-    "firebase": "^5.9.3",
+    "@fortawesome/fontawesome-free": "^5.10.2",
+    "clipboard-polyfill": "^2.8.6",
+    "color": "^3.1.2",
+    "color-name-list": "^4.10.0",
+    "firebase": "^6.6.0",
     "nearest-color": "^0.4.4",
-    "node-sass": "^4.11.0",
-    "parse-color": "^1.0.0",
-    "react": "^16.8.6",
-    "react-dnd": "^7.4.5",
-    "react-dom": "^16.8.6",
-    "react-ga": "^2.5.7",
-    "react-scripts": "^2.1.8",
+    "node-sass": "^4.12.0",
+    "react": "^16.9.0",
+    "react-browser-hooks": "^2.2.3",
+    "react-dom": "^16.9.0",
+    "react-ga": "^2.6.0",
+    "react-scripts": "^3.1.1",
     "react-tippy": "^1.2.3"
   },
   "scripts": {
@@ -32,5 +31,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "prettier": {
+    "tabWidth": 2
+  }
 }
