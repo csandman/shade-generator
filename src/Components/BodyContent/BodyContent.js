@@ -41,7 +41,7 @@ const BodyContent = ({
                 handleColorClick={handleColorClick}
                 bodyNum={bodyNum}
                 color={color}
-                key={color + index}
+                key={`${index}-${color.hex}`}
                 squareNumber={index + 1}
               />
             );

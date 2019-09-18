@@ -44,7 +44,7 @@ const ColorHistory = ({
           className="menu-item"
           style={{ backgroundColor: item.hex }}
           onClick={() => {
-            handleColorClick(item.hex, 1);
+            handleColorClick(item, 1);
             closeMenu();
           }}
           data-hex={item.hex}

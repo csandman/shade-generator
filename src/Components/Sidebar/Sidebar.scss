@@ -70,15 +70,6 @@
       transform: translateX(-100%);
     }
 
-    .secondary-main-menu {
-      display: none;
-      border-bottom: 3px solid $contrast;
-
-      @media only screen and (max-width: 900px) and (min-width: 600px) {
-        display: block;
-      }
-    }
-
     .main-menu-item {
       padding: 1.5rem;
       cursor: pointer;

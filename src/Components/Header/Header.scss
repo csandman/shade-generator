@@ -18,12 +18,6 @@
     transition: 150ms all linear;
   }
 
-  .right-content {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 3rem;
-  }
-  
   .left-content {
     text-align: center;
     margin-left: 3rem;
@@ -43,51 +37,37 @@
       display: grid;
       grid-template-columns: 12px 12px;
       grid-gap: 2px;
-      margin-right: .8rem;
+      margin-right: 0.8rem;
       padding: 1px;
       cursor: pointer;
 
       .icon-dot {
         height: 12px;
-        background-color: rgba(0,0,0,0.3);
+        background-color: rgba(0, 0, 0, 0.3);
         display: flex;
         border-radius: 2px;
       }
     }
   }
 
-  button {
-    font-size: 1.2rem;
-    padding: .5rem 1rem;
-    background-color: rgba(0,0,0,0);
-    border: 2px solid;
-    color: white;
-    border-radius: 5px;
-    overflow: hidden;
-    cursor: pointer;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  .right-content {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 3rem;
+
+    .button-section {
+      display: flex;
+      margin-right: 3rem;
+    }
   }
 
   .icon-button {
-    margin-left: .75rem;
+    margin-left: 0.75rem;
     border-radius: 5px;
     padding: 6px 12px;
     font-size: 1.3rem;
     display: flex;
     align-items: center;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
     cursor: pointer;
     font-weight: 600;
     border: 2px solid $contrast;
@@ -99,6 +79,7 @@
 
       i {
         color: $opposite-contrast;
+        padding: 2px 0;
       }
 
       span {
@@ -117,30 +98,24 @@
     }
   }
 
-  .menu-icon{
+  .menu-icon {
     transition: none;
     transition: color 150ms linear;
   }
 
-  .button-section {
-    display: flex;
-    margin-right: 3rem;
-  }
-
   @media only screen and (max-width: 900px) {
-    .split-button {
-      display: none;
-    }    
+    .right-content {
+      .icon-button {
+        .icon-button-text {
+          display: none;
+        }
+      }
+    }
   }
 
   @media only screen and (max-width: 650px) {
-
     height: 4rem;
 
-    button {
-      display: none;
-    }
-  
     .left-content {
       margin-left: 1rem;
 
@@ -158,17 +133,30 @@
       .button-section {
         margin-right: 1rem;
       }
-  
+
       .bars.big.icon {
         margin-left: 0;
       }
-  
+
       .icon-button {
-        margin: 0;
         padding: 6px 7px;
 
         .random-button-text {
           display: none;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .right-content {
+      .button-section {
+        .icon-button {
+          margin: 0;
+
+          &.split-button {
+            display: none;
+          }
         }
       }
     }
@@ -183,7 +171,7 @@
 
     .right-content {
       .button-section {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
       }
     }
   }

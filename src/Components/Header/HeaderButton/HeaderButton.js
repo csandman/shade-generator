@@ -35,7 +35,7 @@ const HeaderButton = ({
         }
       />
       <span
-        className={textClassName}
+        className={`icon-button-text ${textClassName}`}
         style={
           !splitView || splitViewDisabled
             ? {

@@ -14,10 +14,9 @@ import {
   searchNamedColors,
   getAllColorInfo,
   getRandomHexColor,
-  getCopy
+  getCopy,
+  attemptCreateColor
 } from "../../Functions";
-
-const parse = require("parse-color");
 
 const App = props => {
   const [colorData1, setColorData1] = useState(
@@ -28,13 +27,10 @@ const App = props => {
   );
   const [loading, setLoading] = useState(true);
   const online = useOnline();
-  const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
+  // const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
   const [curInputNum, setCurInputNum] = useState(1);
   const [curInputVal, setCurInputVal] = useState(colorData1.hex);
-  const {
-    splitView,
-    splitViewDisabled
-  } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
   useEffect(() => {
     if (online) {
@@ -56,7 +52,7 @@ const App = props => {
     //   setPathnameArr([colorData1.hex.slice(1)]);
     // }
     setTimeout(() => setLoading(false), 200);
-  }, []);
+  }, [online]);
 
   function addMenuItem(newColor) {
     newColor.timeAdded = new Date();
@@ -115,7 +111,6 @@ const App = props => {
   //   window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
   // }, [pathnameArr]);
 
-
   // useEffect(() => {
   //   let newPathNameArr = splitView
   //     ? pathnameArr.slice(0, 1)
@@ -128,10 +123,12 @@ const App = props => {
       category: "Button Press",
       action: "Random color button"
     });
+    console.log("get random hex 1");
     const randomHex1 = getRandomHexColor();
     updateStateValues(randomHex1, 1);
 
     if (splitView && splitViewDisabled === false) {
+      console.log("get random hex 2");
       const randomHex2 = getRandomHexColor();
       updateStateValues(randomHex2, 2);
     }
@@ -141,8 +138,8 @@ const App = props => {
     const searchTerm = inputVal.toLowerCase().replace(/\s/g, "");
 
     let hex =
-      parse(searchTerm).hex ||
-      parse("#" + searchTerm).hex ||
+      attemptCreateColor(searchTerm).hex() ||
+      attemptCreateColor(`#${searchTerm}`).hex() ||
       searchNamedColors(searchTerm);
     if (hex) {
       updateStateValues(hex, inputNum);
@@ -152,25 +149,30 @@ const App = props => {
     }
   };
 
-  const updateStateValues = (hex, colorNum) => {
-    let colorData = getAllColorInfo(hex);
+  const updateStateValues = (color, colorNum) => {
+    console.log("update state values");
+    let colorData;
+    if (typeof color === "object") {
+      colorData = color;
+    } else if (typeof color === "string") {
+      colorData = getAllColorInfo(color);
+    } else {
+      return;
+    }
+
     delete colorData.keyword;
     if (colorNum === 1) {
-      const newPNA = pathnameArr;
-      newPNA[0] = colorData.hex.slice(1);
+      // const newPNA = pathnameArr;
+      // newPNA[0] = colorData.hex.slice(1);
       setColorData1(colorData);
-      setPathnameArr(newPNA);
+      // setPathnameArr(newPNA);
     } else if (colorNum === 2) {
       setColorData2(colorData);
-      setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
+      // setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
     }
-    setCurInputVal(hex);
+    setCurInputVal(colorData.hex);
     setCurInputNum(colorNum);
     if (online) addMenuItem(getCopy(colorData));
-  };
-
-  const handleColorClick = (hex, dataNum) => {
-    updateStateValues(hex, dataNum);
   };
 
   return (
@@ -178,20 +180,15 @@ const App = props => {
       <InputUpdater inputNum={curInputNum} inputValue={curInputVal} />
       <LoadingScreen show={loading} />
       <div>
-        <Header
-          colorData={colorData1}
-          getRandomColors={getRandomColors}
-        />
-        <Sidebar
-          handleColorClick={handleColorClick}
-        />
+        <Header colorData={colorData1} getRandomColors={getRandomColors} />
+        <Sidebar handleColorClick={updateStateValues} />
 
         <div className="page">
           <BodyContent
             handleSubmit={handleSubmit}
             colorData={colorData1}
             bodyNum={1}
-            handleColorClick={handleColorClick}
+            handleColorClick={updateStateValues}
           />
           {splitView && !splitViewDisabled && (
             <BodyContent
@@ -201,7 +198,7 @@ const App = props => {
               handleSubmit={handleSubmit}
               colorData={colorData2}
               bodyNum={2}
-              handleColorClick={handleColorClick}
+              handleColorClick={updateStateValues}
             />
           )}
         </div>

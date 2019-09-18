@@ -59,6 +59,7 @@ const Header = ({
             colorData={colorData}
             buttonText="Split View"
             iconClassName="fas fa-columns"
+            textClassName="split-button-text"
           />
         </div>
         <HamburgerButton

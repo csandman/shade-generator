@@ -43,7 +43,7 @@ const TopColors = ({
             style={{ backgroundColor: item.hex }}
             onClick={() => {
               closeMenu();
-              handleColorClick(item.hex, 1);
+              handleColorClick(item, 1);
             }}
             data-hex={item.hex}
           >

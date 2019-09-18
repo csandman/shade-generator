@@ -1,33 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import namedColors from "color-name-list";
 import SidebarContext from "../../../Contexts/SidebarContext";
+import Color from "color";
 
 import { getContrastColor, hexToRgb } from "../../../Functions";
+
+const initialColorNameList = namedColors.slice(0, 50).map(el => {
+  el.contrast = getContrastColor(Color(el.hex)).hex();
+  return el;
+});
 
 const ColorNameMenu = ({ handleColorClick }) => {
   const { closeMenu } = useContext(SidebarContext);
 
-  useEffect(() => {
-    updateColorNameList(getInitialColorNameList());
-  }, []);
-
-  const getInitialColorNameList = () => {
-    return namedColors.slice(0, 200).map(el => {
-      el.contrast = getContrastColor(hexToRgb(el.hex));
-      return el;
-    });
-  };
-
   const [searchInput, updateSearchInput] = useState("");
   const [colorNameList, updateColorNameList] = useState(
-    getInitialColorNameList()
+    initialColorNameList
   );
 
   const searchColorNames = e => {
     updateSearchInput(e.target.value);
     let newColorArr = [];
     let index = 0;
-    while (newColorArr.length < 200 && index < namedColors.length) {
+    while (newColorArr.length < 100 && index < namedColors.length) {
       if (
         namedColors[index].name
           .replace(/\s/g, "")
