@@ -153,7 +153,11 @@ const App = props => {
     console.log("update state values");
     let colorData;
     if (typeof color === "object") {
-      colorData = color;
+      if (color.shades) {
+        colorData = color;
+      } else {
+        colorData = getAllColorInfo(color.hex);
+      }
     } else if (typeof color === "string") {
       colorData = getAllColorInfo(color);
     } else {
