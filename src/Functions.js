@@ -2,16 +2,11 @@ import nearestColor from "nearest-color";
 import namedColors from "color-name-list";
 import Color from "color";
 
-export function getRandomHexColor() {
-  return "0123456789ABCDEF".split("").reduce((a, c, i, arr) => {
+export function getRandomColor() {
+  const color = "0123456789ABCDEF".split("").reduce((a, c, i, arr) => {
     return i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a;
   }, "#");
-}
-
-export function getRandomRgbColor() {
-  return Array(3)
-    .fill()
-    .map(() => Math.floor(Math.random() * 255));
+  return Color(color);
 }
 
 export function getContrastColor(color) {
@@ -63,28 +58,7 @@ export function getColorName(hex) {
   return nearest(hex).name;
 }
 
-export function rgbToHex(rgb) {
-  const [r, g, b] = rgb;
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-
-function componentToHex(c) {
-  var hex = c.toString(16);
-  return hex.length === 1 ? "0" + hex : hex;
-}
-
-export function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16)
-      ]
-    : null;
-}
-
-export const calcAllGradients = color => {
+export function calcAllGradients(color) {
   let gradientArr = [];
   for (let opac = 90; opac >= 5; opac -= 5) {
     const newColor = calculateGradient(color, false, opac / 100);

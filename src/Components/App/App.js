@@ -13,17 +13,17 @@ import SplitViewContext from "../../Contexts/SplitViewContext";
 import {
   searchNamedColors,
   getAllColorInfo,
-  getRandomHexColor,
+  getRandomColor,
   getCopy,
   attemptCreateColor
 } from "../../Functions";
 
 const App = props => {
   const [colorData1, setColorData1] = useState(
-    getAllColorInfo(getRandomHexColor())
+    getAllColorInfo(getRandomColor())
   );
   const [colorData2, setColorData2] = useState(
-    getAllColorInfo(getRandomHexColor())
+    getAllColorInfo(getRandomColor())
   );
   const [loading, setLoading] = useState(true);
   const online = useOnline();
@@ -124,13 +124,13 @@ const App = props => {
       action: "Random color button"
     });
     console.log("get random hex 1");
-    const randomHex1 = getRandomHexColor();
-    updateStateValues(randomHex1, 1);
+    const randomColor1 = getAllColorInfo(getRandomColor());
+    updateStateValues(randomColor1, 1);
 
     if (splitView && splitViewDisabled === false) {
       console.log("get random hex 2");
-      const randomHex2 = getRandomHexColor();
-      updateStateValues(randomHex2, 2);
+      const randomColor2 = getAllColorInfo(getRandomColor());
+      updateStateValues(randomColor2, 2);
     }
   };
 

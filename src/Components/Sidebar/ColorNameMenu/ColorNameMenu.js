@@ -3,7 +3,7 @@ import namedColors from "color-name-list";
 import SidebarContext from "../../../Contexts/SidebarContext";
 import Color from "color";
 
-import { getContrastColor, hexToRgb } from "../../../Functions";
+import { getContrastColor } from "../../../Functions";
 
 const initialColorNameList = namedColors.slice(0, 50).map(el => {
   el.contrast = getContrastColor(Color(el.hex)).hex();
@@ -34,7 +34,7 @@ const ColorNameMenu = ({ handleColorClick }) => {
       index++;
     }
     newColorArr.map(el => {
-      el.contrast = getContrastColor(hexToRgb(el.hex));
+      el.contrast = getContrastColor(Color(el.hex)).hex();
       return el;
     });
     updateColorNameList(newColorArr);
