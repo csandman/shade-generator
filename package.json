@@ -21,7 +21,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettify": "prettier --write \"src/**/*.*(js|s?css)\"",
+    "predeploy": "npm install && npm run prettify && npm run build",
+    "deploy": "npm run predeploy && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,5 +37,8 @@
   ],
   "prettier": {
     "tabWidth": 2
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   }
 }
