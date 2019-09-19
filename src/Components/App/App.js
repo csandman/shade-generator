@@ -63,7 +63,6 @@ const App = props => {
   const { splitView, splitViewDisabled, setSplitView } = useContext(SplitViewContext);
 
   useEffect(() => {
-    console.log('effect should run once')
     if (online) {
       ReactGA.initialize(process.env.REACT_APP_GA_CODE);
       ReactGA.event({
