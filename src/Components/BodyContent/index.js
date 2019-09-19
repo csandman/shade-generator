@@ -1,3 +1,3 @@
 import BodyContent from "./BodyContent";
 
-export default BodyContent
+export default BodyContent;

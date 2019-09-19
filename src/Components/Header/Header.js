@@ -5,12 +5,10 @@ import HamburgerButton from "../HamburgerButton";
 import SplitViewContext from "../../Contexts/SplitViewContext";
 import "./Header.scss";
 
-const Header = ({
-  colorData,
-  getRandomColors
-}) => {
-
-  const {splitView, splitViewDisabled, toggleSplitView} = useContext(SplitViewContext)
+const Header = ({ colorData, getRandomColors }) => {
+  const { splitView, splitViewDisabled, toggleSplitView } = useContext(
+    SplitViewContext
+  );
 
   return (
     <div
@@ -26,10 +24,7 @@ const Header = ({
     >
       <div className="left-content">
         {colorData.shades.length && (
-          <HeaderIcon
-            getRandomColors={getRandomColors}
-            colorData={colorData}
-          />
+          <HeaderIcon getRandomColors={getRandomColors} colorData={colorData} />
         )}
         <h1
           style={
@@ -45,7 +40,7 @@ const Header = ({
       </div>
       <div className="right-content">
         <div className="button-section">
-          <HeaderButton 
+          <HeaderButton
             action={getRandomColors}
             className="random-button"
             colorData={colorData}
@@ -53,7 +48,7 @@ const Header = ({
             iconClassName="fas fa-random"
             textClassName="random-button-text"
           />
-          <HeaderButton 
+          <HeaderButton
             action={toggleSplitView}
             className={`split-button ${splitView ? " active" : ""}`}
             colorData={colorData}

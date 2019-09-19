@@ -75,7 +75,7 @@ export function calcAllGradients(color) {
     });
   }
   return gradientArr;
-};
+}
 
 function calculateGradient(color, isDark, opacity) {
   return isDark

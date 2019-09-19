@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import SidebarContext from '../../../Contexts/SidebarContext';
+import SidebarContext from "../../../Contexts/SidebarContext";
 import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
 
-const TopColors = ({
-  firebase,
-  handleColorClick
- }) => {
-
+const TopColors = ({ firebase, handleColorClick }) => {
   const { closeMenu } = useContext(SidebarContext);
 
   const online = useOnline();

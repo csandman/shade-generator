@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
-import SidebarContext from '../../../Contexts/SidebarContext';
+import SidebarContext from "../../../Contexts/SidebarContext";
 
-
-const ColorHistory = ({
-  firebase,
-  handleColorClick
- }) => {
-
+const ColorHistory = ({ firebase, handleColorClick }) => {
   const { closeMenu } = useContext(SidebarContext);
 
   const online = useOnline();
   const [recentColors, setRecentColors] = useState([]);
-
 
   useEffect(() => {
     if (online) {
@@ -37,48 +31,42 @@ const ColorHistory = ({
 
   return (
     <div className="menu-items">
-    {recentColors.map((item, i) => {
-      return (
-        <div
-          key={item.hex + i}
-          className="menu-item"
-          style={{ backgroundColor: item.hex }}
-          onClick={() => {
-            handleColorClick(item, 1);
-            closeMenu();
-          }}
-          data-hex={item.hex}
-        >
+      {recentColors.map((item, i) => {
+        return (
           <div
-            className="color-name"
-            style={{ color: item.contrast }}
+            key={item.hex + i}
+            className="menu-item"
+            style={{ backgroundColor: item.hex }}
+            onClick={() => {
+              handleColorClick(item, 1);
+              closeMenu();
+            }}
             data-hex={item.hex}
           >
-            {item.name}
+            <div
+              className="color-name"
+              style={{ color: item.contrast }}
+              data-hex={item.hex}
+            >
+              {item.name}
+            </div>
+            <div
+              className="color-name"
+              style={{ color: item.contrast }}
+              data-hex={item.hex}
+            >
+              {item.hex}
+            </div>
+            <div className="footer-left" style={{ color: item.contrast }}>
+              {item.dateString}
+            </div>
+            <div className="footer-right" style={{ color: item.contrast }}>
+              {item.timeString}
+            </div>
           </div>
-          <div
-            className="color-name"
-            style={{ color: item.contrast }}
-            data-hex={item.hex}
-          >
-            {item.hex}
-          </div>
-          <div
-            className="footer-left"
-            style={{ color: item.contrast }}
-          >
-            {item.dateString}
-          </div>
-          <div
-            className="footer-right"
-            style={{ color: item.contrast }}
-          >
-            {item.timeString}
-          </div>
-        </div>
-      );
-    })}
-  </div>
+        );
+      })}
+    </div>
   );
 };
 

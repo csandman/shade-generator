@@ -5,7 +5,6 @@ import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
 
 const ColorSquare = props => {
-
   const { rgb, hex } = props.color;
   const rgbStr = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 
@@ -43,14 +42,10 @@ const ColorSquare = props => {
           <div>
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">
-              <button onClick={copyHexCode}>
-                {hex.toUpperCase()}
-              </button>
+              <button onClick={copyHexCode}>{hex.toUpperCase()}</button>
             </div>
             <div className="popup-button">
-              <button onClick={copyRgb}>
-                {rgbStr}
-              </button>
+              <button onClick={copyRgb}>{rgbStr}</button>
             </div>
           </div>
         }

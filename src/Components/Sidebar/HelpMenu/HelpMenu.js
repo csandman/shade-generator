@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import PlusButton from "../../PlusButton";
 
-
 const HelpMenu = () => {
-
   const [accordianStates, updateAccordianStates] = useState({
     colorParserOpen: false,
     copyToClipboardOpen: false,
@@ -15,7 +13,7 @@ const HelpMenu = () => {
   });
 
   const toggleAccordianState = accordianID => {
-    let newState = {...accordianStates};
+    let newState = { ...accordianStates };
     newState[`${accordianID}Open`] = !accordianStates[`${accordianID}Open`];
     updateAccordianStates(newState);
   };

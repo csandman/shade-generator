@@ -14,9 +14,7 @@ const ColorNameMenu = ({ handleColorClick }) => {
   const { closeMenu } = useContext(SidebarContext);
 
   const [searchInput, updateSearchInput] = useState("");
-  const [colorNameList, updateColorNameList] = useState(
-    initialColorNameList
-  );
+  const [colorNameList, updateColorNameList] = useState(initialColorNameList);
 
   const searchColorNames = e => {
     updateSearchInput(e.target.value);

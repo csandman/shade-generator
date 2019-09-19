@@ -13,7 +13,7 @@ const Sidebar = props => {
   const { isMenuOpen, closeMenu } = useContext(SidebarContext);
 
   function handleKeyPress(e) {
-    console.log(e)
+    console.log(e);
     if (e.code === "Escape") {
       closeMenu();
     }
@@ -35,7 +35,7 @@ const Sidebar = props => {
       newMenuStates[key] = false;
     }
     newMenuStates[`is${menuId}Open`] = true;
-    updateMenuStates({...newMenuStates});
+    updateMenuStates({ ...newMenuStates });
   };
 
   const closeSubMenu = () => {
@@ -120,9 +120,7 @@ const Sidebar = props => {
             <span>Color History</span>
           </div>
           <div className="sub-menu-content">
-            <ColorHistory
-              handleColorClick={props.handleColorClick}
-            />
+            <ColorHistory handleColorClick={props.handleColorClick} />
           </div>
         </div>
 
@@ -159,7 +157,9 @@ const Sidebar = props => {
           />
         </div>
 
-        <div className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}>
+        <div
+          className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}
+        >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
             <span>What is this?</span>
