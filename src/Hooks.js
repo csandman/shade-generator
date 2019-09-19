@@ -9,10 +9,8 @@ const useEventListener = (eventName, handler, element = global) => {
 
   useEffect(
     () => {
-      console.log("useEventListener");
       const isSupported = element && element.addEventListener;
       if (!isSupported) {
-        console.error(element, "addEventListener is not supported");
         return;
       }
       const eventListener = event => savedHandler.current(event);

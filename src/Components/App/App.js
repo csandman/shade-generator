@@ -18,21 +18,52 @@ import {
   attemptCreateColor
 } from "../../Functions";
 
+function parseURL() {
+  let path = window.location.pathname.slice(1);
+  if (path.length) {
+    let splitUrl = window.location.pathname
+      .slice(1)
+      .toUpperCase()
+      .split("-");
+
+    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9A-F]{6}$/)) {
+      return [`#${splitUrl[0]}`, "", false];
+    } else if (
+      splitUrl.length === 2 &&
+      splitUrl[0].match(/^[0-9A-F]{6}$/) &&
+      splitUrl[1].match(/^[0-9A-F]{6}$/)
+    ) {
+      return [`#${splitUrl[0]}`, `#${splitUrl[1]}`, true];
+    } else {
+      window.history.pushState({}, "Shade Generator", "");
+    }
+  }
+
+  return ["", "", false];
+}
+
+const [initialHex1, initialHex2, initialSplitState] = parseURL();
+
+const initialColor1 = getAllColorInfo(
+  initialHex1.length ? attemptCreateColor(initialHex1) : getRandomColor()
+);
+
+const initialColor2 = getAllColorInfo(
+  initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor()
+);
+
 const App = props => {
-  const [colorData1, setColorData1] = useState(
-    getAllColorInfo(getRandomColor())
-  );
-  const [colorData2, setColorData2] = useState(
-    getAllColorInfo(getRandomColor())
-  );
-  const [loading, setLoading] = useState(true);
   const online = useOnline();
-  // const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
-  const [curInputVal1, setCurInputVal1] = useState(1);
-  const [curInputVal2, setCurInputVal2] = useState(colorData1.hex);
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const [colorData1, setColorData1] = useState(initialColor1);
+  const [colorData2, setColorData2] = useState(initialColor2);
+  const [loading, setLoading] = useState(true);
+  const [curInputVal1, setCurInputVal1] = useState(initialHex1);
+  const [curInputVal2, setCurInputVal2] = useState(initialHex2);
+
+  const { splitView, splitViewDisabled, setSplitView } = useContext(SplitViewContext);
 
   useEffect(() => {
+    console.log('effect should run once')
     if (online) {
       ReactGA.initialize(process.env.REACT_APP_GA_CODE);
       ReactGA.event({
@@ -41,18 +72,31 @@ const App = props => {
       });
     } else {
       console.log("offline detected");
-      setLoading(false);
     }
 
-    // let parseSuccessful = false;
-    // if (window.location.pathname.slice(1)) {
-    //   parseSuccessful = parseURL();
-    // }
-    // if (!parseSuccessful) {
-    //   setPathnameArr([colorData1.hex.slice(1)]);
-    // }
+    setSplitView(initialSplitState);
     setTimeout(() => setLoading(false), 200);
-  }, [online]);
+  }, [online, setSplitView]);
+
+  const hex1 = colorData1.hex;
+  const hex2 = colorData2.hex;
+
+  useEffect(() => {
+    if (splitView === true && !splitViewDisabled) {
+      window.history.pushState(
+        {},
+        "Shade Generator",
+        `${hex1.slice(1)}-${hex2.slice(1)}`
+      );
+    } else if (splitView === false) {
+      window.history.pushState(
+        {},
+        "Shade Generator",
+        hex1.slice(1)
+      );
+    }
+    
+  }, [hex1, hex2, splitView, splitViewDisabled]);
 
   function addMenuItem(newColor) {
     newColor.timeAdded = new Date();
@@ -77,58 +121,15 @@ const App = props => {
     });
   }
 
-  //TODO: Add URL parsing/setting back into the app
-
-  // function parseURL() {
-  //   let splitUrl = window.location.pathname
-  //     .slice(1)
-  //     .toUpperCase()
-  //     .split("-");
-
-  //   if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
-  //     updateStateValues("#" + splitUrl[0], 1);
-  //     window.history.pushState(
-  //       {},
-  //       "Shade Generator",
-  //       window.location.pathname.slice(1)
-  //     );
-  //     return true;
-  //   } else if (
-  //     splitUrl.length === 2 &&
-  //     splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
-  //     splitUrl[1].match(/^[0-9a-f]{6}$/i)
-  //   ) {
-  //     updateStateValues("#" + splitUrl[0], 1);
-  //     updateStateValues("#" + splitUrl[1], 2);
-  //     setSplitView(true);
-  //     setPathnameArr(splitUrl);
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // useEffect(() => {
-  //   window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
-  // }, [pathnameArr]);
-
-  // useEffect(() => {
-  //   let newPathNameArr = splitView
-  //     ? pathnameArr.slice(0, 1)
-  //     : [...pathnameArr, colorData2.hex.slice(1)];
-  //   setPathnameArr(newPathNameArr);
-  // }, [splitView, pathnameArr, setPathnameArr]);
-
   const getRandomColors = () => {
     ReactGA.event({
       category: "Button Press",
       action: "Random color button"
     });
-    console.log("get random hex 1");
     const randomColor1 = getAllColorInfo(getRandomColor());
     updateStateValues(randomColor1, 1);
 
     if (splitView && splitViewDisabled === false) {
-      console.log("get random hex 2");
       const randomColor2 = getAllColorInfo(getRandomColor());
       updateStateValues(randomColor2, 2);
     }
@@ -150,7 +151,6 @@ const App = props => {
   };
 
   const updateStateValues = (color, colorNum) => {
-    console.log("update state values");
     let colorData;
     if (typeof color === "object") {
       if (color.shades) {
@@ -166,15 +166,11 @@ const App = props => {
 
     delete colorData.keyword;
     if (colorNum === 1) {
-      // const newPNA = pathnameArr;
-      // newPNA[0] = colorData.hex.slice(1);
       setColorData1(colorData);
       setCurInputVal1(colorData.hex);
-      // setPathnameArr(newPNA);
     } else if (colorNum === 2) {
       setColorData2(colorData);
       setCurInputVal2(colorData.hex);
-      // setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
     }
     if (online) addMenuItem(getCopy(colorData));
   };

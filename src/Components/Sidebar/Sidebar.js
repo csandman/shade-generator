@@ -9,11 +9,18 @@ import "./Sidebar.scss";
 import SidebarContext from "../../Contexts/SidebarContext";
 import { useEventListener } from "../../Hooks";
 
+const initialMenuStates = {
+  isMainMenuOpen: true,
+  isHistoryMenuOpen: false,
+  isSearchMenuOpen: false,
+  isTopColorsMenuOpen: false,
+  isHelpMenuOpen: false
+};
+
 const Sidebar = props => {
   const { isMenuOpen, closeMenu } = useContext(SidebarContext);
 
   function handleKeyPress(e) {
-    console.log(e);
     if (e.code === "Escape") {
       closeMenu();
     }
@@ -21,30 +28,20 @@ const Sidebar = props => {
   useEventListener("keyup", handleKeyPress, document);
 
   const online = useOnline();
-  const [menuStates, updateMenuStates] = useState({
-    isMainMenuOpen: true,
-    isHistoryMenuOpen: false,
-    isSearchMenuOpen: false,
-    isTopColorsMenuOpen: false,
-    isHelpMenuOpen: false
-  });
+  const [menuStates, updateMenuStates] = useState(initialMenuStates);
 
   const openMenu = menuId => {
-    const newMenuStates = {};
-    for (const key in menuStates) {
-      newMenuStates[key] = false;
-    }
+    const newMenuStates = {
+      ...initialMenuStates,
+      isMainMenuOpen: false
+    };
     newMenuStates[`is${menuId}Open`] = true;
-    updateMenuStates({ ...newMenuStates });
+    updateMenuStates(newMenuStates);
   };
 
   const closeSubMenu = () => {
     document.activeElement.blur();
-    const newMenuStates = {};
-    for (const key in menuStates) {
-      newMenuStates[key] = false;
-    }
-    updateMenuStates({ ...newMenuStates, isMainMenuOpen: true });
+    updateMenuStates({ ...initialMenuStates });
   };
 
   return (

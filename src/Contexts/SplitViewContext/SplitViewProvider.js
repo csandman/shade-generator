@@ -43,8 +43,8 @@ const SplitViewProvider = ({ children }) => {
   };
 
   const [splitViewValues, setSplitViewValues] = useState({
-    splitView: false,
-    splitViewDisabled: false,
+    splitView: null,
+    splitViewDisabled: isSplitViewDisabled(),
     setSplitView,
     toggleSplitView
   });
