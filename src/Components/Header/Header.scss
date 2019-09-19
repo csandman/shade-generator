@@ -72,6 +72,7 @@
     font-weight: 600;
     border: 2px solid $contrast;
     color: $contrast;
+    user-select: none;
 
     &.active {
       color: $opposite-contrast;
