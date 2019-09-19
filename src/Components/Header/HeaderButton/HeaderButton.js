@@ -12,7 +12,7 @@ const HeaderButton = ({
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
   return (
-    <div
+    <button
       className={`icon-button ${className}`}
       onClick={action}
       style={
@@ -47,7 +47,7 @@ const HeaderButton = ({
       >
         {buttonText}
       </span>
-    </div>
+    </button>
   );
 };
 
