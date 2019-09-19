@@ -10,16 +10,16 @@ function usePrevious(value) {
   return ref.current;
 }
 
-const InputUpdater = ({ inputNum, inputValue }) => {
+const InputUpdater = ({ inputValue1, inputValue2 }) => {
   const { updateInputValue } = useContext(InputContext);
-  const prevProps = usePrevious({ inputNum, inputValue });
+  const prevProps = usePrevious({ inputValue1, inputValue2 });
   useEffect(() => {
     if (!prevProps) return;
-    if (
-      inputNum !== prevProps.inputNum ||
-      inputValue !== prevProps.inputValue
-    ) {
-      updateInputValue(inputNum, inputValue);
+    if (inputValue1 !== prevProps.inputValue1) {
+      updateInputValue(1, inputValue1);
+    }
+    if (inputValue2 !== prevProps.inputValue2) {
+      updateInputValue(2, inputValue2);
     }
   });
   return null;

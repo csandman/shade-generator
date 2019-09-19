@@ -28,8 +28,8 @@ const App = props => {
   const [loading, setLoading] = useState(true);
   const online = useOnline();
   // const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
-  const [curInputNum, setCurInputNum] = useState(1);
-  const [curInputVal, setCurInputVal] = useState(colorData1.hex);
+  const [curInputVal1, setCurInputVal1] = useState(1);
+  const [curInputVal2, setCurInputVal2] = useState(colorData1.hex);
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
   useEffect(() => {
@@ -169,19 +169,19 @@ const App = props => {
       // const newPNA = pathnameArr;
       // newPNA[0] = colorData.hex.slice(1);
       setColorData1(colorData);
+      setCurInputVal1(colorData.hex);
       // setPathnameArr(newPNA);
     } else if (colorNum === 2) {
       setColorData2(colorData);
+      setCurInputVal2(colorData.hex);
       // setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
     }
-    setCurInputVal(colorData.hex);
-    setCurInputNum(colorNum);
     if (online) addMenuItem(getCopy(colorData));
   };
 
   return (
     <div id="App" style={{ backgroundColor: colorData1.hex }}>
-      <InputUpdater inputNum={curInputNum} inputValue={curInputVal} />
+      <InputUpdater inputValue1={curInputVal1} inputValue2={curInputVal2} />
       <LoadingScreen show={loading} />
       <div>
         <Header colorData={colorData1} getRandomColors={getRandomColors} />
