@@ -61,7 +61,9 @@ const App = props => {
   const [curInputVal1, setCurInputVal1] = useState(initialHex1);
   const [curInputVal2, setCurInputVal2] = useState(initialHex2);
 
-  const { splitView, splitViewDisabled, setSplitView } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled, setSplitView } = useContext(
+    SplitViewContext
+  );
 
   useEffect(() => {
     if (online) {
@@ -89,13 +91,8 @@ const App = props => {
         `${hex1.slice(1)}-${hex2.slice(1)}`
       );
     } else if (splitView === false) {
-      window.history.pushState(
-        {},
-        "Shade Generator",
-        hex1.slice(1)
-      );
+      window.history.pushState({}, "Shade Generator", hex1.slice(1));
     }
-    
   }, [hex1, hex2, splitView, splitViewDisabled]);
 
   function addMenuItem(newColor) {
