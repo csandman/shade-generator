@@ -9,10 +9,9 @@ export function getRandomColor() {
   return Color(color);
 }
 
-export function getContrastColor(color) {
+export function getContrastColor(color, minContrastRatio = 4.5) {
   let isDark = !color.isDark();
   let i = 0.01;
-  const minContrastRatio = 4.5;
   let contrastColor;
   let contrastRatio = 0;
   while (contrastRatio < minContrastRatio && i < 1) {
@@ -64,14 +63,20 @@ export function calcAllGradients(color) {
     const newColor = calculateGradient(color, false, opac / 100);
     gradientArr.push({
       hex: newColor.hex(),
-      rgb: newColor.rgb().array()
+      rgb: newColor.rgb().array(),
+      contrastRatio: color.contrast(newColor),
+      contrastLevel: color.level(newColor),
+      isDark: newColor.isDark()
     });
   }
   for (let opac = 5; opac <= 90; opac += 5) {
     const newColor = calculateGradient(color, true, opac / 100);
     gradientArr.push({
       hex: newColor.hex(),
-      rgb: newColor.rgb().array()
+      rgb: newColor.rgb().array(),
+      contrastRatio: color.contrast(newColor),
+      contrastLevel: color.level(newColor),
+      isDark: newColor.isDark()
     });
   }
   return gradientArr;
@@ -129,7 +134,7 @@ export function getAllColorInfo(color) {
     hsv: color.hsv().array(),
     name: getColorName(color.hex()),
 
-    highContrast: getHighContrastColor(color).hex(),
+    highContrast: getContrastColor(color, 7.0).hex(),
     lowContrast: getLowContrastColor(color).hex(),
     oppositeContrast: getOppositeContrastColor(color).hex(),
     shades: calcAllGradients(color)
