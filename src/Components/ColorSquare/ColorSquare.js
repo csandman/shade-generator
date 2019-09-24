@@ -4,8 +4,12 @@ import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
 
-const ColorSquare = props => {
-  const { rgb, hex } = props.color;
+const ColorSquare = ({
+  color: { rgb, hex, contrastRatio, contrastLevel, isDark },
+  squareNumber,
+  handleColorClick,
+  bodyNum
+}) => {
   const rgbStr = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 
   const copyHexCode = e => {
@@ -40,6 +44,8 @@ const ColorSquare = props => {
         duration={200}
         html={
           <div>
+            {/* <div className="tooltip-title">CONTRAST RATIO:</div>
+            <div className="tooltip-title">{contrastRatio.toFixed(1)}:1 {contrastLevel ? `(${contrastLevel})` : ''}</div> */}
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">
               <button onClick={copyHexCode}>{hex.toUpperCase()}</button>
@@ -53,9 +59,9 @@ const ColorSquare = props => {
         <div
           style={{ backgroundColor: hex }}
           className="color-tile"
-          id={"tippy-tooltip-" + props.squareNumber}
+          id={"tippy-tooltip-" + squareNumber}
           onClick={() => {
-            props.handleColorClick(hex, props.bodyNum);
+            handleColorClick(hex, bodyNum);
           }}
         />
       </Tooltip>

@@ -9,6 +9,7 @@ import "./App.scss";
 import { withFirebase } from "../Firebase";
 import { InputUpdater } from "../../Contexts/InputContext";
 import SplitViewContext from "../../Contexts/SplitViewContext";
+// import ContrastRatio from '../ContrastRatio';
 
 import {
   searchNamedColors,
@@ -178,10 +179,9 @@ const App = props => {
     <div id="App" style={{ backgroundColor: colorData1.hex }}>
       <InputUpdater inputValue1={curInputVal1} inputValue2={curInputVal2} />
       <LoadingScreen show={loading} />
-      <div>
+      <div className="main-container">
         <Header colorData={colorData1} getRandomColors={getRandomColors} />
         <Sidebar handleColorClick={updateStateValues} />
-
         <div className="page">
           <BodyContent
             handleSubmit={handleSubmit}
@@ -201,6 +201,7 @@ const App = props => {
             />
           )}
         </div>
+        {/* <ContrastRatio hex1={hex1} hex2={hex2} /> */}
       </div>
     </div>
   );
