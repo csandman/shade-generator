@@ -1,0 +1,34 @@
+noscript {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #222;
+  font-family: "Nunito";
+}
+
+noscript h3 {
+  color: #fff;
+  font-size: 2em;
+  margin: 0;
+  padding: 0.33em 1em;
+}
+
+noscript p {
+  font-size: 1.2em;
+  color: #fff;
+  margin: 0;
+  padding: 0.33em 1em;
+}
+
+noscript a:link,
+noscript a:visited {
+  color: #fff;
+}
