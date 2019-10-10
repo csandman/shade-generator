@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
+import { withFirebase } from "../../Firebase";
 import SidebarContext from "../../../Contexts/SidebarContext";
 
 const ColorHistory = ({ firebase, handleColorClick }) => {
@@ -16,8 +16,8 @@ const ColorHistory = ({ firebase, handleColorClick }) => {
         .orderBy("timeAdded", "desc")
         .limit(40)
         .onSnapshot(querySnapshot => {
-          let data = querySnapshot.docs.map(doc => {
-            let out = doc.data();
+          const data = querySnapshot.docs.map(doc => {
+            const out = doc.data();
             out.id = doc.id;
             return out;
           });

@@ -5,31 +5,32 @@ import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
 
 const ColorSquare = ({
-  color: { rgb, hex, contrastRatio, contrastLevel, isDark },
+  color: { rgb, hex },
   squareNumber,
   handleColorClick,
   bodyNum
 }) => {
   const rgbStr = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 
+  const changeButtonText = (e, text) => {
+    const button = e.target;
+    const originalText = button.textContent;
+    button.textContent = text;
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 1200);
+  };
+
   const copyHexCode = e => {
     const output = hex.toUpperCase();
     clipboard.writeText(output);
-    changeButtonText(e.target, "Copied!");
+    changeButtonText(e, "Copied!");
   };
 
   const copyRgb = e => {
     const output = rgbStr;
     clipboard.writeText(output);
-    changeButtonText(e.target, "Copied!");
-  };
-
-  const changeButtonText = (button, text) => {
-    const original = button.textContent;
-    button.textContent = text;
-    setTimeout(() => {
-      button.textContent = original;
-    }, 1200);
+    changeButtonText(e, "Copied!");
   };
 
   return (
@@ -37,7 +38,7 @@ const ColorSquare = ({
       <Tooltip
         trigger="mouseenter"
         position="bottom"
-        arrow={true}
+        arrow
         animation="fade"
         interactive
         theme="dark-border"
@@ -45,21 +46,30 @@ const ColorSquare = ({
         html={
           <div>
             {/* <div className="tooltip-title">CONTRAST RATIO:</div>
-            <div className="tooltip-title">{contrastRatio.toFixed(1)}:1 {contrastLevel ? `(${contrastLevel})` : ''}</div> */}
+            <div className="tooltip-title">
+              {contrastRatio.toFixed(1)}:1{" "}
+              {contrastLevel ? `(${contrastLevel})` : ""}
+            </div> */}
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">
-              <button onClick={copyHexCode}>{hex.toUpperCase()}</button>
+              <button type="button" className="button" onClick={copyHexCode}>
+                {hex.toUpperCase()}
+              </button>
             </div>
             <div className="popup-button">
-              <button onClick={copyRgb}>{rgbStr}</button>
+              <button type="button" className="button" onClick={copyRgb}>
+                {rgbStr}
+              </button>
             </div>
           </div>
         }
       >
-        <div
+        <button
+          type="button"
+          aria-label={`Color tile ${bodyNum}-${squareNumber}`}
           style={{ backgroundColor: hex }}
           className="color-tile"
-          id={"tippy-tooltip-" + squareNumber}
+          id={`tippy-tooltip-${bodyNum}-${squareNumber}`}
           onClick={() => {
             handleColorClick(hex, bodyNum);
           }}

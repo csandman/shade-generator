@@ -1,0 +1,4 @@
+/src/serviceWorker.js
+node_modules/
+public/
+build/

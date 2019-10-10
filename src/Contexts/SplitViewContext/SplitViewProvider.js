@@ -6,40 +6,33 @@ const isSplitViewDisabled = () => {
   const width = window.innerWidth;
   if (width <= 600) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
 const SplitViewProvider = ({ children }) => {
   useEventListener("resize", () => {
-    let splitViewDisabled = isSplitViewDisabled();
+    const splitViewDisabled = isSplitViewDisabled();
     if (splitViewDisabled !== splitViewValues.splitViewDisabled) {
-      setSplitViewValues(prevSplitViewValues => {
-        let newSplitViewValues = {
-          ...prevSplitViewValues,
-          splitViewDisabled
-        };
-        return newSplitViewValues;
-      });
+      setSplitViewValues(prevSplitViewValues => ({
+        ...prevSplitViewValues,
+        splitViewDisabled
+      }));
     }
   });
 
   const setSplitView = splitView => {
-    setSplitViewValues(prevSplitViewValues => {
-      let newSplitViewValues = { ...prevSplitViewValues, splitView };
-      return newSplitViewValues;
-    });
+    setSplitViewValues(prevSplitViewValues => ({
+      ...prevSplitViewValues,
+      splitView
+    }));
   };
 
   const toggleSplitView = () => {
-    setSplitViewValues(prevSplitViewValues => {
-      let newSplitViewValues = {
-        ...prevSplitViewValues,
-        splitView: !prevSplitViewValues.splitView
-      };
-      return newSplitViewValues;
-    });
+    setSplitViewValues(prevSplitViewValues => ({
+      ...prevSplitViewValues,
+      splitView: !prevSplitViewValues.splitView
+    }));
   };
 
   const [splitViewValues, setSplitViewValues] = useState({

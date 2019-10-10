@@ -1,9 +1,9 @@
 import React from "react";
 import "./LoadingScreen.scss";
 
-const LoadingScreen = props => {
+const LoadingScreen = ({ show = false }) => {
   return (
-    <div className={"loading " + (props.show ? "" : "hidden")}>
+    <div className={`loading ${show ? "" : "hidden"}`}>
       <svg
         width="248px"
         height="248px"

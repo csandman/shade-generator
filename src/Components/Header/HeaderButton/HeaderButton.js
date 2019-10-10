@@ -7,13 +7,17 @@ const HeaderButton = ({
   colorData = {},
   buttonText = "Button",
   iconClassName = "",
-  textClassName = ""
+  textClassName = "",
+  name = ""
 }) => {
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
   return (
     <button
-      className={`icon-button ${className}`}
+      name={name}
+      aria-label={name}
+      type="button"
+      className={`button icon-button ${className}`}
       onClick={action}
       style={
         !splitView || splitViewDisabled

@@ -41,6 +41,7 @@ const Header = ({ colorData, getRandomColors }) => {
       <div className="right-content">
         <div className="button-section">
           <HeaderButton
+            name="Get random color"
             action={getRandomColors}
             className="random-button"
             colorData={colorData}
@@ -49,6 +50,7 @@ const Header = ({ colorData, getRandomColors }) => {
             textClassName="random-button-text"
           />
           <HeaderButton
+            name="Toggle split view"
             action={toggleSplitView}
             className={`split-button ${splitView ? " active" : ""}`}
             colorData={colorData}
@@ -58,7 +60,6 @@ const Header = ({ colorData, getRandomColors }) => {
           />
         </div>
         <HamburgerButton
-          className="menu-icon"
           color={
             !splitView || splitViewDisabled ? colorData.contrast : "#7a7a7a"
           }

@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
+import Color from "color";
 import namedColors from "color-name-list";
 import SidebarContext from "../../../Contexts/SidebarContext";
-import Color from "color";
 
 import { getContrastColor } from "../../../Functions";
 
-const initialColorNameList = namedColors.slice(0, 50).map(el => {
-  el.contrast = getContrastColor(Color(el.hex)).hex();
-  return el;
-});
+const initialColorNameList = namedColors.slice(0, 50).map(el => ({
+  ...el,
+  contrast: getContrastColor(Color(el.hex)).hex()
+}));
 
 const ColorNameMenu = ({ handleColorClick }) => {
   const { closeMenu } = useContext(SidebarContext);
@@ -18,7 +18,7 @@ const ColorNameMenu = ({ handleColorClick }) => {
 
   const searchColorNames = e => {
     updateSearchInput(e.target.value);
-    let newColorArr = [];
+    const newColorArr = [];
     let index = 0;
     while (newColorArr.length < 100 && index < namedColors.length) {
       if (
@@ -29,12 +29,12 @@ const ColorNameMenu = ({ handleColorClick }) => {
       ) {
         newColorArr.push(namedColors[index]);
       }
-      index++;
+      index += 1;
     }
-    newColorArr.map(el => {
-      el.contrast = getContrastColor(Color(el.hex)).hex();
-      return el;
-    });
+    newColorArr.map(el => ({
+      ...el,
+      contrast: getContrastColor(Color(el.hex)).hex()
+    }));
     updateColorNameList(newColorArr);
   };
 
@@ -44,7 +44,7 @@ const ColorNameMenu = ({ handleColorClick }) => {
         <div className="search-icon-container">
           <i className="icon fas fa-search" />
         </div>
-        <label htmlFor={"color-search"}>Color search</label>
+        <label htmlFor="color-search">Color search</label>
         <input
           id="color-search"
           type="search"

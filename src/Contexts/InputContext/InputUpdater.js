@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 
-import InputContext from "../../Contexts/InputContext";
+import InputContext from "./InputContext";
 
 let prevInput1 = "";
 let prevInput2 = "";

@@ -9,8 +9,20 @@ export function getRandomColor() {
   return Color(color);
 }
 
+function calculateGradient(color, isDark, opacity) {
+  return isDark
+    ? color
+        .mix(Color("black"), opacity)
+        .rgb()
+        .round()
+    : color
+        .mix(Color("white"), opacity)
+        .rgb()
+        .round();
+}
+
 export function getContrastColor(color, minContrastRatio = 4.5) {
-  let isDark = !color.isDark();
+  const isDark = !color.isDark();
   let i = 0.01;
   let contrastColor;
   let contrastRatio = 0;
@@ -38,7 +50,7 @@ export function getLowContrastColor(color) {
 }
 
 export function searchNamedColors(searchTerm) {
-  for (let i = 0; i < namedColors.length; i++) {
+  for (let i = 0; i < namedColors.length; i += 1) {
     if (namedColors[i].name.replace(/\s/g, "").toLowerCase() === searchTerm)
       return namedColors[i].hex.toUpperCase();
   }
@@ -48,17 +60,17 @@ export function searchNamedColors(searchTerm) {
 // Uses the named-colors library for a list of named of colors
 // and uses nearest color to match the entered color to the closest
 // option with a name
-export function getColorName(hex) {
+export function getColorName(hexCode) {
   const colors = namedColors.reduce(
     (o, { name, hex }) => Object.assign(o, { [name]: hex }),
     {}
   );
   const nearest = nearestColor.from(colors);
-  return nearest(hex).name;
+  return nearest(hexCode).name;
 }
 
 export function calcAllGradients(color) {
-  let gradientArr = [];
+  const gradientArr = [];
   for (let opac = 90; opac >= 5; opac -= 5) {
     const newColor = calculateGradient(color, false, opac / 100);
     gradientArr.push({
@@ -82,32 +94,6 @@ export function calcAllGradients(color) {
   return gradientArr;
 }
 
-function calculateGradient(color, isDark, opacity) {
-  return isDark
-    ? color
-        .mix(Color("black"), opacity)
-        .rgb()
-        .round()
-    : color
-        .mix(Color("white"), opacity)
-        .rgb()
-        .round();
-  // return isDark
-  //   ? col
-  //       .darken(opacity)
-  //       .rgb()
-  //       .round()
-  //       .array()
-  //   : col
-  //       .lighten(opacity)
-  //       .rgb()
-  //       .round()
-  //       .array();
-  // return rgb.map(val =>
-  //   calculateIndividualColor(val, isDark ? 0 : 255, opacity)
-  // );
-}
-
 export function attemptCreateColor(colorStr) {
   let color;
 
@@ -120,10 +106,15 @@ export function attemptCreateColor(colorStr) {
   return color;
 }
 
-export function getAllColorInfo(color) {
-  if (typeof color === "string") {
-    color = Color(color);
+export function getAllColorInfo(colorVal) {
+  let color;
+  if (typeof colorVal === "string") {
+    color = Color(colorVal);
+  } else {
+    color = colorVal;
   }
+
+  console.log(color);
 
   return {
     contrast: getContrastColor(color).hex(),
