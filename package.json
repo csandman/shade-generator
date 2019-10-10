@@ -14,7 +14,7 @@
     "react-browser-hooks": "^2.2.3",
     "react-dom": "^16.9.0",
     "react-ga": "^2.6.0",
-    "react-scripts": "^3.1.2",
+    "react-scripts": "^3.2.0",
     "react-tippy": "^1.2.3"
   },
   "scripts": {
