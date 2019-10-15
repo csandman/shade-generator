@@ -1,4 +1,5 @@
 /src/serviceWorker.js
+/src/Components/SignUp/SignUp.js
 node_modules/
 public/
 build/

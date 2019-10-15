@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useOnline } from "react-browser-hooks";
 import { withFirebase } from "../../Firebase";
-import SidebarContext from "../../../Contexts/SidebarContext";
+import MenuItem from "../MenuItem/MenuItem";
 
 const ColorHistory = ({ firebase, handleColorClick }) => {
-  const { closeMenu } = useContext(SidebarContext);
-
   const online = useOnline();
   const [recentColors, setRecentColors] = useState([]);
 
@@ -33,37 +31,16 @@ const ColorHistory = ({ firebase, handleColorClick }) => {
     <div className="menu-items">
       {recentColors.map((item, i) => {
         return (
-          <div
+          <MenuItem
             key={item.hex + i}
-            className="menu-item"
-            style={{ backgroundColor: item.hex }}
-            onClick={() => {
-              handleColorClick(item, 1);
-              closeMenu();
-            }}
-            data-hex={item.hex}
-          >
-            <div
-              className="color-name"
-              style={{ color: item.contrast }}
-              data-hex={item.hex}
-            >
-              {item.name}
-            </div>
-            <div
-              className="color-name"
-              style={{ color: item.contrast }}
-              data-hex={item.hex}
-            >
-              {item.hex}
-            </div>
-            <div className="footer-left" style={{ color: item.contrast }}>
-              {item.dateString}
-            </div>
-            <div className="footer-right" style={{ color: item.contrast }}>
-              {item.timeString}
-            </div>
-          </div>
+            item={item}
+            color={item.hex}
+            name={item.name}
+            contrast={item.contrast}
+            textBottomLeft={item.dateString}
+            textBottomRight={item.timeString}
+            onClick={handleColorClick}
+          />
         );
       })}
     </div>

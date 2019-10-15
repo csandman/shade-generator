@@ -97,7 +97,9 @@ class SignUp extends Component {
               onChange={this.handlePasswordChange}
               value={this.state.password}
             />
-            <button onClick={this.handleSubmit}>Submit</button>
+            <button type="button" onClick={this.handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       </div>

@@ -27,9 +27,6 @@
     "deploy": "npm run predeploy && firebase deploy",
     "lint": "eslint --ext .js --ext .jsx ."
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",

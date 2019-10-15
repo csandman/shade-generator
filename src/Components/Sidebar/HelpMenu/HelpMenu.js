@@ -13,9 +13,10 @@ const HelpMenu = () => {
   });
 
   const toggleAccordianState = accordianID => {
-    let newState = { ...accordianStates };
-    newState[`${accordianID}Open`] = !accordianStates[`${accordianID}Open`];
-    updateAccordianStates(newState);
+    updateAccordianStates({
+      ...accordianStates,
+      [`${accordianID}Open`]: !accordianStates[`${accordianID}Open`]
+    });
   };
 
   return (
@@ -68,10 +69,9 @@ const HelpMenu = () => {
         Color Parser
       </h5>
       <div
-        className={
-          "feature-container" +
-          (accordianStates.colorParserOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.colorParserOpen ? "" : " closed"
+        }`}
       >
         <p>
           One of the first things I added was the NPM package{" "}
@@ -102,9 +102,9 @@ const HelpMenu = () => {
         <p>
           This was useful, not only to interpret input from the user but also
           for providing hex and rgb values, both of which are important to this
-          app's functionality. After scrubbing the user input before passing it
-          to this function, it does a great job of matching everything you'd
-          expect it to!
+          app&apos;s functionality. After scrubbing the user input before
+          passing it to this function, it does a great job of matching
+          everything you&apos;d expect it to!
         </p>
       </div>
       <h5
@@ -120,15 +120,14 @@ const HelpMenu = () => {
         Copy to Clipboard
       </h5>
       <div
-        className={
-          "feature-container" +
-          (accordianStates.copyToClipboardOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.copyToClipboardOpen ? "" : " closed"
+        }`}
       >
         <p>
           The next main thing I added was the option to click to copy either the
           hex code or the rgb code to your clipboard. The first two things I
-          tried were <code>document.execCommand("copy")</code> and{" "}
+          tried were <code>document.execCommand(&quot;copy&quot;)</code> and{" "}
           <code>navigator.clipboard.write()</code>. Both of these options worked
           but I ran into issued with them working on all devices. I soon
           stumbled upon a nice small NPM package called{" "}
@@ -154,10 +153,9 @@ const HelpMenu = () => {
         Color Names
       </h5>
       <div
-        className={
-          "feature-container" +
-          (accordianStates.colorNamesOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.colorNamesOpen ? "" : " closed"
+        }`}
       >
         <p>
           Now that the basic features were in place, it was time to have some
@@ -176,7 +174,7 @@ const HelpMenu = () => {
           NTC.
         </p>
         <p>
-          After running into some problems with this package (I can't quite
+          After running into some problems with this package (I can&apos;t quite
           remember what) I decided to keep looking around. Somehow I missed the
           amazing package{" "}
           <a
@@ -199,8 +197,8 @@ const HelpMenu = () => {
             nearest-color
           </a>
           . This matches the color the user enters with the closest color from
-          the list, and due to the magnitude of color-name-list, it's usually
-          pretty damn close!
+          the list, and due to the magnitude of color-name-list, it&apos;s
+          usually pretty damn close!
         </p>
       </div>
       <h5
@@ -213,21 +211,20 @@ const HelpMenu = () => {
         Random Colors
       </h5>
       <div
-        className={
-          "feature-container" +
-          (accordianStates.randomColorsOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.randomColorsOpen ? "" : " closed"
+        }`}
       >
         <p>
           So now I have the main functionality I want and a little pizzazz, I
           realized I needed a faster way to test the app. So I decided the best
           way would be to add a random color generator. This may seem like it
           should have been an obvious thing to make from the start but it took
-          me a while to realize it (I know, sometimes I'm thick). It took me all
-          of 5 minutes to add it and get it going and it made a world of
-          difference. Now when I'm looking for colors for a new website, I'll
-          just hit random until something stands out to me. And I still get a
-          kick out some of these names.
+          me a while to realize it (I know, sometimes I&apos;m thick). It took
+          me all of 5 minutes to add it and get it going and it made a world of
+          difference. Now when I&apos;m looking for colors for a new website,
+          I&apos;ll just hit random until something stands out to me. And I
+          still get a kick out some of these names.
         </p>
       </div>
       <h5
@@ -240,10 +237,9 @@ const HelpMenu = () => {
         Color History
       </h5>
       <div
-        className={
-          "feature-container" +
-          (accordianStates.colorHistoryOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.colorHistoryOpen ? "" : " closed"
+        }`}
       >
         <p>
           This was a feature that I added more for the experience than an it
@@ -255,7 +251,7 @@ const HelpMenu = () => {
           >
             Firebase Firestore
           </a>
-          , Google's real time noSQL database, for a while and this was the
+          , Google&apos;s real time noSQL database, for a while and this was the
           perfect excuse. I added a simple collection for storing the globally
           most recent colors that anyone has submitted, updating their timestamp
           every time it is used. I could not have been more happy with how easy
@@ -279,10 +275,9 @@ const HelpMenu = () => {
         Offline Capability
       </h5>
       <div
-        className={
-          "feature-container" +
-          (accordianStates.offlineCapabilityOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.offlineCapabilityOpen ? "" : " closed"
+        }`}
       >
         <p className="italic">work in progress...</p>
       </div>
@@ -296,9 +291,9 @@ const HelpMenu = () => {
         Split Screen
       </h5>
       <div
-        className={
-          "feature-container" + (accordianStates.splitViewOpen ? "" : " closed")
-        }
+        className={`feature-container${
+          accordianStates.splitViewOpen ? "" : " closed"
+        }`}
       >
         <p className="italic">work in progress...</p>
       </div>

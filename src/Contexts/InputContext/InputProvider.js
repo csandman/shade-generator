@@ -3,11 +3,10 @@ import InputContext from "./InputContext";
 
 const InputProvider = ({ children }) => {
   const updateInputValue = (inputNum, value) => {
-    setInputValues(prevInputValues => {
-      let newInputValues = { ...prevInputValues };
-      newInputValues[`inputValue${inputNum}`] = value;
-      return newInputValues;
-    });
+    setInputValues(prevInputValues => ({
+      ...prevInputValues,
+      [`inputValue${inputNum}`]: value
+    }));
   };
 
   const [inputValues, setInputValues] = useState({

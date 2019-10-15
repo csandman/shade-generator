@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import SidebarContext from "../../../Contexts/SidebarContext";
-import { withFirebase } from "../../Firebase";
+import React, { useState, useEffect } from "react";
 import { useOnline } from "react-browser-hooks";
+import { withFirebase } from "../../Firebase";
+import MenuItem from "../MenuItem/MenuItem";
 
 const TopColors = ({ firebase, handleColorClick }) => {
-  const { closeMenu } = useContext(SidebarContext);
-
   const online = useOnline();
   const [topColors, setTopColors] = useState([]);
 
@@ -16,8 +14,8 @@ const TopColors = ({ firebase, handleColorClick }) => {
         .orderBy("count", "desc")
         .limit(40)
         .onSnapshot(querySnapshot => {
-          let data = querySnapshot.docs.map(doc => {
-            let out = doc.data();
+          const data = querySnapshot.docs.map(doc => {
+            const out = doc.data();
             out.id = doc.id;
             return out;
           });
@@ -33,38 +31,14 @@ const TopColors = ({ firebase, handleColorClick }) => {
     <div className="menu-items">
       {topColors.map((item, i) => {
         return (
-          <div
+          <MenuItem
             key={item.hex + i}
-            className="menu-item"
-            style={{ backgroundColor: item.hex }}
-            onClick={() => {
-              closeMenu();
-              handleColorClick(item, 1);
-            }}
-            data-hex={item.hex}
-          >
-            <div
-              className="color-name"
-              style={{ color: item.contrast }}
-              data-hex={item.hex}
-            >
-              {item.name}
-            </div>
-            <div
-              className="color-name"
-              style={{ color: item.contrast }}
-              data-hex={item.hex}
-            >
-              {item.hex}
-            </div>
-            <div
-              className="footer-left"
-              style={{ color: item.contrast }}
-              data-hex={item.hex}
-            >
-              {item.count} X
-            </div>
-          </div>
+            color={item.hex}
+            name={item.name}
+            contrast={item.contrast}
+            textBottomLeft={`${item.count} X`}
+            onClick={handleColorClick}
+          />
         );
       })}
     </div>
