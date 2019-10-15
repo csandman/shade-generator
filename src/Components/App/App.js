@@ -106,15 +106,17 @@ const App = props => {
 
     const colorRef = props.firebase.db
       .collection("color-history")
-      .doc(newColor.hex);
+      .doc(colorToAdd.hex);
+
+    console.log(colorToAdd);
 
     colorRef.get().then(colorRecord => {
       if (colorRecord.exists) {
         colorToAdd.count = (colorRecord.data().count || 0) + 1;
-        colorRef.update({ ...newColor });
+        colorRef.update(colorToAdd);
       } else {
         colorToAdd.count = 1;
-        colorRef.set(newColor);
+        colorRef.set(colorToAdd);
       }
     });
   }

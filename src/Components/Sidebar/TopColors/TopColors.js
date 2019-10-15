@@ -33,6 +33,7 @@ const TopColors = ({ firebase, handleColorClick }) => {
         return (
           <MenuItem
             key={item.hex + i}
+            item={item}
             color={item.hex}
             name={item.name}
             contrast={item.contrast}
