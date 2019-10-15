@@ -6,7 +6,7 @@ import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
 import "./App.scss";
-import { withFirebase } from "../Firebase";
+import FirebaseContext from "../Firebase";
 import { InputUpdater } from "../../Contexts/InputContext";
 import SplitViewContext from "../../Contexts/SplitViewContext";
 // import ContrastRatio from "../ContrastRatio";
@@ -53,7 +53,7 @@ const initialColor2 = getAllColorInfo(
   initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor()
 );
 
-const App = props => {
+const App = () => {
   const online = useOnline();
   const [colorData1, setColorData1] = useState(initialColor1);
   const [colorData2, setColorData2] = useState(initialColor2);
@@ -64,6 +64,8 @@ const App = props => {
   const { splitView, splitViewDisabled, setSplitView } = useContext(
     SplitViewContext
   );
+
+  const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
     if (online) {
@@ -104,11 +106,9 @@ const App = props => {
     });
     colorToAdd.dateString = new Date().toLocaleDateString();
 
-    const colorRef = props.firebase.db
+    const colorRef = firebase.db
       .collection("color-history")
       .doc(colorToAdd.hex);
-
-    console.log(colorToAdd);
 
     colorRef.get().then(colorRecord => {
       if (colorRecord.exists) {
@@ -222,4 +222,4 @@ const App = props => {
   );
 };
 
-export default withFirebase(App);
+export default App;

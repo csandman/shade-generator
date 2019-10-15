@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useOnline } from "react-browser-hooks";
-import { withFirebase } from "../../Firebase";
+import FirebaseContext from "../../Firebase";
 import MenuItem from "../MenuItem/MenuItem";
 
-const ColorHistory = ({ firebase, handleColorClick }) => {
+const ColorHistory = ({ handleColorClick }) => {
   const online = useOnline();
   const [recentColors, setRecentColors] = useState([]);
+  const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
     if (online) {
@@ -47,4 +48,4 @@ const ColorHistory = ({ firebase, handleColorClick }) => {
   );
 };
 
-export default withFirebase(ColorHistory);
+export default ColorHistory;
