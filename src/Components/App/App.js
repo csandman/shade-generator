@@ -5,10 +5,11 @@ import Header from "../Header";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
-import "./App.scss";
 import FirebaseContext from "../Firebase";
 import { InputUpdater } from "../../Contexts/InputContext";
 import SplitViewContext from "../../Contexts/SplitViewContext";
+import "./App.scss";
+
 // import ContrastRatio from "../ContrastRatio";
 
 import {
@@ -19,6 +20,7 @@ import {
   attemptCreateColor
 } from "../../Functions";
 
+// returns [ hex1, hex2, isSplitScreen ]
 function parseURL() {
   const path = window.location.pathname.slice(1);
   if (path.length) {
@@ -85,15 +87,22 @@ const App = () => {
   const hex1 = colorData1.hex;
   const hex2 = colorData2.hex;
 
+  const [popCount, setPopCount] = useState(0);
+
+  // Update url when colors change or when split view
   useEffect(() => {
-    if (splitView === true && !splitViewDisabled) {
-      window.history.pushState(
-        {},
-        "Shade Generator",
-        `${hex1.slice(1)}-${hex2.slice(1)}`
-      );
-    } else if (splitView === false) {
-      window.history.pushState({}, "Shade Generator", hex1.slice(1));
+    if (!popCount) {
+      if (splitView === true && !splitViewDisabled) {
+        window.history.pushState(
+          { hex1, hex2 },
+          "Shade Generator",
+          `${hex1.slice(1)}-${hex2.slice(1)}`
+        );
+      } else {
+        window.history.pushState({ hex1 }, "Shade Generator", hex1.slice(1));
+      }
+    } else {
+      setPopCount(popCount - 1);
     }
   }, [hex1, hex2, splitView, splitViewDisabled]);
 
@@ -167,20 +176,20 @@ const App = () => {
     try {
       hex = attemptCreateColor(searchTerm).hex();
     } catch (err) {
-      // ignore empty expression
+      // ignore invalid expression
     }
     if (!hex) {
       try {
         hex = attemptCreateColor(`#${searchTerm}`).hex();
       } catch (err) {
-        // ignore empty expression
+        // ignore invalid expression
       }
     }
     if (!hex) {
       try {
         hex = searchNamedColors(searchTerm);
       } catch (err) {
-        // ignore empty expression
+        // ignore invalid expression
       }
     }
 
@@ -190,6 +199,25 @@ const App = () => {
     }
     return false;
   }
+
+  useEffect(() => {
+    window.onpopstate = e => {
+      if (e.state.hex2) {
+        setPopCount(2);
+      } else {
+        setPopCount(1);
+      }
+      setTimeout(() => {
+        updateStateValues(e.state.hex1, 1);
+        if (e.state.hex2) {
+          updateStateValues(e.state.hex2, 2);
+          setSplitView(true);
+        } else {
+          setSplitView(false);
+        }
+      });
+    };
+  }, []);
 
   return (
     <div id="App" style={{ backgroundColor: colorData1.hex }}>
