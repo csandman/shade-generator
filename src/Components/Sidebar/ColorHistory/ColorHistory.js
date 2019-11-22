@@ -1,19 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { withFirebase } from "../../Firebase";
 import { useOnline } from "react-browser-hooks";
-import SidebarContext from '../../../Contexts/SidebarContext';
+import FirebaseContext from "../../Firebase";
+import MenuItem from "../MenuItem/MenuItem";
 
-
-const ColorHistory = ({
-  firebase,
-  handleColorClick
- }) => {
-
-  const { closeMenu } = useContext(SidebarContext);
-
+const ColorHistory = ({ handleColorClick }) => {
   const online = useOnline();
   const [recentColors, setRecentColors] = useState([]);
-
+  const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
     if (online) {
@@ -22,8 +15,8 @@ const ColorHistory = ({
         .orderBy("timeAdded", "desc")
         .limit(40)
         .onSnapshot(querySnapshot => {
-          let data = querySnapshot.docs.map(doc => {
-            let out = doc.data();
+          const data = querySnapshot.docs.map(doc => {
+            const out = doc.data();
             out.id = doc.id;
             return out;
           });
@@ -37,49 +30,22 @@ const ColorHistory = ({
 
   return (
     <div className="menu-items">
-    {recentColors.map((item, i) => {
-      return (
-        <div
-          key={item.hex + i}
-          className="menu-item"
-          style={{ backgroundColor: item.hex }}
-          onClick={() => {
-            handleColorClick(item, 1);
-            closeMenu();
-          }}
-          data-hex={item.hex}
-        >
-          <div
-            className="color-name"
-            style={{ color: item.contrast }}
-            data-hex={item.hex}
-          >
-            {item.name}
-          </div>
-          <div
-            className="color-name"
-            style={{ color: item.contrast }}
-            data-hex={item.hex}
-          >
-            {item.hex}
-          </div>
-          <div
-            className="footer-left"
-            style={{ color: item.contrast }}
-          >
-            {item.dateString}
-          </div>
-          <div
-            className="footer-right"
-            style={{ color: item.contrast }}
-          >
-            {item.timeString}
-          </div>
-        </div>
-      );
-    })}
-  </div>
+      {recentColors.map((item, i) => {
+        return (
+          <MenuItem
+            key={item.hex + i}
+            item={item}
+            color={item.hex}
+            name={item.name}
+            contrast={item.contrast}
+            textBottomLeft={item.dateString}
+            textBottomRight={item.timeString}
+            onClick={handleColorClick}
+          />
+        );
+      })}
+    </div>
   );
 };
 
-export default withFirebase(ColorHistory);
+export default ColorHistory;

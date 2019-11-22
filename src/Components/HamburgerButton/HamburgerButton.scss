@@ -3,6 +3,10 @@
   height: 28px;
   position: relative;
   cursor: pointer;
+  border: 0;
+  outline: none;
+  padding: 0;
+  background: transparent;
 
   .line {
     display: block;
@@ -26,13 +30,13 @@
   }
   &.close {
     .line {
-      &:nth-child(1){
+      &:nth-child(1) {
         top: 0;
         transform: translateY(11px) rotate(-45deg);
       }
       &:nth-child(2) {
         opacity: 0;
-              transform: translateX(20px) translateY(-50%);
+        transform: translateX(20px) translateY(-50%);
       }
       &:nth-child(3) {
         transform: translateY(-11px) rotate(45deg);

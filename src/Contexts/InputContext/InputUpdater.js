@@ -1,29 +1,23 @@
-import {
-  useEffect,
-  useContext,
-  useRef
-} from "react";
+import { useEffect, useContext } from "react";
 
-import InputContext from '../../Contexts/InputContext';
+import InputContext from "./InputContext";
 
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
+let prevInput1 = "";
+let prevInput2 = "";
 
-const InputUpdater = ({inputNum, inputValue}) => {
+const InputUpdater = ({ inputValue1, inputValue2 }) => {
   const { updateInputValue } = useContext(InputContext);
-  const prevProps = usePrevious({ inputNum, inputValue });
   useEffect(() => {
-    if (!prevProps) return;
-    if (inputNum !== prevProps.inputNum || inputValue !== prevProps.inputValue) {
-      updateInputValue(inputNum, inputValue);
+    if (inputValue1 !== prevInput1) {
+      updateInputValue(1, inputValue1);
+      prevInput1 = inputValue1;
+    }
+    if (inputValue2 !== prevInput2) {
+      updateInputValue(2, inputValue2);
+      prevInput2 = inputValue2;
     }
   });
   return null;
-}
+};
 
 export default InputUpdater;

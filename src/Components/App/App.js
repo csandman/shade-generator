@@ -1,36 +1,73 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useOnline } from "react-browser-hooks";
+import ReactGA from "react-ga";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
-import ReactGA from "react-ga";
-import "./App.scss";
-import { withFirebase } from "../Firebase";
+import FirebaseContext from "../Firebase";
 import { InputUpdater } from "../../Contexts/InputContext";
 import SplitViewContext from "../../Contexts/SplitViewContext";
+import "./App.scss";
+
+// import ContrastRatio from "../ContrastRatio";
 
 import {
   searchNamedColors,
   getAllColorInfo,
-  getRandomHexColor,
+  getRandomColor,
   getCopy,
   attemptCreateColor
 } from "../../Functions";
 
-const App = props => {
-  const [colorData1, setColorData1] = useState(
-    getAllColorInfo(getRandomHexColor())
-  );
-  const [colorData2, setColorData2] = useState(
-    getAllColorInfo(getRandomHexColor())
-  );
-  const [loading, setLoading] = useState(true);
+// returns [ hex1, hex2, isSplitScreen ]
+function parseURL() {
+  const path = window.location.pathname.slice(1);
+  if (path.length) {
+    const splitUrl = window.location.pathname
+      .slice(1)
+      .toUpperCase()
+      .split("-");
+
+    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9A-F]{6}$/)) {
+      return [`#${splitUrl[0]}`, "", false];
+    }
+    if (
+      splitUrl.length === 2 &&
+      splitUrl[0].match(/^[0-9A-F]{6}$/) &&
+      splitUrl[1].match(/^[0-9A-F]{6}$/)
+    ) {
+      return [`#${splitUrl[0]}`, `#${splitUrl[1]}`, true];
+    }
+    window.history.pushState({}, "Shade Generator", "");
+  }
+
+  return ["", "", false];
+}
+
+const [initialHex1, initialHex2, initialSplitState] = parseURL();
+
+const initialColor1 = getAllColorInfo(
+  initialHex1.length ? attemptCreateColor(initialHex1) : getRandomColor()
+);
+
+const initialColor2 = getAllColorInfo(
+  initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor()
+);
+
+const App = () => {
   const online = useOnline();
-  // const [pathnameArr, setPathnameArr] = useState([colorData1.hex.slice(1)]);
-  const [curInputNum, setCurInputNum] = useState(1);
-  const [curInputVal, setCurInputVal] = useState(colorData1.hex);
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const [colorData1, setColorData1] = useState(initialColor1);
+  const [colorData2, setColorData2] = useState(initialColor2);
+  const [loading, setLoading] = useState(true);
+  const [curInputVal1, setCurInputVal1] = useState(initialHex1);
+  const [curInputVal2, setCurInputVal2] = useState(initialHex2);
+
+  const { splitView, splitViewDisabled, setSplitView } = useContext(
+    SplitViewContext
+  );
+
+  const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
     if (online) {
@@ -41,116 +78,59 @@ const App = props => {
       });
     } else {
       console.log("offline detected");
-      setLoading(false);
     }
 
-    // let parseSuccessful = false;
-    // if (window.location.pathname.slice(1)) {
-    //   parseSuccessful = parseURL();
-    // }
-    // if (!parseSuccessful) {
-    //   setPathnameArr([colorData1.hex.slice(1)]);
-    // }
-    setTimeout(() => setLoading(false), 200);
-  }, [online]);
+    setSplitView(initialSplitState);
+    setTimeout(() => setLoading(false), 1000);
+  }, [online, setSplitView]);
+
+  const hex1 = colorData1.hex;
+  const hex2 = colorData2.hex;
+
+  const [popCount, setPopCount] = useState(0);
+
+  // Update url when colors change or when split view
+  useEffect(() => {
+    if (!popCount) {
+      if (splitView === true && !splitViewDisabled) {
+        window.history.pushState(
+          { hex1, hex2 },
+          "Shade Generator",
+          `${hex1.slice(1)}-${hex2.slice(1)}`
+        );
+      } else {
+        window.history.pushState({ hex1 }, "Shade Generator", hex1.slice(1));
+      }
+    } else {
+      setPopCount(popCount - 1);
+    }
+  }, [hex1, hex2, splitView, splitViewDisabled]);
 
   function addMenuItem(newColor) {
-    newColor.timeAdded = new Date();
-    newColor.timeString = new Date().toLocaleTimeString([], {
+    const colorToAdd = { ...newColor };
+    colorToAdd.timeAdded = new Date();
+    colorToAdd.timeString = new Date().toLocaleTimeString([], {
       hour: "numeric",
       minute: "numeric"
     });
-    newColor.dateString = new Date().toLocaleDateString();
+    colorToAdd.dateString = new Date().toLocaleDateString();
 
-    let colorRef = props.firebase.db
+    const colorRef = firebase.db
       .collection("color-history")
-      .doc(newColor.hex);
+      .doc(colorToAdd.hex);
 
     colorRef.get().then(colorRecord => {
       if (colorRecord.exists) {
-        newColor.count = (colorRecord.data().count || 0) + 1;
-        colorRef.update({ ...newColor });
+        colorToAdd.count = (colorRecord.data().count || 0) + 1;
+        colorRef.update(colorToAdd);
       } else {
-        newColor.count = 1;
-        colorRef.set(newColor);
+        colorToAdd.count = 1;
+        colorRef.set(colorToAdd);
       }
     });
   }
 
-  //TODO: Add URL parsing/setting back into the app
-
-  // function parseURL() {
-  //   let splitUrl = window.location.pathname
-  //     .slice(1)
-  //     .toUpperCase()
-  //     .split("-");
-
-  //   if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9a-f]{6}$/i)) {
-  //     updateStateValues("#" + splitUrl[0], 1);
-  //     window.history.pushState(
-  //       {},
-  //       "Shade Generator",
-  //       window.location.pathname.slice(1)
-  //     );
-  //     return true;
-  //   } else if (
-  //     splitUrl.length === 2 &&
-  //     splitUrl[0].match(/^[0-9a-f]{6}$/i) &&
-  //     splitUrl[1].match(/^[0-9a-f]{6}$/i)
-  //   ) {
-  //     updateStateValues("#" + splitUrl[0], 1);
-  //     updateStateValues("#" + splitUrl[1], 2);
-  //     setSplitView(true);
-  //     setPathnameArr(splitUrl);
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // useEffect(() => {
-  //   window.history.pushState({}, "Shade Generator", pathnameArr.join("-"));
-  // }, [pathnameArr]);
-
-  // useEffect(() => {
-  //   let newPathNameArr = splitView
-  //     ? pathnameArr.slice(0, 1)
-  //     : [...pathnameArr, colorData2.hex.slice(1)];
-  //   setPathnameArr(newPathNameArr);
-  // }, [splitView, pathnameArr, setPathnameArr]);
-
-  const getRandomColors = () => {
-    ReactGA.event({
-      category: "Button Press",
-      action: "Random color button"
-    });
-    console.log("get random hex 1");
-    const randomHex1 = getRandomHexColor();
-    updateStateValues(randomHex1, 1);
-
-    if (splitView && splitViewDisabled === false) {
-      console.log("get random hex 2");
-      const randomHex2 = getRandomHexColor();
-      updateStateValues(randomHex2, 2);
-    }
-  };
-
-  const handleSubmit = (inputNum, inputVal) => {
-    const searchTerm = inputVal.toLowerCase().replace(/\s/g, "");
-
-    let hex =
-      attemptCreateColor(searchTerm).hex() ||
-      attemptCreateColor(`#${searchTerm}`).hex() ||
-      searchNamedColors(searchTerm);
-    if (hex) {
-      updateStateValues(hex, inputNum);
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const updateStateValues = (color, colorNum) => {
-    console.log("update state values");
+  function updateStateValues(color, colorNum) {
     let colorData;
     if (typeof color === "object") {
       if (color.shades) {
@@ -166,27 +146,86 @@ const App = props => {
 
     delete colorData.keyword;
     if (colorNum === 1) {
-      // const newPNA = pathnameArr;
-      // newPNA[0] = colorData.hex.slice(1);
       setColorData1(colorData);
-      // setPathnameArr(newPNA);
+      setCurInputVal1(colorData.hex);
     } else if (colorNum === 2) {
       setColorData2(colorData);
-      // setPathnameArr([pathnameArr[0], colorData.hex.slice(1)]);
+      setCurInputVal2(colorData.hex);
     }
-    setCurInputVal(colorData.hex);
-    setCurInputNum(colorNum);
     if (online) addMenuItem(getCopy(colorData));
-  };
+  }
+
+  function getRandomColors() {
+    ReactGA.event({
+      category: "Button Press",
+      action: "Random color button"
+    });
+    const randomColor1 = getAllColorInfo(getRandomColor());
+    updateStateValues(randomColor1, 1);
+
+    if (splitView && splitViewDisabled === false) {
+      const randomColor2 = getAllColorInfo(getRandomColor());
+      updateStateValues(randomColor2, 2);
+    }
+  }
+
+  function handleSubmit(inputNum, inputVal) {
+    const searchTerm = inputVal.toLowerCase().replace(/\s/g, "");
+
+    let hex;
+    try {
+      hex = attemptCreateColor(searchTerm).hex();
+    } catch (err) {
+      // ignore invalid expression
+    }
+    if (!hex) {
+      try {
+        hex = attemptCreateColor(`#${searchTerm}`).hex();
+      } catch (err) {
+        // ignore invalid expression
+      }
+    }
+    if (!hex) {
+      try {
+        hex = searchNamedColors(searchTerm);
+      } catch (err) {
+        // ignore invalid expression
+      }
+    }
+
+    if (hex) {
+      updateStateValues(hex, inputNum);
+      return true;
+    }
+    return false;
+  }
+
+  useEffect(() => {
+    window.onpopstate = e => {
+      if (e.state.hex2) {
+        setPopCount(2);
+      } else {
+        setPopCount(1);
+      }
+      setTimeout(() => {
+        updateStateValues(e.state.hex1, 1);
+        if (e.state.hex2) {
+          updateStateValues(e.state.hex2, 2);
+          setSplitView(true);
+        } else {
+          setSplitView(false);
+        }
+      });
+    };
+  }, []);
 
   return (
     <div id="App" style={{ backgroundColor: colorData1.hex }}>
-      <InputUpdater inputNum={curInputNum} inputValue={curInputVal} />
+      <InputUpdater inputValue1={curInputVal1} inputValue2={curInputVal2} />
       <LoadingScreen show={loading} />
-      <div>
+      <div className="main-container">
         <Header colorData={colorData1} getRandomColors={getRandomColors} />
         <Sidebar handleColorClick={updateStateValues} />
-
         <div className="page">
           <BodyContent
             handleSubmit={handleSubmit}
@@ -196,9 +235,6 @@ const App = props => {
           />
           {splitView && !splitViewDisabled && (
             <BodyContent
-              style={{
-                borderLeft: "2px solid" + colorData1.contrast
-              }}
               handleSubmit={handleSubmit}
               colorData={colorData2}
               bodyNum={2}
@@ -206,9 +242,10 @@ const App = props => {
             />
           )}
         </div>
+        {/* <ContrastRatio hex1={hex1} hex2={hex2} /> */}
       </div>
     </div>
   );
 };
 
-export default withFirebase(App);
+export default App;

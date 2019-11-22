@@ -19,7 +19,7 @@ const BodyContent = ({
     >
       <div
         className={`body-content ${
-          splitView & !splitViewDisabled ? "split" : ""
+          splitView && !splitViewDisabled ? "split" : ""
         }`}
       >
         <div className="input-container">
@@ -41,7 +41,7 @@ const BodyContent = ({
                 handleColorClick={handleColorClick}
                 bodyNum={bodyNum}
                 color={color}
-                key={`${index}-${color.hex}`}
+                key={`color-square-${bodyNum}-${index}-${color.hex}`}
                 squareNumber={index + 1}
               />
             );

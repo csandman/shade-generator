@@ -1,11 +1,14 @@
 .color-square {
   .color-tile {
+    padding: 0.5rem 1rem;
     width: 6rem;
     height: 6rem;
     border-radius: 5px;
     cursor: pointer;
     transition: 150ms background-color ease-in-out;
     background-color: #222;
+    border: 0;
+    outline: none;
   }
 
   @media only screen and (max-width: 1250px) {
@@ -40,8 +43,8 @@
 
   @media only screen and (max-width: 720px) {
     .color-tile {
-      width: calc(50vw / 3 - 4 / 3 * .75rem);
-      height: calc(50vw / 3 - 4 / 3 * .75rem);
+      width: calc(50vw / 3 - 4 / 3 * 0.75rem);
+      height: calc(50vw / 3 - 4 / 3 * 0.75rem);
     }
   }
 }
@@ -57,7 +60,7 @@
   margin-bottom: 0.75rem;
 
   &:last-of-type {
-    margin-bottom: .35rem;
+    margin-bottom: 0.35rem;
   }
 
   button {
@@ -75,18 +78,18 @@
   border: 2px solid white;
 }
 
-.tippy-popper[x-placement^=top] [x-arrow] {
+.tippy-popper[x-placement^="top"] [x-arrow] {
   border-top-color: white;
 }
 
-.tippy-popper[x-placement^=bottom] [x-arrow] {
+.tippy-popper[x-placement^="bottom"] [x-arrow] {
   border-bottom-color: white;
 }
 
-.tippy-popper[x-placement^=right] [x-arrow] {
+.tippy-popper[x-placement^="right"] [x-arrow] {
   border-right-color: white;
 }
 
-.tippy-popper[x-placement^=left] [x-arrow] {
+.tippy-popper[x-placement^="left"] [x-arrow] {
   border-left-color: white;
 }

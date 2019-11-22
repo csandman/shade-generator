@@ -21,7 +21,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         Color code input {bodyNum}
       </label>
       <input
-        name={"inputValue" + bodyNum}
+        name={`inputValue${bodyNum}`}
         id={`color-input-${bodyNum}`}
         type="search"
         placeholder="Color Code (Hex, RGB, or Name)"
@@ -33,11 +33,12 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         style={{ borderColor: contrast }}
       />
       <button
+        type="button"
         onClick={() => {
           console.log(inputValue, bodyNum);
           handleSubmit(bodyNum, inputValue);
         }}
-        name={"inputValue" + bodyNum}
+        name={`inputValue${bodyNum}`}
         style={{
           borderColor: contrast,
           backgroundColor: contrast,

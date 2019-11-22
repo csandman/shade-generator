@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import './SignUp.scss';
-import { withFirebase } from '../Firebase';
-
+import React, { Component } from "react";
+import "./SignUp.scss";
+import { withFirebase } from "../Firebase";
 
 class SignUp extends Component {
-
   constructor(props) {
     super(props);
 
@@ -12,7 +10,7 @@ class SignUp extends Component {
       name: "",
       email: "",
       password: ""
-    }
+    };
 
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -37,23 +35,24 @@ class SignUp extends Component {
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
-        authUser.updateProfile({
-          displayName: userName
-        }).then(function() {
-          
-        }).catch(function(error) {
-          // An error happened.
-        });
+        authUser
+          .updateProfile({
+            displayName: userName
+          })
+          .then(function() {})
+          .catch(function(error) {
+            // An error happened.
+          });
         this.setState({
-          userName: '',
-          email: '',
-          password: ''
+          userName: "",
+          email: "",
+          password: ""
         });
       })
       .catch(error => {
         this.setState({ error });
       });
-      this.props.closeSignUpModal();
+    this.props.closeSignUpModal();
     e.preventDefault();
   }
 
@@ -62,7 +61,11 @@ class SignUp extends Component {
   }
   render() {
     return (
-      <div id="signup-page" className={ this.props.isOpen ? "" : "hidden"} onClick={this.props.closeSignUpModal}>
+      <div
+        id="signup-page"
+        className={this.props.isOpen ? "" : "hidden"}
+        onClick={this.props.closeSignUpModal}
+      >
         <div className="signup-modal" onClick={this.stopPropagation}>
           <div className="color-panel">
             <div className="color-pane-1"></div>
@@ -76,18 +79,31 @@ class SignUp extends Component {
               <div className="login-tab">Log in</div>
               <div className="signup-tab">Sign up</div>
             </div>
-            <input type="text" placeholder="User Name" onChange={this.handleUserNameChange}
-            value={this.state.userName} />
-            <input type="text" placeholder="Email" onChange={this.handleEmailChange}
-            value={this.state.email} />
-            <input type="password" placeholder="Password" onChange={this.handlePasswordChange}
-            value={this.state.password} />
-            <button onClick={this.handleSubmit}>Submit</button>
+            <input
+              type="text"
+              placeholder="User Name"
+              onChange={this.handleUserNameChange}
+              value={this.state.userName}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              onChange={this.handleEmailChange}
+              value={this.state.email}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={this.handlePasswordChange}
+              value={this.state.password}
+            />
+            <button type="button" onClick={this.handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
-      
       </div>
-    )
+    );
   }
 }
 

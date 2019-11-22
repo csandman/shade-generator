@@ -3,28 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.2",
+    "@fortawesome/fontawesome-free": "^5.11.1",
     "clipboard-polyfill": "^2.8.6",
     "color": "^3.1.2",
     "color-name-list": "^4.10.0",
-    "firebase": "^6.6.0",
+    "firebase": "^6.6.2",
     "nearest-color": "^0.4.4",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-browser-hooks": "^2.2.3",
     "react-dom": "^16.9.0",
     "react-ga": "^2.6.0",
-    "react-scripts": "^3.1.1",
+    "react-scripts": "^3.1.2",
     "react-tippy": "^1.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "eject": "react-scripts eject",
+    "prettify": "prettier --write \"src/**/*.*(js|s?css)\"",
+    "predeploy": "npm install && npm run prettify && npm run build",
+    "deploy": "npm run predeploy && firebase deploy",
+    "lint": "eslint --ext .js --ext .jsx .",
+    "clean-install": "rm -rf node_modules && rm package-lock.json && npm i"
   },
   "browserslist": [
     ">0.2%",
@@ -34,5 +36,23 @@
   ],
   "prettier": {
     "tabWidth": 2
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.1.2",
+    "husky": "^3.0.5",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
   }
 }

@@ -1,6 +1,6 @@
-import app from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth'; //Do later
+import app from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth"; // Do later
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -13,9 +13,7 @@ const config = {
 
 class Firebase {
   constructor() {
-
     if (navigator && navigator.onLine) {
-
       app.initializeApp(config);
 
       // DB setup
@@ -35,12 +33,11 @@ class Firebase {
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
-  doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
+  doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
-  colorHistory = () => this.db.collection('color-history');
+  colorHistory = () => this.db.collection("color-history");
 
-  aggRef = () => this.db.collection("aggregation").doc('all');
+  aggRef = () => this.db.collection("aggregation").doc("all");
 }
 
 export default Firebase;

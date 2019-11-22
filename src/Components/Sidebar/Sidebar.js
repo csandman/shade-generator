@@ -1,19 +1,26 @@
 import React, { useState, useContext } from "react";
+import { useOnline } from "react-browser-hooks";
 import HelpMenu from "./HelpMenu/HelpMenu";
 import ColorHistory from "./ColorHistory/ColorHistory";
 import TopColors from "./TopColors/TopColors";
 import KofiButton from "../KofiButton";
 import ColorNameMenu from "./ColorNameMenu/ColorNameMenu";
-import { useOnline } from "react-browser-hooks";
 import "./Sidebar.scss";
 import SidebarContext from "../../Contexts/SidebarContext";
 import { useEventListener } from "../../Hooks";
 
-const Sidebar = props => {
+const initialMenuStates = {
+  isMainMenuOpen: true,
+  isHistoryMenuOpen: false,
+  isSearchMenuOpen: false,
+  isTopColorsMenuOpen: false,
+  isHelpMenuOpen: false
+};
+
+const Sidebar = ({ handleColorClick = () => {} }) => {
   const { isMenuOpen, closeMenu } = useContext(SidebarContext);
 
   function handleKeyPress(e) {
-    console.log(e)
     if (e.code === "Escape") {
       closeMenu();
     }
@@ -21,39 +28,29 @@ const Sidebar = props => {
   useEventListener("keyup", handleKeyPress, document);
 
   const online = useOnline();
-  const [menuStates, updateMenuStates] = useState({
-    isMainMenuOpen: true,
-    isHistoryMenuOpen: false,
-    isSearchMenuOpen: false,
-    isTopColorsMenuOpen: false,
-    isHelpMenuOpen: false
-  });
+  const [menuStates, updateMenuStates] = useState(initialMenuStates);
 
   const openMenu = menuId => {
-    const newMenuStates = {};
-    for (const key in menuStates) {
-      newMenuStates[key] = false;
-    }
+    const newMenuStates = {
+      ...initialMenuStates,
+      isMainMenuOpen: false
+    };
     newMenuStates[`is${menuId}Open`] = true;
-    updateMenuStates({...newMenuStates});
+    updateMenuStates(newMenuStates);
   };
 
   const closeSubMenu = () => {
     document.activeElement.blur();
-    const newMenuStates = {};
-    for (const key in menuStates) {
-      newMenuStates[key] = false;
-    }
-    updateMenuStates({ ...newMenuStates, isMainMenuOpen: true });
+    updateMenuStates({ ...initialMenuStates });
   };
 
   return (
     <div id="sidebar" className={isMenuOpen ? "" : "hidden"}>
       <div className="sidebar-content">
         <div
-          className={
-            "main-menu-items" + (menuStates.isMainMenuOpen ? "" : " hidden")
-          }
+          className={`main-menu-items${
+            menuStates.isMainMenuOpen ? "" : " hidden"
+          }`}
         >
           {online && (
             <div className="online-menu-items">
@@ -111,55 +108,45 @@ const Sidebar = props => {
           </div>
         </div>
         <div
-          className={
-            "sub-menu" + (menuStates.isHistoryMenuOpen ? "" : " hidden")
-          }
+          className={`sub-menu${menuStates.isHistoryMenuOpen ? "" : " hidden"}`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
             <span>Color History</span>
           </div>
           <div className="sub-menu-content">
-            <ColorHistory
-              handleColorClick={props.handleColorClick}
-            />
+            <ColorHistory handleColorClick={handleColorClick} />
           </div>
         </div>
 
         <div
-          className={
-            "sub-menu" + (menuStates.isTopColorsMenuOpen ? "" : " hidden")
-          }
+          className={`sub-menu${
+            menuStates.isTopColorsMenuOpen ? "" : " hidden"
+          }`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
             <span>Most Popular</span>
           </div>
           <div className="sub-menu-content">
-            <TopColors
-              handleColorClick={props.handleColorClick}
-              closeSidebar={props.closeSidebar}
-            />
+            <TopColors handleColorClick={handleColorClick} />
           </div>
         </div>
 
         <div
-          className={
-            "sub-menu" + (menuStates.isSearchMenuOpen ? "" : " hidden")
-          }
+          className={`sub-menu${menuStates.isSearchMenuOpen ? "" : " hidden"}`}
           id="color-search-menu"
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
             <span>Search Colors</span>
           </div>
-          <ColorNameMenu
-            handleColorClick={props.handleColorClick}
-            closeSidebar={props.closeSidebar}
-          />
+          <ColorNameMenu handleColorClick={handleColorClick} />
         </div>
 
-        <div className={"sub-menu" + (menuStates.isHelpMenuOpen ? "" : " hidden")}>
+        <div
+          className={`sub-menu${menuStates.isHelpMenuOpen ? "" : " hidden"}`}
+        >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
             <span>What is this?</span>

@@ -15,7 +15,6 @@
   }
 }
 
-
 html {
   font-size: 14px;
   font-family: "Nunito", sans-serif !important;
@@ -29,16 +28,14 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration,
 input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance:none;
+  -webkit-appearance: none;
 }
 
-input, input:before, input:after {
-  -webkit-user-select: initial;
-  -khtml-user-select: initial;
-  -moz-user-select: initial;
-  -ms-user-select: initial;
+input,
+input:before,
+input:after {
   user-select: initial;
- } 
+}
 
 #App {
   transition: 150ms background-color ease-in-out;
@@ -46,10 +43,14 @@ input, input:before, input:after {
   background-color: #222;
 }
 
-button {
+.main-container {
+  position: relative;
+}
+
+.button {
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   border: 2px solid;
   color: white;
   border-radius: 5px;

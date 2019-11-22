@@ -1,15 +1,11 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import SplitViewContext from "../../../Contexts/SplitViewContext";
 
-const HeaderIcon = ({
-  getRandomColors,
-  colorData
-}) => {
-
-  const {splitView, splitViewDisabled} = useContext(SplitViewContext)
+const HeaderIcon = ({ getRandomColors, colorData }) => {
+  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
   return (
-    <div className="icon" onClick={getRandomColors}>
+    <div className="icon" onClick={getRandomColors} role="button" tabIndex={0}>
       <div
         style={{
           backgroundColor:

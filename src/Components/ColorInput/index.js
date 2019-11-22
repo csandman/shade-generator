@@ -1,3 +1,3 @@
 import ColorInput from "./ColorInput";
 
-export default ColorInput
+export default ColorInput;
