@@ -25,7 +25,8 @@
     "prettify": "prettier --write \"src/**/*.*(js|s?css)\"",
     "predeploy": "npm install && npm run prettify && npm run build",
     "deploy": "npm run predeploy && firebase deploy",
-    "lint": "eslint --ext .js --ext .jsx ."
+    "lint": "eslint --ext .js --ext .jsx .",
+    "clean-install": "rm -rf node_modules && rm package-lock.json && npm i"
   },
   "browserslist": [
     ">0.2%",
