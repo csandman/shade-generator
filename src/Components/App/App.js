@@ -184,8 +184,6 @@ const App = () => {
       }
     }
 
-    console.log(hex);
-
     if (hex) {
       updateStateValues(hex, inputNum);
       return true;

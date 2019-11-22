@@ -114,8 +114,6 @@ export function getAllColorInfo(colorVal) {
     color = colorVal;
   }
 
-  console.log(color);
-
   return {
     contrast: getContrastColor(color).hex(),
     hex: color.hex(),
