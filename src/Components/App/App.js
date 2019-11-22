@@ -79,7 +79,7 @@ const App = () => {
     }
 
     setSplitView(initialSplitState);
-    setTimeout(() => setLoading(false), 200);
+    setTimeout(() => setLoading(false), 1000);
   }, [online, setSplitView]);
 
   const hex1 = colorData1.hex;
