@@ -55,6 +55,8 @@ const initialColor2 = getAllColorInfo(
   initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor()
 );
 
+let popCount = 0;
+
 const App = () => {
   const online = useOnline();
   const [colorData1, setColorData1] = useState(initialColor1);
@@ -87,8 +89,6 @@ const App = () => {
   const hex1 = colorData1.hex;
   const hex2 = colorData2.hex;
 
-  const [popCount, setPopCount] = useState(0);
-
   // Update url when colors change or when split view
   useEffect(() => {
     if (!popCount) {
@@ -102,7 +102,7 @@ const App = () => {
         window.history.pushState({ hex1 }, "Shade Generator", hex1.slice(1));
       }
     } else {
-      setPopCount(popCount - 1);
+      popCount -= 1;
     }
   }, [hex1, hex2, splitView, splitViewDisabled]);
 
@@ -202,22 +202,20 @@ const App = () => {
 
   useEffect(() => {
     window.onpopstate = e => {
+      popCount = 1;
       if (e.state.hex2) {
-        setPopCount(2);
-      } else {
-        setPopCount(1);
+        popCount = 2;
       }
-      setTimeout(() => {
-        updateStateValues(e.state.hex1, 1);
-        if (e.state.hex2) {
-          updateStateValues(e.state.hex2, 2);
-          setSplitView(true);
-        } else {
-          setSplitView(false);
-        }
-      });
+
+      updateStateValues(e.state.hex1, 1);
+      if (e.state.hex2) {
+        updateStateValues(e.state.hex2, 2);
+        setSplitView(true);
+      } else {
+        setSplitView(false);
+      }
     };
-  }, []);
+  });
 
   return (
     <div id="App" style={{ backgroundColor: colorData1.hex }}>
