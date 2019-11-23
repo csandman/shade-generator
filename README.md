@@ -7,7 +7,7 @@
 
 Shade Generator aims to provide a quick and easy way to generate the shades and tints of the colors you use in all of your web development and design projects.
 
-It's very easy to use.  Just enter the color you would like to get shades for (accepts hex, css names, rgb, and more) and the site does the rest.  Hover over the shade you want the color code for (tap on mobile) and click on the format you would like to copy to your clipboard.  If you want some inspiration, check out the sidebar where you can see the most popularly used colors as well as a the most recent.  You can also view the list of named colors to get a broad range of color inspiration.
+It's very easy to use.  Just enter the color you would like to get shades for (accepts hex, css names, rgb, and more) and the site does the rest.  Hover over the shade you want the color code for (or tap on mobile) and click on the format you would like to copy to your clipboard.  If you want some inspiration, check out the sidebar where you can see the most popularly used colors as well as a the most recent.  You can also view the list of named colors to get a broad range of color inspiration.
 
 ![](github/demo_small.gif)
 
@@ -39,11 +39,11 @@ One of the first things I added was the NPM package [parse-color](https://www.np
 
 This was useful, not only to interpret input from the user but also for providing hex and rgb values, both of which are important to this app's functionality. After scrubbing the user input before passing it to this function, it does a great job of matching everything you'd expect it to!
 
-Eventually I discovered a package that is already installed by default called [color](https://www.npmjs.com/package/color).  I'm pretty shocked that I missed this one considering the name, its popularity (6.5M downloads/week, 480M downloads total), and its functionality.  Not only can it do all of the conversion I need for my app, but also has some built in tools to find the shades, as well as the contrast ratios used for the text.
+Eventually I discovered a package that is already installed in create-react-app by default called [color](https://www.npmjs.com/package/color).  I'm pretty shocked that I missed this one considering the name, its popularity (6.5M downloads/week, 480M downloads total), and its functionality.  Not only can it do all of the conversion I need for my app, but also has some built in tools to find the shades, as well as the contrast ratios used for the text.
 
 ### Copy to Clipboard
 
-The next main thing I added was the option to click to copy either the hex code or the rgb code to your clipboard. The first two things I tried were document.execCommand("copy") and navigator.clipboard.write(). Both of these options worked but I ran into issued with them working on all devices. I soon stumbled upon a nice small NPM package called [clipboard-polyfill](https://www.npmjs.com/package/clipboard-polyfill). It is nice and compact and gave me a convenient way to ensure copying would work on all devices and browser the clipboard is accessible in!
+The next main thing I added was the option to click to copy either the hex code or the rgb code to your clipboard. The first two things I tried were `document.execCommand("copy")` and `navigator.clipboard.write()`. Both of these options worked but I ran into issued with them working on all devices. I soon stumbled upon a nice small NPM package called [clipboard-polyfill](https://www.npmjs.com/package/clipboard-polyfill). It is nice and compact and gave me a convenient way to ensure copying would work on all devices and browser the clipboard is accessible in!
 
 ### Color Names
 Now that the basic features were in place, it was time to have some fun! I decided that the page was a little too plain so I thought I would add some names for the colors. The first library I added for this is called [color-namer](https://www.npmjs.com/package/color-namer). It appealed to me because of the fact that it offered a combination of multiple lists of colors including CSS colors, X11, Pantone, and NTC.
