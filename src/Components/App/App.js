@@ -5,7 +5,7 @@ import Header from "../Header";
 import Sidebar from "../Sidebar";
 import LoadingScreen from "../LoadingScreen";
 import BodyContent from "../BodyContent";
-import FirebaseContext from "../Firebase";
+import FirebaseContext from "../../Contexts/FirebaseContext";
 import { InputUpdater } from "../../Contexts/InputContext";
 import SplitViewContext from "../../Contexts/SplitViewContext";
 import "./App.scss";

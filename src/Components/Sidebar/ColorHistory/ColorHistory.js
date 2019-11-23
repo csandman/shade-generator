@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useOnline } from "react-browser-hooks";
-import FirebaseContext from "../../Firebase";
+import FirebaseContext from "../../../Contexts/FirebaseContext";
 import MenuItem from "../MenuItem/MenuItem";
 
 const ColorHistory = ({ handleColorClick }) => {
