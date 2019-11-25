@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import * as clipboard from "clipboard-polyfill";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
 import "./ColorSquare.scss";
+
+let hexTimeout;
+let rgbTimeout;
 
 const ColorSquare = ({
   color: { rgb, hex },
@@ -10,27 +13,29 @@ const ColorSquare = ({
   handleColorClick,
   bodyNum
 }) => {
-  const rgbStr = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+  const [r, g, b] = rgb;
+  const rgbStr = `rgb(${r}, ${g}, ${b})`;
+  const hexStr = hex.toUpperCase();
 
-  const changeButtonText = (e, text) => {
-    const button = e.target;
-    const originalText = button.textContent;
-    button.textContent = text;
-    setTimeout(() => {
-      button.textContent = originalText;
+  const [rgbBtnTxt, setRgbBtnTxt] = useState(rgbStr);
+  const [hexBtnTxt, setHexBtnTxt] = useState(hexStr);
+
+  const copyHexCode = () => {
+    clipboard.writeText(hexStr);
+    setHexBtnTxt("Copied!");
+    clearTimeout(hexTimeout);
+    hexTimeout = setTimeout(() => {
+      setHexBtnTxt(hexStr);
     }, 1200);
   };
 
-  const copyHexCode = e => {
-    const output = hex.toUpperCase();
-    clipboard.writeText(output);
-    changeButtonText(e, "Copied!");
-  };
-
-  const copyRgb = e => {
-    const output = rgbStr;
-    clipboard.writeText(output);
-    changeButtonText(e, "Copied!");
+  const copyRgb = () => {
+    clipboard.writeText(rgbStr);
+    setRgbBtnTxt("Copied!");
+    clearTimeout(rgbTimeout);
+    rgbTimeout = setTimeout(() => {
+      setRgbBtnTxt(rgbStr);
+    }, 1200);
   };
 
   return (
@@ -53,12 +58,12 @@ const ColorSquare = ({
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">
               <button type="button" className="button" onClick={copyHexCode}>
-                {hex.toUpperCase()}
+                {hexBtnTxt}
               </button>
             </div>
             <div className="popup-button">
               <button type="button" className="button" onClick={copyRgb}>
-                {rgbStr}
+                {rgbBtnTxt}
               </button>
             </div>
           </div>
