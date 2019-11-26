@@ -133,7 +133,7 @@ const App = () => {
   function updateStateValues(color, colorNum) {
     let colorData;
     if (typeof color === "object") {
-      if (color.shades) {
+      if (color.shades && color.shades[0].contrastRatio) {
         colorData = color;
       } else {
         colorData = getAllColorInfo(color.hex);
