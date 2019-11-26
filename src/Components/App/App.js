@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useOnline } from "react-browser-hooks";
-import ReactGA from "react-ga";
-import Header from "../Header";
-import Sidebar from "../Sidebar";
-import LoadingScreen from "../LoadingScreen";
-import BodyContent from "../BodyContent";
-import FirebaseContext from "../../Contexts/FirebaseContext";
-import { InputUpdater } from "../../Contexts/InputContext";
-import SplitViewContext from "../../Contexts/SplitViewContext";
-import "./App.scss";
+import React, { useState, useEffect, useContext } from 'react';
+import { useOnline } from 'react-browser-hooks';
+import ReactGA from 'react-ga';
+import Header from '../Header';
+import Sidebar from '../Sidebar';
+import LoadingScreen from '../LoadingScreen';
+import BodyContent from '../BodyContent';
+import FirebaseContext from '../../Contexts/FirebaseContext';
+import { InputUpdater } from '../../Contexts/InputContext';
+import SplitViewContext from '../../Contexts/SplitViewContext';
+import './App.scss';
 
 // import ContrastRatio from "../ContrastRatio";
 
@@ -18,7 +18,7 @@ import {
   getRandomColor,
   getCopy,
   attemptCreateColor
-} from "../../Functions";
+} from '../../Functions';
 
 // returns [ hex1, hex2, isSplitScreen ]
 function parseURL() {
@@ -27,10 +27,10 @@ function parseURL() {
     const splitUrl = window.location.pathname
       .slice(1)
       .toUpperCase()
-      .split("-");
+      .split('-');
 
     if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9A-F]{6}$/)) {
-      return [`#${splitUrl[0]}`, "", false];
+      return [`#${splitUrl[0]}`, '', false];
     }
     if (
       splitUrl.length === 2 &&
@@ -39,10 +39,10 @@ function parseURL() {
     ) {
       return [`#${splitUrl[0]}`, `#${splitUrl[1]}`, true];
     }
-    window.history.pushState({}, "Shade Generator", "");
+    window.history.pushState({}, 'Shade Generator', '');
   }
 
-  return ["", "", false];
+  return ['', '', false];
 }
 
 const [initialHex1, initialHex2, initialSplitState] = parseURL();
@@ -75,11 +75,11 @@ const App = () => {
     if (online) {
       ReactGA.initialize(process.env.REACT_APP_GA_CODE);
       ReactGA.event({
-        category: "Connection",
-        action: "Connected to Shade Generator"
+        category: 'Connection',
+        action: 'Connected to Shade Generator'
       });
     } else {
-      console.log("offline detected");
+      console.log('offline detected');
     }
 
     setSplitView(initialSplitState);
@@ -95,11 +95,11 @@ const App = () => {
       if (splitView === true && !splitViewDisabled) {
         window.history.pushState(
           { hex1, hex2 },
-          "Shade Generator",
+          'Shade Generator',
           `${hex1.slice(1)}-${hex2.slice(1)}`
         );
       } else {
-        window.history.pushState({ hex1 }, "Shade Generator", hex1.slice(1));
+        window.history.pushState({ hex1 }, 'Shade Generator', hex1.slice(1));
       }
     } else {
       popCount -= 1;
@@ -110,13 +110,13 @@ const App = () => {
     const colorToAdd = { ...newColor };
     colorToAdd.timeAdded = new Date();
     colorToAdd.timeString = new Date().toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "numeric"
+      hour: 'numeric',
+      minute: 'numeric'
     });
     colorToAdd.dateString = new Date().toLocaleDateString();
 
     const colorRef = firebase.db
-      .collection("color-history")
+      .collection('color-history')
       .doc(colorToAdd.hex);
 
     colorRef.get().then(colorRecord => {
@@ -132,13 +132,13 @@ const App = () => {
 
   function updateStateValues(color, colorNum) {
     let colorData;
-    if (typeof color === "object") {
+    if (typeof color === 'object') {
       if (color.shades && color.shades[0].contrastRatio) {
         colorData = color;
       } else {
         colorData = getAllColorInfo(color.hex);
       }
-    } else if (typeof color === "string") {
+    } else if (typeof color === 'string') {
       colorData = getAllColorInfo(color);
     } else {
       return;
@@ -157,8 +157,8 @@ const App = () => {
 
   function getRandomColors() {
     ReactGA.event({
-      category: "Button Press",
-      action: "Random color button"
+      category: 'Button Press',
+      action: 'Random color button'
     });
     const randomColor1 = getAllColorInfo(getRandomColor());
     updateStateValues(randomColor1, 1);
@@ -170,7 +170,7 @@ const App = () => {
   }
 
   function handleSubmit(inputNum, inputVal) {
-    const searchTerm = inputVal.toLowerCase().replace(/\s/g, "");
+    const searchTerm = inputVal.toLowerCase().replace(/\s/g, '');
 
     let hex;
     try {

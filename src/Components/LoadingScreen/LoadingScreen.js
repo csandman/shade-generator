@@ -1,9 +1,9 @@
-import React from "react";
-import "./LoadingScreen.scss";
+import React from 'react';
+import './LoadingScreen.scss';
 
 const LoadingScreen = ({ show = false }) => {
   return (
-    <div className={`loading ${show ? "" : "hidden"}`}>
+    <div className={`loading ${show ? '' : 'hidden'}`}>
       <svg
         width="248px"
         height="248px"
@@ -11,7 +11,7 @@ const LoadingScreen = ({ show = false }) => {
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
         className="lds-colorbar"
-        style={{ background: "none" }}
+        style={{ background: 'none' }}
       >
         <defs>
           <clipPath

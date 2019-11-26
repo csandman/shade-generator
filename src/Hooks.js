@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from 'react';
 
 function useEventListener(eventName, handler, element = global) {
   const savedHandler = useRef();
@@ -18,7 +18,7 @@ function useEventListener(eventName, handler, element = global) {
   }, [eventName, element]);
 }
 
-const isClient = typeof window === "object";
+const isClient = typeof window === 'object';
 
 function getSize() {
   return {
@@ -39,8 +39,8 @@ function useWindowSize() {
       setWindowSize(getSize());
     }
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return windowSize;

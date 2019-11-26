@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react";
-import { useOnline } from "react-browser-hooks";
-import HelpMenu from "./HelpMenu/HelpMenu";
-import ColorHistory from "./ColorHistory/ColorHistory";
-import TopColors from "./TopColors/TopColors";
-import KofiButton from "../KofiButton";
-import ColorNameMenu from "./ColorNameMenu/ColorNameMenu";
-import "./Sidebar.scss";
-import SidebarContext from "../../Contexts/SidebarContext";
-import { useEventListener } from "../../Hooks";
+import React, { useState, useContext } from 'react';
+import { useOnline } from 'react-browser-hooks';
+import HelpMenu from './HelpMenu/HelpMenu';
+import ColorHistory from './ColorHistory/ColorHistory';
+import TopColors from './TopColors/TopColors';
+import KofiButton from '../KofiButton';
+import ColorNameMenu from './ColorNameMenu/ColorNameMenu';
+import './Sidebar.scss';
+import SidebarContext from '../../Contexts/SidebarContext';
+import { useEventListener } from '../../Hooks';
 
 const initialMenuStates = {
   isMainMenuOpen: true,
@@ -21,11 +21,11 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
   const { isMenuOpen, closeMenu } = useContext(SidebarContext);
 
   function handleKeyPress(e) {
-    if (e.code === "Escape") {
+    if (e.code === 'Escape') {
       closeMenu();
     }
   }
-  useEventListener("keyup", handleKeyPress, document);
+  useEventListener('keyup', handleKeyPress, document);
 
   const online = useOnline();
   const [menuStates, updateMenuStates] = useState(initialMenuStates);
@@ -45,11 +45,11 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
   };
 
   return (
-    <div id="sidebar" className={isMenuOpen ? "" : "hidden"}>
+    <div id="sidebar" className={isMenuOpen ? '' : 'hidden'}>
       <div className="sidebar-content">
         <div
           className={`main-menu-items${
-            menuStates.isMainMenuOpen ? "" : " hidden"
+            menuStates.isMainMenuOpen ? '' : ' hidden'
           }`}
         >
           {online && (
@@ -108,7 +108,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
           </div>
         </div>
         <div
-          className={`sub-menu${menuStates.isHistoryMenuOpen ? "" : " hidden"}`}
+          className={`sub-menu${menuStates.isHistoryMenuOpen ? '' : ' hidden'}`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
@@ -121,7 +121,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
 
         <div
           className={`sub-menu${
-            menuStates.isTopColorsMenuOpen ? "" : " hidden"
+            menuStates.isTopColorsMenuOpen ? '' : ' hidden'
           }`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
@@ -134,7 +134,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
         </div>
 
         <div
-          className={`sub-menu${menuStates.isSearchMenuOpen ? "" : " hidden"}`}
+          className={`sub-menu${menuStates.isSearchMenuOpen ? '' : ' hidden'}`}
           id="color-search-menu"
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
@@ -148,7 +148,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
         </div>
 
         <div
-          className={`sub-menu${menuStates.isHelpMenuOpen ? "" : " hidden"}`}
+          className={`sub-menu${menuStates.isHelpMenuOpen ? '' : ' hidden'}`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />

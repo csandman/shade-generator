@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import SidebarContext from "./SidebarContext";
+import React, { useState } from 'react';
+import SidebarContext from './SidebarContext';
 
 const SidebarProvider = ({ children }) => {
   const toggleMenu = () => {

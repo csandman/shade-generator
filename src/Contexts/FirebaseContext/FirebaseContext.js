@@ -1,7 +1,7 @@
-import React, { createContext } from "react";
-import app from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth"; // Do later
+import React, { createContext } from 'react';
+import app from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth'; // Do later
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -36,9 +36,9 @@ class Firebase {
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
-  colorHistory = () => this.db.collection("color-history");
+  colorHistory = () => this.db.collection('color-history');
 
-  aggRef = () => this.db.collection("aggregation").doc("all");
+  aggRef = () => this.db.collection('aggregation').doc('all');
 }
 
 const FirebaseContext = createContext({

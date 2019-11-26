@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import InputContext from "./InputContext";
+import React, { useState } from 'react';
+import InputContext from './InputContext';
 
 const InputProvider = ({ children }) => {
   const updateInputValue = (inputNum, value) => {
@@ -10,8 +10,8 @@ const InputProvider = ({ children }) => {
   };
 
   const [inputValues, setInputValues] = useState({
-    inputValue1: "",
-    inputValue2: "",
+    inputValue1: '',
+    inputValue2: '',
     updateInputValue
   });
 

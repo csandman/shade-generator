@@ -1,3 +1,3 @@
-import KofiButton from "./KofiButton";
+import KofiButton from './KofiButton';
 
 export default KofiButton;

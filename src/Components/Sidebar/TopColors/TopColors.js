@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useOnline } from "react-browser-hooks";
-import FirebaseContext from "../../../Contexts/FirebaseContext";
-import MenuItem from "../MenuItem/MenuItem";
+import React, { useState, useEffect, useContext } from 'react';
+import { useOnline } from 'react-browser-hooks';
+import FirebaseContext from '../../../Contexts/FirebaseContext';
+import MenuItem from '../MenuItem/MenuItem';
 
 const TopColors = ({ handleColorClick }) => {
   const online = useOnline();
@@ -12,7 +12,7 @@ const TopColors = ({ handleColorClick }) => {
     if (online) {
       firebase
         .colorHistory()
-        .orderBy("count", "desc")
+        .orderBy('count', 'desc')
         .limit(40)
         .onSnapshot(querySnapshot => {
           const data = querySnapshot.docs.map(doc => {

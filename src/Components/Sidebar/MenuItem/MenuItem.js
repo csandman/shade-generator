@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import SidebarContext from "../../../Contexts/SidebarContext";
-import SplitViewContext from "../../../Contexts/SplitViewContext";
+import React, { useContext } from 'react';
+import SidebarContext from '../../../Contexts/SidebarContext';
+import SplitViewContext from '../../../Contexts/SplitViewContext';
 
 function MenuItem({
-  color = "#222",
+  color = '#222',
   onClick = () => {},
-  contrast = "#8A8A8A",
-  name = "Black Out",
-  textBottomLeft = "",
-  textBottomRight = "",
+  contrast = '#8A8A8A',
+  name = 'Black Out',
+  textBottomLeft = '',
+  textBottomRight = '',
   item
 }) {
   const { closeMenu } = useContext(SidebarContext);

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import SplitViewContext from "./SplitViewContext";
-import { useEventListener } from "../../Hooks";
+import React, { useState } from 'react';
+import SplitViewContext from './SplitViewContext';
+import { useEventListener } from '../../Hooks';
 
 const isSplitViewDisabled = () => {
   const width = window.innerWidth;
@@ -11,7 +11,7 @@ const isSplitViewDisabled = () => {
 };
 
 const SplitViewProvider = ({ children }) => {
-  useEventListener("resize", () => {
+  useEventListener('resize', () => {
     const splitViewDisabled = isSplitViewDisabled();
     if (splitViewDisabled !== splitViewValues.splitViewDisabled) {
       setSplitViewValues(prevSplitViewValues => ({

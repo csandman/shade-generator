@@ -1,4 +1,4 @@
-@import "../../styles/colors";
+@import '../../styles/colors';
 
 .contrast-ratio {
   position: absolute;
@@ -8,9 +8,9 @@
   background-color: $color;
   color: white;
   border: 2px solid white;
-  padding: 1.25rem 1.5rem 1rem 1.5rem;;
+  padding: 1.25rem 1.5rem 1rem 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
 
   .ratio-text {
     font-size: 1.4rem;
@@ -24,7 +24,7 @@
 
     &.ratio {
       font-size: 2.25rem;
-      margin-top: .75rem;
+      margin-top: 0.75rem;
     }
   }
 }

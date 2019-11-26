@@ -1,3 +1,3 @@
-import ColorSquare from "./ColorSquare";
+import ColorSquare from './ColorSquare';
 
 export default ColorSquare;

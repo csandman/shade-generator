@@ -1,9 +1,9 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
-import Color from "color";
-import namedColors from "color-name-list";
-import SidebarContext from "../../../Contexts/SidebarContext";
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import Color from 'color';
+import namedColors from 'color-name-list';
+import SidebarContext from '../../../Contexts/SidebarContext';
 
-import { getContrastColor } from "../../../Functions";
+import { getContrastColor } from '../../../Functions';
 
 const initialColorNameList = namedColors.slice(0, 50).map(el => ({
   ...el,
@@ -28,7 +28,7 @@ const ColorNameMenu = ({ handleColorClick, isOpen }) => {
     }
   }, [isOpen]);
 
-  const [searchInput, updateSearchInput] = useState("");
+  const [searchInput, updateSearchInput] = useState('');
   const [colorNameList, updateColorNameList] = useState(initialColorNameList);
 
   const searchColorNames = e => {
@@ -38,9 +38,9 @@ const ColorNameMenu = ({ handleColorClick, isOpen }) => {
     while (newColorArr.length < 100 && index < namedColors.length) {
       if (
         namedColors[index].name
-          .replace(/\s/g, "")
+          .replace(/\s/g, '')
           .toLowerCase()
-          .indexOf(e.target.value.replace(/\s/g, "").toLowerCase()) >= 0
+          .indexOf(e.target.value.replace(/\s/g, '').toLowerCase()) >= 0
       ) {
         newColorArr.push(namedColors[index]);
       }

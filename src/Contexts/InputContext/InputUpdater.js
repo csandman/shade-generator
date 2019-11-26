@@ -1,9 +1,9 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext } from 'react';
 
-import InputContext from "./InputContext";
+import InputContext from './InputContext';
 
-let prevInput1 = "";
-let prevInput2 = "";
+let prevInput1 = '';
+let prevInput2 = '';
 
 const InputUpdater = ({ inputValue1, inputValue2 }) => {
   const { updateInputValue } = useContext(InputContext);

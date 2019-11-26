@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import * as clipboard from "clipboard-polyfill";
-import { Tooltip } from "react-tippy";
-import "react-tippy/dist/tippy.css";
-import "./ColorSquare.scss";
+import React, { useState } from 'react';
+import * as clipboard from 'clipboard-polyfill';
+import { Tooltip } from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
+import './ColorSquare.scss';
 
 let hexTimeout;
 let rgbTimeout;
@@ -27,7 +27,7 @@ const ColorSquare = ({
 
   const copyHexCode = () => {
     clipboard.writeText(hexStr);
-    setHexBtnTxt("Copied!");
+    setHexBtnTxt('Copied!');
     clearTimeout(hexTimeout);
     hexTimeout = setTimeout(() => {
       setHexBtnTxt(hexStr);
@@ -36,7 +36,7 @@ const ColorSquare = ({
 
   const copyRgb = () => {
     clipboard.writeText(rgbStr);
-    setRgbBtnTxt("Copied!");
+    setRgbBtnTxt('Copied!');
     clearTimeout(rgbTimeout);
     rgbTimeout = setTimeout(() => {
       setRgbBtnTxt(rgbStr);
@@ -55,11 +55,6 @@ const ColorSquare = ({
         duration={200}
         html={
           <div>
-            {/* <div className="tooltip-title">CONTRAST RATIO:</div>
-            <div className="tooltip-title">
-              {contrastRatio.toFixed(1)}:1{" "}
-              {contrastLevel ? `(${contrastLevel})` : ""}
-            </div> */}
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">
               <button type="button" className="button" onClick={copyHexCode}>
@@ -71,6 +66,10 @@ const ColorSquare = ({
                 {rgbBtnTxt}
               </button>
             </div>
+            {/* <div className="tooltip-sub-title">
+              CONTRAST - {contrastRatio.toFixed(1)}:1{" "}
+              {contrastLevel ? `(${contrastLevel})` : ""}
+            </div> */}
           </div>
         }
       >

@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import SplitViewContext from "../../../Contexts/SplitViewContext";
+import React, { useContext } from 'react';
+import SplitViewContext from '../../../Contexts/SplitViewContext';
 
 const HeaderButton = ({
   action = () => {},
-  className = "",
+  className = '',
   colorData = {},
-  buttonText = "Button",
-  iconClassName = "",
-  textClassName = "",
-  name = ""
+  buttonText = 'Button',
+  iconClassName = '',
+  textClassName = '',
+  name = ''
 }) => {
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
