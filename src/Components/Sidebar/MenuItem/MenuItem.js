@@ -21,7 +21,7 @@ function MenuItem({
 
   function handleSubClick(e) {
     closeMenu();
-    console.log(e.currentTarget.dataset.index);
+    // console.log(e.currentTarget.dataset.index);
     onClick(item, Number(e.currentTarget.dataset.index));
     e.stopPropagation();
   }

@@ -61,7 +61,7 @@ const HelpMenu = () => {
       <h5
         id="colorParser"
         onClick={e => {
-          console.log(e);
+          // console.log(e);
           toggleAccordianState(e.currentTarget.id);
         }}
       >

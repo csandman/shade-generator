@@ -24,7 +24,7 @@ const TopColors = ({ handleColorClick }) => {
           return true;
         });
     } else {
-      console.log("offline detected");
+      // console.log("offline detected");
     }
   }, [online, firebase]);
 
