@@ -1,4 +1,8 @@
 .color-square {
+  & > div {
+    display: block !important;
+  }
+
   .color-tile {
     padding: 0.5rem 1rem;
     width: 6rem;
