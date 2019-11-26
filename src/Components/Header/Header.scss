@@ -1,4 +1,5 @@
-@import "../../styles/colors";
+@import '../../styles/colors';
+@import '../../styles/general';
 
 #header {
   height: 5rem;
@@ -9,13 +10,13 @@
   justify-content: space-between;
   align-items: center;
   z-index: 500;
-  transition: 150ms all linear;
+  transition: $transition-time all linear;
   z-index: 2000;
   border-bottom: 2px solid $contrast;
   background-color: $color;
 
   * {
-    transition: 150ms all linear;
+    transition: $transition-time all linear;
   }
 
   .left-content {
@@ -100,7 +101,7 @@
   }
 
   .menu-icon {
-    transition: color 150ms linear;
+    transition: color $transition-time linear;
   }
 
   @media only screen and (max-width: 900px) {

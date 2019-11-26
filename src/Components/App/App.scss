@@ -1,10 +1,11 @@
-@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "@fortawesome/fontawesome-free/scss/solid.scss";
-@import "@fortawesome/fontawesome-free/scss/brands.scss";
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '@fortawesome/fontawesome-free/scss/solid.scss';
+@import '@fortawesome/fontawesome-free/scss/brands.scss';
+@import '../../styles/general';
 
 * {
   box-sizing: border-box;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 
   &:focus {
     outline: none;
@@ -17,7 +18,7 @@
 
 html {
   font-size: 14px;
-  font-family: "Nunito", sans-serif !important;
+  font-family: 'Nunito', sans-serif !important;
 
   @media only screen and (min-width: 2000px) {
     font-size: 16px;
@@ -28,10 +29,10 @@ input {
   font-size: 16px;
 }
 
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration,
-input[type="search"]::-webkit-search-cancel-button {
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration,
+input[type='search']::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
@@ -42,7 +43,7 @@ input:after {
 }
 
 #App {
-  transition: 150ms background-color ease-in-out;
+  transition: $transition-time background-color ease-in-out;
   will-change: background-color;
   background-color: #222;
 }
@@ -98,7 +99,7 @@ input:after {
   letter-spacing: 2px;
   line-height: 2rem;
   text-align: center;
-  transition: 150ms color ease-in-out;
+  transition: $transition-time color ease-in-out;
 }
 
 label {
