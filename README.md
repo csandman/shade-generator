@@ -12,6 +12,8 @@ It's very easy to use.  Just enter the color you would like to get shades for (a
 ![](github/demo_small.gif)
 
 ## The Story behind Shade Generator (a.k.a. the boring part)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcsandman%2Fshade-generator.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcsandman%2Fshade-generator?ref=badge_shield)
+
 Shade generator is a project that started as a codepen a couple years ago. The idea behind it was simple, when you overlap a color with a transparent white or black section, you end up with a tint or shade of that color. As many people do in web development, I would often use this trick to create a contrasting color effect for button hovers or element borders. This got annoying because in order to make the effect work, I would need two elements on the screen for the overlap where I often only needed one. So, I decided to make a little tool to help me find the color codes for this resulting shade by giving me a variety of overlapping icons with the color I was plannibg on using as the background. However it was still not the most convenient because I had to use a chrome plugin called ColorZilla to get the actual code of the resulting color, however I could not think of a better way. Finally, after using this tool hundreds of times I finally thought, there must be some way to calculate this resulting color!
 
 After a quick google search, I found [this link](https://www.viget.com/articles/equating-color-and-transparency/). I immediately realized calculating the colors I wanted was possible with this very simple formula...
@@ -78,3 +80,7 @@ This was a feature that I added more for the experience than an it actually prov
 
 ### Sharing Colors
 *work in progress...*
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcsandman%2Fshade-generator.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcsandman%2Fshade-generator?ref=badge_large)
