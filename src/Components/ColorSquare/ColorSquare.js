@@ -20,6 +20,11 @@ const ColorSquare = ({
   const [rgbBtnTxt, setRgbBtnTxt] = useState(rgbStr);
   const [hexBtnTxt, setHexBtnTxt] = useState(hexStr);
 
+  const background =
+    squareNumber <= 18
+      ? `rgba(255,255,255,${(95 - squareNumber * 5) / 100})`
+      : `rgba(0,0,0,${((squareNumber - 18) * 5) / 100})`;
+
   const copyHexCode = () => {
     clipboard.writeText(hexStr);
     setHexBtnTxt("Copied!");
@@ -72,7 +77,7 @@ const ColorSquare = ({
         <button
           type="button"
           aria-label={`Color tile ${bodyNum}-${squareNumber}`}
-          style={{ backgroundColor: hex }}
+          style={{ background }}
           className="color-tile"
           id={`tippy-tooltip-${bodyNum}-${squareNumber}`}
           onClick={() => {
