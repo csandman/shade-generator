@@ -26,7 +26,7 @@ export function getContrastColor(color, minContrastRatio = 4.5) {
   let i = 0.01;
   let contrastColor;
   let contrastRatio = 0;
-  while (contrastRatio < minContrastRatio && i < 1) {
+  while (contrastRatio < minContrastRatio && i < 0.9) {
     contrastColor = calculateGradient(color, isDark, i);
     contrastRatio = color.contrast(contrastColor);
     i += 0.01;
