@@ -141,7 +141,10 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <i className="icon fas fa-arrow-left" />
             <span>Search Colors</span>
           </div>
-          <ColorNameMenu handleColorClick={handleColorClick} />
+          <ColorNameMenu
+            isOpen={menuStates.isSearchMenuOpen && isMenuOpen}
+            handleColorClick={handleColorClick}
+          />
         </div>
 
         <div

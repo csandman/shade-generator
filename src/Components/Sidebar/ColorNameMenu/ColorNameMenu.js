@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import Color from "color";
 import namedColors from "color-name-list";
 import SidebarContext from "../../../Contexts/SidebarContext";
@@ -10,8 +10,23 @@ const initialColorNameList = namedColors.slice(0, 50).map(el => ({
   contrast: getContrastColor(Color(el.hex)).hex()
 }));
 
-const ColorNameMenu = ({ handleColorClick }) => {
+let inputElTimeout;
+
+const ColorNameMenu = ({ handleColorClick, isOpen }) => {
   const { closeMenu } = useContext(SidebarContext);
+
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    clearTimeout(inputElTimeout);
+    if (isOpen) {
+      inputElTimeout = setTimeout(() => {
+        inputEl.current.focus();
+      }, 300);
+    } else {
+      inputEl.current.blur();
+    }
+  }, [isOpen]);
 
   const [searchInput, updateSearchInput] = useState("");
   const [colorNameList, updateColorNameList] = useState(initialColorNameList);
@@ -46,6 +61,7 @@ const ColorNameMenu = ({ handleColorClick }) => {
         </div>
         <label htmlFor="color-search">Color search</label>
         <input
+          ref={inputEl}
           id="color-search"
           type="search"
           placeholder="Search..."
