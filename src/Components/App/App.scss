@@ -18,6 +18,10 @@
 html {
   font-size: 14px;
   font-family: "Nunito", sans-serif !important;
+
+  @media only screen and (min-width: 2000px) {
+    font-size: 16px;
+  }
 }
 
 input {
