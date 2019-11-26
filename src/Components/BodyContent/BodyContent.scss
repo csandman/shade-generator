@@ -30,7 +30,7 @@
         border-right: 0;
         border-radius: 5px 0 0 5px;
         margin: 0;
-        padding: 0 .75rem;
+        padding: 0 0.75rem;
         overflow: visible;
         -webkit-appearance: none;
         outline-offset: -2px;
@@ -152,15 +152,15 @@
   @media only screen and (max-width: 720px) {
     .container {
       grid-template-columns: repeat(3, auto);
-      grid-gap: .75rem;
-      padding: .75rem;
+      grid-gap: 0.75rem;
+      padding: 0.75rem;
     }
 
     .input-container {
-      padding: .75rem .75rem 0 .75rem;
+      padding: 0.75rem 0.75rem 0 0.75rem;
 
       .color-name {
-        margin-bottom: .75rem;
+        margin-bottom: 0.75rem;
       }
     }
   }

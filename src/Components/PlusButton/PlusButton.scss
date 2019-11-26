@@ -13,18 +13,18 @@
     opacity: 1;
     top: 50%;
     transform: translateY(-50%);
-    
+
     &:nth-child(1) {
       transform: translateY(-50%) rotate(-90deg);
     }
   }
   &.close {
     .line {
-      &:nth-child(1){
+      &:nth-child(1) {
         transform: translateY(-50%) rotate(180deg);
       }
-      
-      &:nth-child(2){
+
+      &:nth-child(2) {
         transform: translateY(-50%) rotate(180deg);
       }
     }
