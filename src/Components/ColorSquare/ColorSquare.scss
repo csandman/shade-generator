@@ -57,7 +57,7 @@
 
 .tooltip-title {
   font-size: 18px;
-  margin-top: 7px;
+  margin-top: 13px;
   margin-bottom: 11px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -69,10 +69,11 @@
 }
 
 .popup-button {
-  margin-bottom: 11px;
+  margin: 11px;
+  margin-bottom: 0;
 
   &:last-of-type {
-    margin-bottom: 6px;
+    margin-bottom: 11px;
   }
 
   button {
@@ -84,6 +85,10 @@
       background-color: #222;
     }
   }
+}
+
+.tippy-tooltip {
+  padding: 0;
 }
 
 .tippy-tooltip.dark-border-theme {

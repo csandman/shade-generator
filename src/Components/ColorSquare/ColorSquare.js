@@ -7,12 +7,7 @@ import './ColorSquare.scss';
 let hexTimeout;
 let rgbTimeout;
 
-const ColorSquare = ({
-  color: { rgb, hex },
-  squareNumber,
-  handleColorClick,
-  bodyNum
-}) => {
+const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
   const [r, g, b] = rgb;
   const rgbStr = `rgb(${r}, ${g}, ${b})`;
   const hexStr = hex.toUpperCase();
@@ -46,6 +41,7 @@ const ColorSquare = ({
   return (
     <div className="color-square">
       <Tooltip
+        hideOnClick={false}
         trigger="mouseenter"
         position="bottom"
         arrow
@@ -73,15 +69,15 @@ const ColorSquare = ({
           </div>
         }
       >
-        <button
-          type="button"
-          aria-label={`Color tile ${bodyNum}-${squareNumber}`}
+        <div
+          // type="button"
+          // aria-label={`Color tile ${bodyNum}-${squareNumber}`}
           style={{ background }}
           className="color-tile"
           id={`tippy-tooltip-${bodyNum}-${squareNumber}`}
-          onClick={() => {
-            handleColorClick(hex, bodyNum);
-          }}
+          // onClick={e => {
+          //   handleColorClick(hex, bodyNum);
+          // }}
         />
       </Tooltip>
     </div>
