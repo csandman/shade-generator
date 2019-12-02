@@ -56,8 +56,9 @@
 }
 
 .tooltip-title {
-  font-size: 1.2rem;
-  margin: 0.5rem;
+  font-size: 18px;
+  margin-top: 7px;
+  margin-bottom: 11px;
   font-weight: 600;
   letter-spacing: 1px;
 }
@@ -68,15 +69,16 @@
 }
 
 .popup-button {
-  margin-bottom: 0.75rem;
+  margin-bottom: 11px;
 
   &:last-of-type {
-    margin-bottom: 0.35rem;
+    margin-bottom: 6px;
   }
 
   button {
+    width: 14rem;
     letter-spacing: 1px;
-    transition: 100ms background-color linear;
+    transition: 80ms background-color linear;
 
     &:hover {
       background-color: #222;
