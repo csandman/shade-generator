@@ -5,9 +5,9 @@ import SidebarContext from '../../../Contexts/SidebarContext';
 
 import { getContrastColor } from '../../../Functions';
 
-const initialColorNameList = namedColors.slice(0, 50).map(el => ({
-  ...el,
-  contrast: getContrastColor(Color(el.hex)).hex()
+const initialColorNameList = namedColors.slice(0, 50).map(color => ({
+  ...color,
+  contrast: getContrastColor(Color(color.hex)).hex()
 }));
 
 let inputElTimeout;
@@ -21,8 +21,8 @@ const ColorNameMenu = ({ handleColorClick, isOpen }) => {
     clearTimeout(inputElTimeout);
     if (isOpen) {
       inputElTimeout = setTimeout(() => {
-        inputEl.current.focus();
-      }, 300);
+        inputEl.current.select();
+      }, 310);
     } else {
       inputEl.current.blur();
     }

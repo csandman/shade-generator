@@ -55,7 +55,7 @@ const initialColor2 = getAllColorInfo(
   initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor()
 );
 
-let popCount = 0;
+let popCount = 2;
 
 const App = () => {
   const online = useOnline();
@@ -83,7 +83,8 @@ const App = () => {
     }
 
     setSplitView(initialSplitState);
-    setTimeout(() => setLoading(false), 1000);
+    setLoading(false);
+    // setTimeout(() => setLoading(false), 1000);
   }, [online, setSplitView]);
 
   const hex1 = colorData1.hex;

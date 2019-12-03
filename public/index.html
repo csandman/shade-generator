@@ -53,7 +53,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/noscript.css" />
 
     <title>Shade Generator | A graphic designer's best friend</title>
     <meta
@@ -62,7 +61,7 @@
     />
     <meta
       name="description"
-      content="Generate color codes for shades and tints of the colors you use everyday"
+      content="A quick and easy tool to help you generate shades and tints of the colors you use in your graphic design projects. Just type in your color and click GO!"
     />
     <meta
       name="keywords"
@@ -72,6 +71,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="3 days" />
+    <style>
+      noscript {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #222;
+        font-family: 'Nunito';
+      }
+
+      noscript h3 {
+        color: #fff;
+        font-size: 2em;
+        margin: 0;
+        padding: 0.33em 1em;
+      }
+
+      noscript p {
+        font-size: 1.2em;
+        color: #fff;
+        margin: 0;
+        padding: 0.33em 1em;
+      }
+
+      noscript a:link,
+      noscript a:visited {
+        color: #fff;
+      }
+    </style>
   </head>
   <body>
     <noscript>
