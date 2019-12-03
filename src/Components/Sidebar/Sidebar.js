@@ -77,7 +77,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
                 onClick={e => openMenu(e.currentTarget.id)}
               >
                 <i className="icon fas fa-award" />
-                <span>Most Popular</span>
+                <span>Top Colors</span>
               </div>
             </div>
           )}
@@ -124,9 +124,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <span>Color History</span>
           </div>
           <div className="sub-menu-content">
-            {firestoreMenuLoad && (
-              <ColorHistory handleColorClick={handleColorClick} />
-            )}
+            <ColorHistory handleColorClick={handleColorClick} />
           </div>
         </div>
 
@@ -137,7 +135,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
             <i className="icon fas fa-arrow-left" />
-            <span>Most Popular</span>
+            <span>Top Colors</span>
           </div>
           <div className="sub-menu-content">
             {firestoreMenuLoad && (

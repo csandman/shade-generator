@@ -8,7 +8,7 @@ import BodyContent from '../BodyContent';
 import FirebaseContext from '../../Contexts/FirebaseContext';
 import { InputUpdater } from '../../Contexts/InputContext';
 import SplitViewContext from '../../Contexts/SplitViewContext';
-import { useLocalStorage } from '../../Hooks';
+import HistoryContext from '../../Contexts/HistoryContext';
 import './App.scss';
 
 // import ContrastRatio from "../ContrastRatio";
@@ -108,9 +108,10 @@ const App = () => {
     }
   }, [hex1, hex2, splitView, splitViewDisabled]);
 
-  const [recentColors, setRecentColors] = useLocalStorage('recentColors', []);
+  const { updateRecentColors } = useContext(HistoryContext);
 
   function addMenuItem(newColor) {
+    console.log('add menu item', newColor);
     const colorToAdd = { ...newColor };
     colorToAdd.timeAdded = new Date();
     colorToAdd.timeString = new Date().toLocaleTimeString([], {
@@ -119,24 +120,22 @@ const App = () => {
     });
     colorToAdd.dateString = new Date().toLocaleDateString();
 
-    const colorRef = firebase.db
-      .collection('color-history')
-      .doc(colorToAdd.hex);
+    updateRecentColors(colorToAdd);
 
-    colorRef.get().then(colorRecord => {
-      if (colorRecord.exists) {
-        colorToAdd.count = (colorRecord.data().count || 0) + 1;
-        colorRef.update(colorToAdd);
-      } else {
-        colorToAdd.count = 1;
-        colorRef.set(colorToAdd);
-      }
-    });
+    if (online) {
+      const colorRef = firebase.db
+        .collection('color-history')
+        .doc(colorToAdd.hex);
 
-    if (recentColors.length >= 100) {
-      setRecentColors([colorData1, ...recentColors.slice(1)]);
-    } else {
-      setRecentColors([colorData1, ...recentColors]);
+      colorRef.get().then(colorRecord => {
+        if (colorRecord.exists) {
+          colorToAdd.count = (colorRecord.data().count || 0) + 1;
+          colorRef.update(colorToAdd);
+        } else {
+          colorToAdd.count = 1;
+          colorRef.set(colorToAdd);
+        }
+      });
     }
   }
 
@@ -162,7 +161,8 @@ const App = () => {
       setColorData2(colorData);
       setCurInputVal2(colorData.hex);
     }
-    if (online) addMenuItem(getCopy(colorData));
+
+    addMenuItem(getCopy(colorData));
   }
 
   function getRandomColors() {

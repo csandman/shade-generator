@@ -7,13 +7,16 @@ import { FirebaseProvider } from './Contexts/FirebaseContext';
 import { InputProvider } from './Contexts/InputContext';
 import { SidebarProvider } from './Contexts/SidebarContext';
 import { SplitViewProvider } from './Contexts/SplitViewContext';
+import { HistoryProvider } from './Contexts/HistoryContext';
 
 ReactDOM.render(
   <FirebaseProvider>
     <SidebarProvider>
       <SplitViewProvider>
         <InputProvider>
-          <App />
+          <HistoryProvider>
+            <App />
+          </HistoryProvider>
         </InputProvider>
       </SplitViewProvider>
     </SidebarProvider>
