@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useOnline } from 'react-browser-hooks';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';
@@ -44,6 +44,15 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
     updateMenuStates({ ...initialMenuStates });
   };
 
+  const [firestoreMenuLoad, setFirestoreMenuLoad] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      console.log('firestore menu load');
+      setFirestoreMenuLoad(true);
+    }
+  }, [isMenuOpen, setFirestoreMenuLoad]);
+
   return (
     <div id="sidebar" className={isMenuOpen ? '' : 'hidden'}>
       <div className="sidebar-content">
@@ -60,7 +69,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
                 onClick={e => openMenu(e.currentTarget.id)}
               >
                 <i className="icon fas fa-history" />
-                <span>Color History</span>
+                <span>History</span>
               </div>
               <div
                 className="main-menu-item"
@@ -115,7 +124,9 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <span>Color History</span>
           </div>
           <div className="sub-menu-content">
-            <ColorHistory handleColorClick={handleColorClick} />
+            {firestoreMenuLoad && (
+              <ColorHistory handleColorClick={handleColorClick} />
+            )}
           </div>
         </div>
 
@@ -129,7 +140,9 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <span>Most Popular</span>
           </div>
           <div className="sub-menu-content">
-            <TopColors handleColorClick={handleColorClick} />
+            {firestoreMenuLoad && (
+              <TopColors handleColorClick={handleColorClick} />
+            )}
           </div>
         </div>
 
