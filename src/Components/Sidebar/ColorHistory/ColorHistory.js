@@ -14,7 +14,8 @@ const ColorHistory = ({ handleColorClick }) => {
         .colorHistory()
         .orderBy('timeAdded', 'desc')
         .limit(40)
-        .onSnapshot(querySnapshot => {
+        .get()
+        .then(querySnapshot => {
           const data = querySnapshot.docs.map(doc => {
             const out = doc.data();
             out.id = doc.id;
