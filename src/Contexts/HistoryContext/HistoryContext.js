@@ -1,21 +1,26 @@
-import React, { createContext } from 'react';
+import React, { createContext, useRef } from 'react';
 import { useLocalStorage } from '../../Hooks';
 
 const HistoryContext = createContext({
-  splitView: false,
-  splitViewDisabled: false,
-  setSplitView: () => {},
-  toggleSplitView: () => {}
+  recentColors: [],
+  updateRecentColors: () => {}
 });
 
 const HistoryProvider = ({ children }) => {
   const [recentColors, setRecentColors] = useLocalStorage('recentColors', []);
 
+  const recentColorsRef = useRef(recentColors);
+
   const updateRecentColors = newColor => {
-    if (recentColors.length >= 100) {
-      setRecentColors([newColor, ...recentColors.slice(1)]);
+    if (recentColorsRef.current.length >= 100) {
+      recentColorsRef.current = [
+        newColor,
+        ...recentColorsRef.current.slice(0, 100)
+      ];
+      setRecentColors(recentColorsRef.current);
     } else {
-      setRecentColors([newColor, ...recentColors]);
+      recentColorsRef.current = [newColor, ...recentColorsRef.current];
+      setRecentColors(recentColorsRef.current);
     }
   };
 
