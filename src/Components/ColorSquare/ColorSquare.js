@@ -71,10 +71,10 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
       >
         <div
           // type="button"
-          // aria-label={`Color tile ${bodyNum}-${squareNumber}`}
+          aria-label={`Color tile ${bodyNum}-${squareNumber}`}
           style={{ background }}
           className="color-tile"
-          id={`tippy-tooltip-${bodyNum}-${squareNumber}`}
+          id={`tippy-tooltip-${(bodyNum - 1) * 36 + squareNumber}`}
           // onClick={e => {
           //   handleColorClick(hex, bodyNum);
           // }}
