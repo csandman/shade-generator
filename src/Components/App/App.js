@@ -8,6 +8,7 @@ import BodyContent from '../BodyContent';
 import FirebaseContext from '../../Contexts/FirebaseContext';
 import { InputUpdater } from '../../Contexts/InputContext';
 import SplitViewContext from '../../Contexts/SplitViewContext';
+import { useLocalStorage } from '../../Hooks';
 import './App.scss';
 
 // import ContrastRatio from "../ContrastRatio";
@@ -107,6 +108,8 @@ const App = () => {
     }
   }, [hex1, hex2, splitView, splitViewDisabled]);
 
+  const [recentColors, setRecentColors] = useLocalStorage('recentColors', []);
+
   function addMenuItem(newColor) {
     const colorToAdd = { ...newColor };
     colorToAdd.timeAdded = new Date();
@@ -129,6 +132,12 @@ const App = () => {
         colorRef.set(colorToAdd);
       }
     });
+
+    if (recentColors.length >= 100) {
+      setRecentColors([colorData1, ...recentColors.slice(1)]);
+    } else {
+      setRecentColors([colorData1, ...recentColors]);
+    }
   }
 
   function updateStateValues(color, colorNum) {
