@@ -10,6 +10,7 @@ const HamburgerButton = ({ color, className = '' }) => {
       type="button"
       className={`hamburger-button ${className} ${isMenuOpen ? 'close' : ''}`}
       onClick={toggleMenu}
+      title="Menu"
     >
       <span className="line" style={{ backgroundColor: color }} />
       <span className="line" style={{ backgroundColor: color }} />
