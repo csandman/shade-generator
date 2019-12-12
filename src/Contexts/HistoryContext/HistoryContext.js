@@ -12,16 +12,11 @@ const HistoryProvider = ({ children }) => {
   const recentColorsRef = useRef(recentColors);
 
   const updateRecentColors = newColor => {
-    if (recentColorsRef.current.length >= 100) {
-      recentColorsRef.current = [
-        newColor,
-        ...recentColorsRef.current.slice(0, 100)
-      ];
-      setRecentColors(recentColorsRef.current);
-    } else {
-      recentColorsRef.current = [newColor, ...recentColorsRef.current];
-      setRecentColors(recentColorsRef.current);
-    }
+    recentColorsRef.current = [
+      newColor,
+      ...recentColorsRef.current.slice(0, 100)
+    ];
+    setRecentColors(recentColorsRef.current);
   };
 
   return (
