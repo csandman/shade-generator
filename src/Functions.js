@@ -1,5 +1,6 @@
 import nearestColor from 'nearest-color';
 import namedColors from 'color-name-list';
+import parseColor from 'parse-color';
 import Color from 'color';
 
 export function getRandomColor() {
@@ -51,8 +52,9 @@ export function getLowContrastColor(color) {
 
 export function searchNamedColors(searchTerm) {
   for (let i = 0; i < namedColors.length; i += 1) {
-    if (namedColors[i].name.replace(/\s/g, '').toLowerCase() === searchTerm)
+    if (namedColors[i].name.replace(/\s/g, '').toLowerCase() === searchTerm) {
       return namedColors[i].hex.toUpperCase();
+    }
   }
   return null;
 }
@@ -132,29 +134,12 @@ export function getAllColorInfo(colorVal) {
 
 export function parseColorFromString(str) {
   const cleanStr = str.replace(/\s/g, '').toLowerCase();
-  let hex = '';
-  if (!hex) {
-    try {
-      hex = attemptCreateColor(cleanStr).hex();
-    } catch (err) {
-      // ignore invalid expression
-    }
-  }
-  if (!hex) {
-    try {
-      hex = attemptCreateColor(`#${cleanStr}`).hex();
-    } catch (err) {
-      // ignore invalid expression
-    }
-  }
-  if (!hex) {
-    try {
-      hex = searchNamedColors(cleanStr);
-    } catch (err) {
-      // ignore invalid expression
-    }
-  }
-
+  const hex =
+    attemptCreateColor(cleanStr)?.hex() ||
+    attemptCreateColor(`#${cleanStr}`)?.hex() ||
+    parseColor(cleanStr)?.hex ||
+    searchNamedColors(cleanStr) ||
+    '';
   return hex.toUpperCase();
 }
 

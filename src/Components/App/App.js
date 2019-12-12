@@ -181,7 +181,9 @@ const App = () => {
 
   function handleSubmit(inputNum, inputVal) {
     const hex = parseColorFromString(inputVal);
-    if (!hex) return;
+    if (!hex) {
+      return;
+    }
     updateStateValues(hex, inputNum);
   }
 
