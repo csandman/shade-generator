@@ -14,11 +14,11 @@ import './App.scss';
 // import ContrastRatio from "../ContrastRatio";
 
 import {
-  searchNamedColors,
   getAllColorInfo,
   getRandomColor,
   getCopy,
-  attemptCreateColor
+  attemptCreateColor,
+  parseColorFromString
 } from '../../Functions';
 
 // returns [ hex1, hex2, isSplitScreen ]
@@ -180,34 +180,9 @@ const App = () => {
   }
 
   function handleSubmit(inputNum, inputVal) {
-    const searchTerm = inputVal.toLowerCase().replace(/\s/g, '');
-
-    let hex;
-    try {
-      hex = attemptCreateColor(searchTerm).hex();
-    } catch (err) {
-      // ignore invalid expression
-    }
-    if (!hex) {
-      try {
-        hex = attemptCreateColor(`#${searchTerm}`).hex();
-      } catch (err) {
-        // ignore invalid expression
-      }
-    }
-    if (!hex) {
-      try {
-        hex = searchNamedColors(searchTerm);
-      } catch (err) {
-        // ignore invalid expression
-      }
-    }
-
-    if (hex) {
-      updateStateValues(hex, inputNum);
-      return true;
-    }
-    return false;
+    const hex = parseColorFromString(inputVal);
+    if (!hex) return;
+    updateStateValues(hex, inputNum);
   }
 
   useEffect(() => {

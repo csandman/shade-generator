@@ -130,6 +130,34 @@ export function getAllColorInfo(colorVal) {
   };
 }
 
+export function parseColorFromString(str) {
+  const cleanStr = str.replace(/\s/g, '').toLowerCase();
+  let hex = '';
+  if (!hex) {
+    try {
+      hex = attemptCreateColor(cleanStr).hex();
+    } catch (err) {
+      // ignore invalid expression
+    }
+  }
+  if (!hex) {
+    try {
+      hex = attemptCreateColor(`#${cleanStr}`).hex();
+    } catch (err) {
+      // ignore invalid expression
+    }
+  }
+  if (!hex) {
+    try {
+      hex = searchNamedColors(cleanStr);
+    } catch (err) {
+      // ignore invalid expression
+    }
+  }
+
+  return hex.toUpperCase();
+}
+
 export function getCopy(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
