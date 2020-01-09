@@ -111,7 +111,6 @@ const App = () => {
   const { updateRecentColors } = useContext(HistoryContext);
 
   function addMenuItem(newColor) {
-    console.log('add menu item', newColor);
     const colorToAdd = { ...newColor };
     colorToAdd.timeAdded = new Date();
     colorToAdd.timeString = new Date().toLocaleTimeString([], {
