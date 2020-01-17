@@ -7,7 +7,7 @@
     "clipboard-polyfill": "^2.8.6",
     "color": "^3.1.2",
     "color-name-list": "^4.11.0",
-    "firebase": "^7.5.2",
+    "firebase": "^7.7.0",
     "nearest-color": "^0.4.4",
     "node-sass": "^4.13.0",
     "parse-color": "^1.0.0",
