@@ -1,16 +1,24 @@
-import React, { useContext } from "react";
-import SplitViewContext from "../../../Contexts/SplitViewContext";
+import React, { useContext } from 'react';
+import SplitViewContext from '../../../Contexts/SplitViewContext';
 
 const HeaderButton = ({
   action = () => {},
-  className = "",
+  className = '',
   colorData = {},
-  buttonText = "Button",
-  iconClassName = "",
-  textClassName = "",
-  name = ""
+  buttonText = '',
+  iconClassName = '',
+  textClassName = '',
+  name = ''
 }) => {
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+
+  const colorStyles =
+    !splitView || splitViewDisabled
+      ? {
+          borderColor: colorData.contrast,
+          color: colorData.contrast
+        }
+      : {};
 
   return (
     <button
@@ -19,36 +27,10 @@ const HeaderButton = ({
       type="button"
       className={`button icon-button ${className}`}
       onClick={action}
-      style={
-        !splitView || splitViewDisabled
-          ? {
-              borderColor: colorData.contrast,
-              color: colorData.contrast
-            }
-          : {}
-      }
+      style={colorStyles}
     >
-      <i
-        className={iconClassName}
-        style={
-          !splitView || splitViewDisabled
-            ? {
-                color: colorData.contrast
-              }
-            : {}
-        }
-      />
-      <span
-        className={`icon-button-text ${textClassName}`}
-        style={
-          !splitView || splitViewDisabled
-            ? {
-                borderColor: colorData.contrast,
-                color: colorData.contrast
-              }
-            : {}
-        }
-      >
+      <i className={iconClassName} style={colorStyles} />
+      <span className={`icon-button-text ${textClassName}`} style={colorStyles}>
         {buttonText}
       </span>
     </button>

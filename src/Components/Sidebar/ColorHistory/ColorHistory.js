@@ -1,32 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useOnline } from "react-browser-hooks";
-import FirebaseContext from "../../../Contexts/FirebaseContext";
-import MenuItem from "../MenuItem/MenuItem";
+import React, { useContext } from 'react';
+import MenuItem from '../MenuItem/MenuItem';
+import HistoryContext from '../../../Contexts/HistoryContext';
 
 const ColorHistory = ({ handleColorClick }) => {
-  const online = useOnline();
-  const [recentColors, setRecentColors] = useState([]);
-  const { firebase } = useContext(FirebaseContext);
-
-  useEffect(() => {
-    if (online) {
-      firebase
-        .colorHistory()
-        .orderBy("timeAdded", "desc")
-        .limit(40)
-        .onSnapshot(querySnapshot => {
-          const data = querySnapshot.docs.map(doc => {
-            const out = doc.data();
-            out.id = doc.id;
-            return out;
-          });
-          setRecentColors(data);
-          return true;
-        });
-    } else {
-      console.log("offline detected");
-    }
-  }, [online, firebase]);
+  const { recentColors } = useContext(HistoryContext);
 
   return (
     <div className="menu-items">

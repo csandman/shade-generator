@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import HeaderIcon from "./HeaderIcon/HeaderIcon";
-import HeaderButton from "./HeaderButton/HeaderButton";
-import HamburgerButton from "../HamburgerButton";
-import SplitViewContext from "../../Contexts/SplitViewContext";
-import "./Header.scss";
+import React, { useContext } from 'react';
+import HeaderIcon from './HeaderIcon/HeaderIcon';
+import HeaderButton from './HeaderButton/HeaderButton';
+import HamburgerButton from '../HamburgerButton';
+import SplitViewContext from '../../Contexts/SplitViewContext';
+import './Header.scss';
 
 const Header = ({ colorData, getRandomColors }) => {
   const { splitView, splitViewDisabled, toggleSplitView } = useContext(
@@ -52,7 +52,7 @@ const Header = ({ colorData, getRandomColors }) => {
           <HeaderButton
             name="Toggle split view"
             action={toggleSplitView}
-            className={`split-button ${splitView ? " active" : ""}`}
+            className={`split-button ${splitView ? ' active' : ''}`}
             colorData={colorData}
             buttonText="Split View"
             iconClassName="fas fa-columns"
@@ -61,7 +61,7 @@ const Header = ({ colorData, getRandomColors }) => {
         </div>
         <HamburgerButton
           color={
-            !splitView || splitViewDisabled ? colorData.contrast : "#7a7a7a"
+            !splitView || splitViewDisabled ? colorData.contrast : '#7a7a7a'
           }
         />
       </div>

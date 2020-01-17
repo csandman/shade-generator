@@ -1,10 +1,12 @@
+@import '../../styles/general';
+
 .content-background {
   min-height: calc(100vh - 5rem);
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 150ms linear;
+  transition: background-color $transition-time linear;
   will-change: background-color;
 }
 
@@ -39,7 +41,7 @@
           cursor: pointer;
           height: 16px;
           width: 16px;
-          background-image: url("../../images/clear-input.svg");
+          background-image: url('../../images/clear-input.svg');
         }
       }
 

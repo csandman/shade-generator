@@ -1,3 +1,3 @@
-import ContrastRatio from "./ContrastRatio";
+import ContrastRatio from './ContrastRatio';
 
 export default ContrastRatio;

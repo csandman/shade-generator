@@ -1,17 +1,17 @@
-import React from "react";
-import "./LoadingScreen.scss";
+import React from 'react';
+import './LoadingScreen.scss';
 
 const LoadingScreen = ({ show = false }) => {
   return (
-    <div className={`loading ${show ? "" : "hidden"}`}>
-      <svg
+    <div className={`loading ${show ? '' : 'hidden'}`}>
+      {/* <svg
         width="248px"
         height="248px"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
         className="lds-colorbar"
-        style={{ background: "none" }}
+        style={{ background: 'none' }}
       >
         <defs>
           <clipPath
@@ -113,7 +113,7 @@ const LoadingScreen = ({ show = false }) => {
             />
           </g>
         </g>
-      </svg>
+  </svg> */}
     </div>
   );
 };

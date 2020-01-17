@@ -1,22 +1,23 @@
-import nearestColor from "nearest-color";
-import namedColors from "color-name-list";
-import Color from "color";
+import nearestColor from 'nearest-color';
+import namedColors from 'color-name-list';
+import parseColor from 'parse-color';
+import Color from 'color';
 
 export function getRandomColor() {
-  const color = "0123456789ABCDEF".split("").reduce((a, c, i, arr) => {
+  const color = '0123456789ABCDEF'.split('').reduce((a, c, i, arr) => {
     return i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a;
-  }, "#");
+  }, '#');
   return Color(color);
 }
 
 function calculateGradient(color, isDark, opacity) {
   return isDark
     ? color
-        .mix(Color("black"), opacity)
+        .mix(Color('black'), opacity)
         .rgb()
         .round()
     : color
-        .mix(Color("white"), opacity)
+        .mix(Color('white'), opacity)
         .rgb()
         .round();
 }
@@ -26,7 +27,7 @@ export function getContrastColor(color, minContrastRatio = 4.5) {
   let i = 0.01;
   let contrastColor;
   let contrastRatio = 0;
-  while (contrastRatio < minContrastRatio && i < 1) {
+  while (contrastRatio < minContrastRatio && i < 0.9) {
     contrastColor = calculateGradient(color, isDark, i);
     contrastRatio = color.contrast(contrastColor);
     i += 0.01;
@@ -51,8 +52,9 @@ export function getLowContrastColor(color) {
 
 export function searchNamedColors(searchTerm) {
   for (let i = 0; i < namedColors.length; i += 1) {
-    if (namedColors[i].name.replace(/\s/g, "").toLowerCase() === searchTerm)
+    if (namedColors[i].name.replace(/\s/g, '').toLowerCase() === searchTerm) {
       return namedColors[i].hex.toUpperCase();
+    }
   }
   return null;
 }
@@ -108,7 +110,7 @@ export function attemptCreateColor(colorStr) {
 
 export function getAllColorInfo(colorVal) {
   let color;
-  if (typeof colorVal === "string") {
+  if (typeof colorVal === 'string') {
     color = Color(colorVal);
   } else {
     color = colorVal;
@@ -128,6 +130,17 @@ export function getAllColorInfo(colorVal) {
     oppositeContrast: getOppositeContrastColor(color).hex(),
     shades: calcAllGradients(color)
   };
+}
+
+export function parseColorFromString(str) {
+  const cleanStr = str.replace(/\s/g, '').toLowerCase();
+  const hex =
+    attemptCreateColor(cleanStr)?.hex() ||
+    attemptCreateColor(`#${cleanStr}`)?.hex() ||
+    parseColor(cleanStr)?.hex ||
+    searchNamedColors(cleanStr) ||
+    '';
+  return hex.toUpperCase();
 }
 
 export function getCopy(obj) {

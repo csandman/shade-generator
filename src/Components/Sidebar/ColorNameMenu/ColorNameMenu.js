@@ -1,19 +1,34 @@
-import React, { useState, useContext } from "react";
-import Color from "color";
-import namedColors from "color-name-list";
-import SidebarContext from "../../../Contexts/SidebarContext";
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import Color from 'color';
+import namedColors from 'color-name-list';
+import SidebarContext from '../../../Contexts/SidebarContext';
 
-import { getContrastColor } from "../../../Functions";
+import { getContrastColor } from '../../../Functions';
 
-const initialColorNameList = namedColors.slice(0, 50).map(el => ({
-  ...el,
-  contrast: getContrastColor(Color(el.hex)).hex()
+const initialColorNameList = namedColors.slice(0, 50).map(color => ({
+  ...color,
+  contrast: getContrastColor(Color(color.hex)).hex()
 }));
 
-const ColorNameMenu = ({ handleColorClick }) => {
+let inputElTimeout;
+
+const ColorNameMenu = ({ handleColorClick, isOpen }) => {
   const { closeMenu } = useContext(SidebarContext);
 
-  const [searchInput, updateSearchInput] = useState("");
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    clearTimeout(inputElTimeout);
+    if (isOpen) {
+      inputElTimeout = setTimeout(() => {
+        inputEl.current.select();
+      }, 310);
+    } else {
+      inputEl.current.blur();
+    }
+  }, [isOpen]);
+
+  const [searchInput, updateSearchInput] = useState('');
   const [colorNameList, updateColorNameList] = useState(initialColorNameList);
 
   const searchColorNames = e => {
@@ -23,9 +38,9 @@ const ColorNameMenu = ({ handleColorClick }) => {
     while (newColorArr.length < 100 && index < namedColors.length) {
       if (
         namedColors[index].name
-          .replace(/\s/g, "")
+          .replace(/\s/g, '')
           .toLowerCase()
-          .indexOf(e.target.value.replace(/\s/g, "").toLowerCase()) >= 0
+          .indexOf(e.target.value.replace(/\s/g, '').toLowerCase()) >= 0
       ) {
         newColorArr.push(namedColors[index]);
       }
@@ -46,6 +61,7 @@ const ColorNameMenu = ({ handleColorClick }) => {
         </div>
         <label htmlFor="color-search">Color search</label>
         <input
+          ref={inputEl}
           id="color-search"
           type="search"
           placeholder="Search..."

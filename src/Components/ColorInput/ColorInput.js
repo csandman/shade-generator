@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import InputContext from "../../Contexts/InputContext";
+import React, { useContext } from 'react';
+import InputContext from '../../Contexts/InputContext';
 
 const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
   const inputContext = useContext(InputContext);
@@ -7,9 +7,9 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
   const { updateInputValue } = inputContext;
 
   function handleKeyPress(e) {
-    console.log(e, e.key);
-    if (e.key === "Enter") {
-      if (document.activeElement.id !== "color-search") {
+    // console.log(e, e.key);
+    if (e.key === 'Enter') {
+      if (document.activeElement.id !== 'color-search') {
         handleSubmit(bodyNum, inputValue);
       }
     }
@@ -35,7 +35,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
       <button
         type="button"
         onClick={() => {
-          console.log(inputValue, bodyNum);
+          // console.log(inputValue, bodyNum);
           handleSubmit(bodyNum, inputValue);
         }}
         name={`inputValue${bodyNum}`}

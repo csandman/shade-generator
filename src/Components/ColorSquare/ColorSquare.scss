@@ -1,3 +1,5 @@
+@import '../../styles/general';
+
 .color-square {
   & > div {
     display: block !important;
@@ -9,7 +11,7 @@
     height: 6rem;
     border-radius: 5px;
     cursor: pointer;
-    transition: 150ms background-color ease-in-out;
+    // transition: $transition-time background-color ease-in-out;
     background-color: #222;
     border: 0;
     outline: none;
@@ -54,22 +56,30 @@
 }
 
 .tooltip-title {
-  font-size: 1.2rem;
-  margin: 0.5rem;
+  font-size: 18px;
+  margin-top: 13px;
+  margin-bottom: 11px;
   font-weight: 600;
   letter-spacing: 1px;
 }
 
+.tooltip-sub-title {
+  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+}
+
 .popup-button {
-  margin-bottom: 0.75rem;
+  margin: 11px;
+  margin-bottom: 0;
 
   &:last-of-type {
-    margin-bottom: 0.35rem;
+    margin-bottom: 11px;
   }
 
   button {
-    width: 13.5rem;
-    transition: 100ms background-color linear;
+    width: 14rem;
+    letter-spacing: 1px;
+    transition: 80ms background-color linear;
 
     &:hover {
       background-color: #222;
@@ -77,23 +87,27 @@
   }
 }
 
+.tippy-tooltip {
+  padding: 0;
+}
+
 .tippy-tooltip.dark-border-theme {
   background-clip: padding-box;
   border: 2px solid white;
 }
 
-.tippy-popper[x-placement^="top"] [x-arrow] {
+.tippy-popper[x-placement^='top'] [x-arrow] {
   border-top-color: white;
 }
 
-.tippy-popper[x-placement^="bottom"] [x-arrow] {
+.tippy-popper[x-placement^='bottom'] [x-arrow] {
   border-bottom-color: white;
 }
 
-.tippy-popper[x-placement^="right"] [x-arrow] {
+.tippy-popper[x-placement^='right'] [x-arrow] {
   border-right-color: white;
 }
 
-.tippy-popper[x-placement^="left"] [x-arrow] {
+.tippy-popper[x-placement^='left'] [x-arrow] {
   border-left-color: white;
 }

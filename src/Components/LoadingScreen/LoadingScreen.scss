@@ -6,13 +6,13 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: #222222;
+  background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 700ms all ease-out;
   opacity: 1;
   will-change: opacity;
+  transition: 80ms all ease-out;
 
   &.hidden {
     visibility: hidden;

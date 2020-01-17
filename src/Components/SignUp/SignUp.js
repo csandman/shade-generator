@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import "./SignUp.scss";
-import { withFirebase } from "../Firebase";
+import React, { Component } from 'react';
+import './SignUp.scss';
+import { withFirebase } from '../Firebase';
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
-      email: "",
-      password: ""
+      name: '',
+      email: '',
+      password: ''
     };
 
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -44,9 +44,9 @@ class SignUp extends Component {
             // An error happened.
           });
         this.setState({
-          userName: "",
-          email: "",
-          password: ""
+          userName: '',
+          email: '',
+          password: ''
         });
       })
       .catch(error => {
@@ -63,7 +63,7 @@ class SignUp extends Component {
     return (
       <div
         id="signup-page"
-        className={this.props.isOpen ? "" : "hidden"}
+        className={this.props.isOpen ? '' : 'hidden'}
         onClick={this.props.closeSignUpModal}
       >
         <div className="signup-modal" onClick={this.stopPropagation}>

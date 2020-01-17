@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PlusButton from "../../PlusButton";
+import React, { useState } from 'react';
+import PlusButton from '../../PlusButton';
 
 const HelpMenu = () => {
   const [accordianStates, updateAccordianStates] = useState({
@@ -40,7 +40,7 @@ const HelpMenu = () => {
         some way to calculate this resulting color!
       </p>
       <p>
-        After a quick google search, I found{" "}
+        After a quick google search, I found{' '}
         <a
           href="https://www.viget.com/articles/equating-color-and-transparency/"
           target="_blank"
@@ -61,7 +61,7 @@ const HelpMenu = () => {
       <h5
         id="colorParser"
         onClick={e => {
-          console.log(e);
+          // console.log(e);
           toggleAccordianState(e.currentTarget.id);
         }}
       >
@@ -70,11 +70,11 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.colorParserOpen ? "" : " closed"
+          accordianStates.colorParserOpen ? '' : ' closed'
         }`}
       >
         <p>
-          One of the first things I added was the NPM package{" "}
+          One of the first things I added was the NPM package{' '}
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -121,16 +121,16 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.copyToClipboardOpen ? "" : " closed"
+          accordianStates.copyToClipboardOpen ? '' : ' closed'
         }`}
       >
         <p>
           The next main thing I added was the option to click to copy either the
           hex code or the rgb code to your clipboard. The first two things I
-          tried were <code>document.execCommand(&quot;copy&quot;)</code> and{" "}
+          tried were <code>document.execCommand(&quot;copy&quot;)</code> and{' '}
           <code>navigator.clipboard.write()</code>. Both of these options worked
           but I ran into issued with them working on all devices. I soon
-          stumbled upon a nice small NPM package called{" "}
+          stumbled upon a nice small NPM package called{' '}
           <a
             href="https://www.npmjs.com/package/clipboard-polyfill"
             target="_blank"
@@ -154,14 +154,14 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.colorNamesOpen ? "" : " closed"
+          accordianStates.colorNamesOpen ? '' : ' closed'
         }`}
       >
         <p>
           Now that the basic features were in place, it was time to have some
           fun! I decided that the page was a little too plain so I thought I
           would add some names for the colors. The first library I added for
-          this is called{" "}
+          this is called{' '}
           <a
             href="https://www.npmjs.com/package/color-namer"
             target="_blank"
@@ -176,7 +176,7 @@ const HelpMenu = () => {
         <p>
           After running into some problems with this package (I can&apos;t quite
           remember what) I decided to keep looking around. Somehow I missed the
-          amazing package{" "}
+          amazing package{' '}
           <a
             href="https://www.npmjs.com/package/color-name-list"
             target="_blank"
@@ -188,7 +188,7 @@ const HelpMenu = () => {
           combines over 15 different sources of color names along with thousands
           of user submission. While this list is massive, it still only contains
           0.11% of the total possible RGB combinations so in order to match all
-          colors so in order to match it to an input color, I used the package{" "}
+          colors so in order to match it to an input color, I used the package{' '}
           <a
             href="https://www.npmjs.com/package/nearest-color"
             target="_blank"
@@ -212,7 +212,7 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.randomColorsOpen ? "" : " closed"
+          accordianStates.randomColorsOpen ? '' : ' closed'
         }`}
       >
         <p>
@@ -238,12 +238,12 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.colorHistoryOpen ? "" : " closed"
+          accordianStates.colorHistoryOpen ? '' : ' closed'
         }`}
       >
         <p>
           This was a feature that I added more for the experience than an it
-          actually providing much value. I had been wanting to mess around with{" "}
+          actually providing much value. I had been wanting to mess around with{' '}
           <a
             href="https://firebase.google.com/"
             target="_blank"
@@ -276,7 +276,7 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.offlineCapabilityOpen ? "" : " closed"
+          accordianStates.offlineCapabilityOpen ? '' : ' closed'
         }`}
       >
         <p className="italic">work in progress...</p>
@@ -292,7 +292,7 @@ const HelpMenu = () => {
       </h5>
       <div
         className={`feature-container${
-          accordianStates.splitViewOpen ? "" : " closed"
+          accordianStates.splitViewOpen ? '' : ' closed'
         }`}
       >
         <p className="italic">work in progress...</p>

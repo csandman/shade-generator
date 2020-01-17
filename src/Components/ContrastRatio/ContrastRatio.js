@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import Color from "color";
-import SplitViewContext from "../../Contexts/SplitViewContext";
+import React, { useContext } from 'react';
+import Color from 'color';
+import SplitViewContext from '../../Contexts/SplitViewContext';
 
-import "./ContrastRatio.scss";
+import './ContrastRatio.scss';
 
 const ContrastRatio = ({ hex1, hex2 }) => {
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
@@ -19,7 +19,7 @@ const ContrastRatio = ({ hex1, hex2 }) => {
         CONTRAST <br /> RATIO
       </h3>
       <h3 className="ratio">
-        {ratio} {level ? `(${level})` : ""}
+        {ratio} {level ? `(${level})` : ''}
       </h3>
     </div>
   ) : null;

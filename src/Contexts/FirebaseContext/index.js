@@ -1,4 +1,4 @@
-import FirebaseContext, { FirebaseProvider } from "./FirebaseContext";
+import FirebaseContext, { FirebaseProvider } from './FirebaseContext';
 
 export { FirebaseProvider };
 

@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import ColorSquare from "../ColorSquare";
-import ColorInput from "../ColorInput";
-import SplitViewContext from "../../Contexts/SplitViewContext";
-import "./BodyContent.scss";
+import React, { useContext } from 'react';
+import ColorSquare from '../ColorSquare';
+import ColorInput from '../ColorInput';
+import SplitViewContext from '../../Contexts/SplitViewContext';
+import './BodyContent.scss';
 
 const BodyContent = ({
   handleSubmit,
@@ -19,7 +19,7 @@ const BodyContent = ({
     >
       <div
         className={`body-content ${
-          splitView && !splitViewDisabled ? "split" : ""
+          splitView && !splitViewDisabled ? 'split' : ''
         }`}
       >
         <div className="input-container">
