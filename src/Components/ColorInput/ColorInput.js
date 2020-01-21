@@ -34,10 +34,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
       />
       <button
         type="button"
-        onClick={() => {
-          // console.log(inputValue, bodyNum);
-          handleSubmit(bodyNum, inputValue);
-        }}
+        onClick={() => handleSubmit(bodyNum, inputValue)}
         name={`inputValue${bodyNum}`}
         style={{
           borderColor: contrast,
