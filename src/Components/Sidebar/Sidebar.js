@@ -61,24 +61,22 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             menuStates.isMainMenuOpen ? '' : ' hidden'
           }`}
         >
+          <div
+            className="main-menu-item"
+            id="HistoryMenu"
+            onClick={e => openMenu(e.currentTarget.id)}
+          >
+            <i className="icon fas fa-history" />
+            <span>History</span>
+          </div>
           {online && (
-            <div className="online-menu-items">
-              <div
-                className="main-menu-item"
-                id="HistoryMenu"
-                onClick={e => openMenu(e.currentTarget.id)}
-              >
-                <i className="icon fas fa-history" />
-                <span>History</span>
-              </div>
-              <div
-                className="main-menu-item"
-                id="TopColorsMenu"
-                onClick={e => openMenu(e.currentTarget.id)}
-              >
-                <i className="icon fas fa-award" />
-                <span>Top Colors</span>
-              </div>
+            <div
+              className="main-menu-item"
+              id="TopColorsMenu"
+              onClick={e => openMenu(e.currentTarget.id)}
+            >
+              <i className="icon fas fa-award" />
+              <span>Top Colors</span>
             </div>
           )}
           <div
