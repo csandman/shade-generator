@@ -2,45 +2,29 @@ import React, { useState } from 'react';
 import SidebarContext from './SidebarContext';
 
 const SidebarProvider = ({ children }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const toggleMenu = () => {
-    setSidebarValues(prevMenuValues => {
-      const newMenuValues = {
-        ...prevMenuValues,
-        isMenuOpen: !prevMenuValues.isMenuOpen
-      };
-      return newMenuValues;
-    });
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const openMenu = () => {
-    setSidebarValues(prevMenuValues => {
-      const newMenuValues = {
-        ...prevMenuValues,
-        isMenuOpen: true
-      };
-      return newMenuValues;
-    });
+    setIsMenuOpen(true);
   };
 
   const closeMenu = () => {
-    setSidebarValues(prevMenuValues => {
-      const newMenuValues = {
-        ...prevMenuValues,
-        isMenuOpen: false
-      };
-      return newMenuValues;
-    });
+    setIsMenuOpen(false);
   };
 
-  const [sidebarValues, setSidebarValues] = useState({
-    isMenuOpen: false,
-    openMenu,
-    closeMenu,
-    toggleMenu
-  });
-
   return (
-    <SidebarContext.Provider value={sidebarValues}>
+    <SidebarContext.Provider
+      value={{
+        isMenuOpen,
+        toggleMenu,
+        openMenu,
+        closeMenu
+      }}
+    >
       {children}
     </SidebarContext.Provider>
   );
