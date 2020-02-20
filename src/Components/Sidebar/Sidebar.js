@@ -48,7 +48,6 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
 
   useEffect(() => {
     if (isMenuOpen) {
-      console.log('firestore menu load');
       setFirestoreMenuLoad(true);
     }
   }, [isMenuOpen, setFirestoreMenuLoad]);
