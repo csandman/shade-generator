@@ -111,7 +111,6 @@ const App = () => {
   const { updateRecentColors } = useContext(HistoryContext);
 
   function addMenuItem(newColor) {
-    console.log('add menu item', newColor);
     const colorToAdd = { ...newColor };
     colorToAdd.timeAdded = new Date();
     colorToAdd.timeString = new Date().toLocaleTimeString([], {
@@ -190,12 +189,12 @@ const App = () => {
   useEffect(() => {
     window.onpopstate = e => {
       popCount = 1;
-      if (e.state.hex2) {
+      if (e?.state?.hex2) {
         popCount = 2;
       }
 
-      updateStateValues(e.state.hex1, 1);
-      if (e.state.hex2) {
+      updateStateValues(e?.state?.hex1, 1);
+      if (e?.state?.hex2) {
         updateStateValues(e.state.hex2, 2);
         setSplitView(true);
       } else {
