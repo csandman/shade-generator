@@ -17,7 +17,9 @@ Shade generator is a project that started as a codepen a couple years ago. The i
 
 After a quick google search, I found [this link](https://www.viget.com/articles/equating-color-and-transparency/). I quickly realized calculating the colors I wanted was possible with this very simple formula:
 
-![Shade formula](github/formula.png)
+<p align="center">
+  <img src="./github/formula.png" alt="shade formula">
+</p>
 
 From there it all just spiraled into me going overboard in making a very simple task into a fullblown web app. Overall the main thing I got out of this was experience with React and Firebase, so I'd say it was worth the effort.
 
