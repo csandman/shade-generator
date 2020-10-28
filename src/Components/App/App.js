@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef, useCallback } from 'react';
-import { useOnline } from 'react-browser-hooks';
 import ReactGA from 'react-ga';
+import useOnline from 'hooks/use-online';
 import Header from 'Components/Header';
 import Sidebar from 'Components/Sidebar';
 import LoadingScreen from 'Components/LoadingScreen';

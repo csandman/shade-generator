@@ -12,7 +12,6 @@
     "node-sass": "^4.14.1",
     "parse-color": "^1.0.0",
     "react": "^17.0.1",
-    "react-browser-hooks": "^2.2.4",
     "react-dom": "^17.0.1",
     "react-ga": "^3.2.0",
     "react-scripts": "^4.0.0",

@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
-import { useOnline } from 'react-browser-hooks';
+import useOnline from 'hooks/use-online';
 import SidebarContext from 'Contexts/SidebarContext';
 import KofiButton from 'Components/KofiButton';
-import { useEventListener } from 'Hooks';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';
 import TopColors from './TopColors/TopColors';
@@ -20,12 +19,18 @@ const initialMenuStates = {
 const Sidebar = ({ handleColorClick = () => {} }) => {
   const { isMenuOpen, closeMenu } = useContext(SidebarContext);
 
-  function handleKeyPress(e) {
-    if (e.code === 'Escape') {
-      closeMenu();
-    }
-  }
-  useEventListener('keyup', handleKeyPress, document);
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.code === 'Escape') {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   const online = useOnline();
   const [menuStates, updateMenuStates] = useState(initialMenuStates);

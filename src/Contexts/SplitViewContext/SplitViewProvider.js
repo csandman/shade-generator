@@ -1,6 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import SplitViewContext from './SplitViewContext';
-import { useEventListener } from '../../Hooks';
 
 const isSplitViewDisabled = () => {
   return window.innerWidth <= 600;
@@ -12,12 +11,19 @@ const SplitViewProvider = ({ children }) => {
     isSplitViewDisabled()
   );
 
-  useEventListener('resize', () => {
-    setSplitViewDisabled(isSplitViewDisabled());
-  });
-
   const toggleSplitView = useCallback(() => {
     setSplitView((prevSplitView) => !prevSplitView);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSplitViewDisabled(isSplitViewDisabled());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import { createContext, useRef } from 'react';
-import { useLocalStorage } from '../../Hooks';
+import useLocalStorage from 'hooks/use-local-storage';
 
 const HistoryContext = createContext({
   recentColors: [],

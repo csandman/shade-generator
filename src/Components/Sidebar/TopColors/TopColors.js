@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useOnline } from 'react-browser-hooks';
+import useOnline from 'hooks/use-online';
 import FirebaseContext from 'Contexts/FirebaseContext';
 import MenuItem from '../MenuItem/MenuItem';
 
