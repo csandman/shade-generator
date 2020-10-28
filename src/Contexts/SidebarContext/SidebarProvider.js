@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SidebarContext from './SidebarContext';
 
 const SidebarProvider = ({ children }) => {

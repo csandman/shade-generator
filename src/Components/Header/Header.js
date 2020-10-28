@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { memo, useContext } from 'react';
 import HeaderIcon from './HeaderIcon/HeaderIcon';
 import HeaderButton from './HeaderButton/HeaderButton';
 import HamburgerButton from '../HamburgerButton';
@@ -69,4 +69,4 @@ const Header = ({ colorData, getRandomColors }) => {
   );
 };
 
-export default React.memo(Header);
+export default memo(Header);

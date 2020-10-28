@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import Color from 'color';
 import namedColors from 'color-name-list';
 import SidebarContext from '../../../Contexts/SidebarContext';

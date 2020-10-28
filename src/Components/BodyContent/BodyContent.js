@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import ColorSquare from '../ColorSquare';
 import ColorInput from '../ColorInput';
 import SplitViewContext from '../../Contexts/SplitViewContext';

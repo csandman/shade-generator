@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useOnline } from 'react-browser-hooks';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';

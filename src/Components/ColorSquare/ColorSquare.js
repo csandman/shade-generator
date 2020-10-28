@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 import * as clipboard from 'clipboard-polyfill';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
@@ -84,4 +84,4 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
   );
 };
 
-export default React.memo(ColorSquare);
+export default memo(ColorSquare);

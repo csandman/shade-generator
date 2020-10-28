@@ -1,4 +1,4 @@
-import React, { createContext, useRef } from 'react';
+import { createContext, useRef } from 'react';
 import { useLocalStorage } from '../../Hooks';
 
 const HistoryContext = createContext({

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import MenuItem from '../MenuItem/MenuItem';
 import HistoryContext from '../../../Contexts/HistoryContext';
 

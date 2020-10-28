@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { memo, useContext } from 'react';
 import './HamburgerButton.scss';
 import SidebarContext from '../../Contexts/SidebarContext';
 
@@ -19,4 +19,4 @@ const HamburgerButton = ({ color, className = '' }) => {
   );
 };
 
-export default React.memo(HamburgerButton);
+export default memo(HamburgerButton);

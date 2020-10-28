@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useRef,
-  useCallback,
-} from 'react';
+import { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { useOnline } from 'react-browser-hooks';
 import ReactGA from 'react-ga';
 import Header from '../Header';

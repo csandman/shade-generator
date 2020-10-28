@@ -1,6 +1,3 @@
-import React from 'react';
-// import "./PlusButton.scss";
-
 const KofiButton = ({ className, height = 50 }) => {
   return (
     <svg

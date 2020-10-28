@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import InputContext from '../../Contexts/InputContext';
 
 const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {

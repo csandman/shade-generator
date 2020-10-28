@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import InputContext from './InputContext';
 
 const InputProvider = ({ children }) => {
