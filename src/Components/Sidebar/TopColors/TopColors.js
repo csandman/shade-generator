@@ -15,8 +15,8 @@ const TopColors = ({ handleColorClick }) => {
         .orderBy('count', 'desc')
         .limit(40)
         .get()
-        .then(querySnapshot => {
-          const data = querySnapshot.docs.map(doc => {
+        .then((querySnapshot) => {
+          const data = querySnapshot.docs.map((doc) => {
             const out = doc.data();
             out.id = doc.id;
             return out;

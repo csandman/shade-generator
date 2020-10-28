@@ -9,7 +9,7 @@ function MenuItem({
   name = 'Black Out',
   textBottomLeft = '',
   textBottomRight = '',
-  item
+  item,
 }) {
   const { closeMenu } = useContext(SidebarContext);
   const { splitView } = useContext(SplitViewContext);

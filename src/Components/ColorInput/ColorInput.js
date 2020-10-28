@@ -25,7 +25,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         id={`color-input-${bodyNum}`}
         type="search"
         placeholder="Color Code (Hex, RGB, or Name)"
-        onChange={e => {
+        onChange={(e) => {
           updateInputValue(bodyNum, e.target.value);
         }}
         onKeyPress={handleKeyPress}
@@ -39,7 +39,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         style={{
           borderColor: contrast,
           backgroundColor: contrast,
-          color: oppositeContrast
+          color: oppositeContrast,
         }}
       >
         GO

@@ -3,7 +3,7 @@ import { useLocalStorage } from '../../Hooks';
 
 const HistoryContext = createContext({
   recentColors: [],
-  updateRecentColors: () => {}
+  updateRecentColors: () => {},
 });
 
 const HistoryProvider = ({ children }) => {
@@ -11,10 +11,10 @@ const HistoryProvider = ({ children }) => {
 
   const recentColorsRef = useRef(recentColors);
 
-  const updateRecentColors = newColor => {
+  const updateRecentColors = (newColor) => {
     recentColorsRef.current = [
       newColor,
-      ...recentColorsRef.current.slice(0, 100)
+      ...recentColorsRef.current.slice(0, 100),
     ];
     setRecentColors(recentColorsRef.current);
   };
@@ -23,7 +23,7 @@ const HistoryProvider = ({ children }) => {
     <HistoryContext.Provider
       value={{
         recentColors,
-        updateRecentColors
+        updateRecentColors,
       }}
     >
       {children}

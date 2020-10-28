@@ -22,7 +22,7 @@ const SidebarProvider = ({ children }) => {
         isMenuOpen,
         toggleMenu,
         openMenu,
-        closeMenu
+        closeMenu,
       }}
     >
       {children}

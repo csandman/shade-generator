@@ -17,7 +17,7 @@ const Header = ({ colorData, getRandomColors }) => {
         !splitView || splitViewDisabled
           ? {
               borderColor: colorData.contrast,
-              backgroundColor: colorData.hex
+              backgroundColor: colorData.hex,
             }
           : {}
       }
@@ -30,7 +30,7 @@ const Header = ({ colorData, getRandomColors }) => {
           style={
             !splitView || splitViewDisabled
               ? {
-                  color: colorData.contrast
+                  color: colorData.contrast,
                 }
               : {}
           }

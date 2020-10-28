@@ -8,7 +8,7 @@ const HeaderButton = ({
   buttonText = '',
   iconClassName = '',
   textClassName = '',
-  name = ''
+  name = '',
 }) => {
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 
@@ -16,7 +16,7 @@ const HeaderButton = ({
     !splitView || splitViewDisabled
       ? {
           borderColor: colorData.contrast,
-          color: colorData.contrast
+          color: colorData.contrast,
         }
       : {};
 

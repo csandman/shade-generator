@@ -9,7 +9,7 @@ class SignUp extends Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
     };
 
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -34,22 +34,22 @@ class SignUp extends Component {
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
-      .then(authUser => {
+      .then((authUser) => {
         authUser
           .updateProfile({
-            displayName: userName
+            displayName: userName,
           })
-          .then(function() {})
-          .catch(function(error) {
+          .then(function () {})
+          .catch(function (error) {
             // An error happened.
           });
         this.setState({
           userName: '',
           email: '',
-          password: ''
+          password: '',
         });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ error });
       });
     this.props.closeSignUpModal();

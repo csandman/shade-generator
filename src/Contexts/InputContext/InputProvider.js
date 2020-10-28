@@ -4,13 +4,13 @@ import InputContext from './InputContext';
 const InputProvider = ({ children }) => {
   const [inputValues, setInputValues] = useState({
     inputValue1: '',
-    inputValue2: ''
+    inputValue2: '',
   });
 
   const updateInputValue = (inputNum, value) => {
-    setInputValues(prevInputValues => ({
+    setInputValues((prevInputValues) => ({
       ...prevInputValues,
-      [`inputValue${inputNum}`]: value
+      [`inputValue${inputNum}`]: value,
     }));
   };
 

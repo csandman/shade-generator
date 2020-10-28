@@ -8,7 +8,7 @@ const BodyContent = ({
   handleSubmit,
   bodyNum,
   colorData,
-  handleColorClick
+  handleColorClick,
 }) => {
   const { splitView, splitViewDisabled } = useContext(SplitViewContext);
 

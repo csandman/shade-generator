@@ -16,19 +16,15 @@ import './App.scss';
 import {
   getAllColorInfo,
   getRandomColor,
-  getCopy,
   attemptCreateColor,
-  parseColorFromString
+  parseColorFromString,
 } from '../../Functions';
 
 // returns [ hex1, hex2, isSplitScreen ]
 function parseURL() {
   const path = window.location.pathname.slice(1);
   if (path.length) {
-    const splitUrl = window.location.pathname
-      .slice(1)
-      .toUpperCase()
-      .split('-');
+    const splitUrl = window.location.pathname.slice(1).toUpperCase().split('-');
 
     if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9A-F]{6}$/)) {
       return [`#${splitUrl[0]}`, '', false];
@@ -77,7 +73,7 @@ const App = () => {
       ReactGA.initialize(process.env.REACT_APP_GA_CODE);
       ReactGA.event({
         category: 'Connection',
-        action: 'Connected to Shade Generator'
+        action: 'Connected to Shade Generator',
       });
     } else {
       console.log('offline detected');
@@ -115,7 +111,7 @@ const App = () => {
     colorToAdd.timeAdded = new Date();
     colorToAdd.timeString = new Date().toLocaleTimeString([], {
       hour: 'numeric',
-      minute: 'numeric'
+      minute: 'numeric',
     });
     colorToAdd.dateString = new Date().toLocaleDateString();
 
@@ -126,7 +122,7 @@ const App = () => {
         .collection('color-history')
         .doc(colorToAdd.hex);
 
-      colorRef.get().then(colorRecord => {
+      colorRef.get().then((colorRecord) => {
         if (colorRecord.exists) {
           colorToAdd.count = (colorRecord.data().count || 0) + 1;
           colorRef.update(colorToAdd);
@@ -161,13 +157,13 @@ const App = () => {
       setCurInputVal2(colorData.hex);
     }
 
-    addMenuItem(getCopy(colorData));
+    addMenuItem({ ...colorData });
   }
 
   function getRandomColors() {
     ReactGA.event({
       category: 'Button Press',
-      action: 'Random color button'
+      action: 'Random color button',
     });
     const randomColor1 = getAllColorInfo(getRandomColor());
     updateStateValues(randomColor1, 1);
@@ -187,7 +183,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    window.onpopstate = e => {
+    window.onpopstate = (e) => {
       popCount = 1;
       if (e?.state?.hex2) {
         popCount = 2;

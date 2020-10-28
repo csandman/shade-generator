@@ -10,7 +10,7 @@ function useEventListener(eventName, handler, element = global) {
   useEffect(() => {
     const isSupported = element && element.addEventListener;
     if (!isSupported) return () => {};
-    const eventListener = event => savedHandler.current(event);
+    const eventListener = (event) => savedHandler.current(event);
     element.addEventListener(eventName, eventListener);
     return () => {
       element.removeEventListener(eventName, eventListener);
@@ -23,7 +23,7 @@ const isClient = typeof window === 'object';
 function getSize() {
   return {
     width: isClient ? window.innerWidth : undefined,
-    height: isClient ? window.innerHeight : undefined
+    height: isClient ? window.innerHeight : undefined,
   };
 }
 
@@ -64,7 +64,7 @@ function useLocalStorage(key, initialValue) {
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue = value => {
+  const setValue = (value) => {
     try {
       // Allow value to be a function so we have same API as useState
       const valueToStore =

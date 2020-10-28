@@ -11,21 +11,21 @@ const HeaderIcon = ({ getRandomColors, colorData }) => {
           backgroundColor:
             splitView && !splitViewDisabled
               ? '#7a7a7a'
-              : colorData.shades[10].hex
+              : colorData.shades[10].hex,
         }}
         className="icon-dot"
       />
       <div
         style={{
           backgroundColor:
-            splitView && !splitViewDisabled ? '#000' : colorData.shades[24].hex
+            splitView && !splitViewDisabled ? '#000' : colorData.shades[24].hex,
         }}
         className="icon-dot"
       />
       <div
         style={{
           backgroundColor:
-            splitView && !splitViewDisabled ? '#000' : colorData.shades[24].hex
+            splitView && !splitViewDisabled ? '#000' : colorData.shades[24].hex,
         }}
         className="icon-dot"
       />
@@ -34,7 +34,7 @@ const HeaderIcon = ({ getRandomColors, colorData }) => {
           backgroundColor:
             splitView && !splitViewDisabled
               ? '#7a7a7a'
-              : colorData.shades[10].hex
+              : colorData.shades[10].hex,
         }}
         className="icon-dot"
       />

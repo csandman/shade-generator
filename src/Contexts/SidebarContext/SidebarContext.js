@@ -4,7 +4,7 @@ const SidebarContext = createContext({
   menuIsOpen: false,
   closeMenu: () => {},
   openMenu: () => {},
-  toggleMenu: () => {}
+  toggleMenu: () => {},
 });
 
 export default SidebarContext;

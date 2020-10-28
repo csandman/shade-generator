@@ -4,7 +4,7 @@ const SplitViewContext = createContext({
   splitView: false,
   splitViewDisabled: false,
   setSplitView: () => {},
-  toggleSplitView: () => {}
+  toggleSplitView: () => {},
 });
 
 export default SplitViewContext;
