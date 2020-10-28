@@ -1,13 +1,12 @@
-import { memo, useState } from 'react';
+import { memo, useState, useRef } from 'react';
 import * as clipboard from 'clipboard-polyfill';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import './ColorSquare.scss';
 
-let hexTimeout;
-let rgbTimeout;
-
 const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
+  const hexTimeout = useRef();
+  const rgbTimeout = useRef();
   const [r, g, b] = rgb;
   const rgbStr = `rgb(${r}, ${g}, ${b})`;
   const hexStr = hex.toUpperCase();
@@ -23,8 +22,8 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
   const copyHexCode = () => {
     clipboard.writeText(hexStr);
     setHexBtnTxt('Copied!');
-    clearTimeout(hexTimeout);
-    hexTimeout = setTimeout(() => {
+    clearTimeout(hexTimeout.current);
+    hexTimeout.current = setTimeout(() => {
       setHexBtnTxt(hexStr);
     }, 1200);
   };
@@ -32,8 +31,8 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
   const copyRgb = () => {
     clipboard.writeText(rgbStr);
     setRgbBtnTxt('Copied!');
-    clearTimeout(rgbTimeout);
-    rgbTimeout = setTimeout(() => {
+    clearTimeout(rgbTimeout.current);
+    rgbTimeout.current = setTimeout(() => {
       setRgbBtnTxt(rgbStr);
     }, 1200);
   };
