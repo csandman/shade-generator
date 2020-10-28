@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import useOnline from 'hooks/use-online';
-import FirebaseContext from 'Contexts/FirebaseContext';
+import { useFirebase } from 'contexts/firebase-context';
 import MenuItem from '../MenuItem/MenuItem';
 
 const TopColors = ({ handleColorClick }) => {
   const online = useOnline();
   const [topColors, setTopColors] = useState([]);
-  const { firebase } = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   useEffect(() => {
     if (online) {

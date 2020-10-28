@@ -1,6 +1,6 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useOnline from 'hooks/use-online';
-import SidebarContext from 'Contexts/SidebarContext';
+import { useSidebar } from 'contexts/sidebar-context';
 import KofiButton from 'Components/KofiButton';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';
@@ -17,7 +17,7 @@ const initialMenuStates = {
 };
 
 const Sidebar = ({ handleColorClick = () => {} }) => {
-  const { isMenuOpen, closeMenu } = useContext(SidebarContext);
+  const { isMenuOpen, closeMenu } = useSidebar();
 
   useEffect(() => {
     const handleKeyPress = (e) => {

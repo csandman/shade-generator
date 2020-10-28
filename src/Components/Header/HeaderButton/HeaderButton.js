@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import SplitViewContext from 'Contexts/SplitViewContext';
+import { useSplitView } from 'contexts/split-view-context';
 
 const HeaderButton = ({
   action = () => {},
@@ -10,7 +9,7 @@ const HeaderButton = ({
   textClassName = '',
   name = '',
 }) => {
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useSplitView();
 
   const colorStyles =
     !splitView || splitViewDisabled

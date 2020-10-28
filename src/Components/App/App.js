@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import ReactGA from 'react-ga';
 import useOnline from 'hooks/use-online';
+import { useFirebase } from 'contexts/firebase-context';
+import { useSplitView } from 'contexts/split-view-context';
+import { useHistory } from 'contexts/history-context';
 import Header from 'Components/Header';
 import Sidebar from 'Components/Sidebar';
 import LoadingScreen from 'Components/LoadingScreen';
 import BodyContent from 'Components/BodyContent';
-import FirebaseContext from 'Contexts/FirebaseContext';
-import { InputUpdater } from 'Contexts/InputContext';
-import SplitViewContext from 'Contexts/SplitViewContext';
-import HistoryContext from 'Contexts/HistoryContext';
+import { InputUpdater } from 'contexts/input-context';
 import {
   getAllColorInfo,
   getRandomColor,
@@ -63,13 +63,11 @@ const App = () => {
 
   const popCount = useRef(2);
 
-  const { splitView, splitViewDisabled, setSplitView } = useContext(
-    SplitViewContext
-  );
+  const { splitView, splitViewDisabled, setSplitView } = useSplitView();
 
-  const { firebase } = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
-  const { updateRecentColors } = useContext(HistoryContext);
+  const { updateRecentColors } = useHistory();
 
   const updateStateValues = useCallback(
     (color, colorNum) => {

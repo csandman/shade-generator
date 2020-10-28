@@ -1,6 +1,5 @@
-import { useContext } from 'react';
-import SidebarContext from 'Contexts/SidebarContext';
-import SplitViewContext from 'Contexts/SplitViewContext';
+import { useSidebar } from 'contexts/sidebar-context';
+import { useSplitView } from 'contexts/split-view-context';
 
 function MenuItem({
   color = '#222',
@@ -11,8 +10,8 @@ function MenuItem({
   textBottomRight = '',
   item,
 }) {
-  const { closeMenu } = useContext(SidebarContext);
-  const { splitView } = useContext(SplitViewContext);
+  const { closeMenu } = useSidebar();
+  const { splitView } = useSplitView();
 
   function handleMainClick() {
     closeMenu();

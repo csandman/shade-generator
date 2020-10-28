@@ -1,14 +1,12 @@
-import { memo, useContext } from 'react';
-import SplitViewContext from 'Contexts/SplitViewContext';
+import { memo } from 'react';
+import { useSplitView } from 'contexts/split-view-context';
 import HamburgerButton from 'Components/HamburgerButton';
 import HeaderIcon from './HeaderIcon/HeaderIcon';
 import HeaderButton from './HeaderButton/HeaderButton';
 import './Header.scss';
 
 const Header = ({ colorData, getRandomColors }) => {
-  const { splitView, splitViewDisabled, toggleSplitView } = useContext(
-    SplitViewContext
-  );
+  const { splitView, splitViewDisabled, toggleSplitView } = useSplitView();
 
   return (
     <div

@@ -1,7 +1,6 @@
-import { useContext } from 'react';
 import ColorSquare from 'Components/ColorSquare';
 import ColorInput from 'Components/ColorInput';
-import SplitViewContext from 'Contexts/SplitViewContext';
+import { useSplitView } from 'contexts/split-view-context';
 import './BodyContent.scss';
 
 const BodyContent = ({
@@ -10,7 +9,7 @@ const BodyContent = ({
   colorData,
   handleColorClick,
 }) => {
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useSplitView();
 
   return (
     <div

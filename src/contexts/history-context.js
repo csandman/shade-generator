@@ -1,4 +1,4 @@
-import { createContext, useRef } from 'react';
+import { createContext, useRef, useContext } from 'react';
 import useLocalStorage from 'hooks/use-local-storage';
 
 const HistoryContext = createContext({
@@ -31,6 +31,8 @@ const HistoryProvider = ({ children }) => {
   );
 };
 
-export { HistoryProvider };
+const useHistory = () => {
+  return useContext(HistoryContext);
+};
 
-export default HistoryContext;
+export { HistoryContext as default, HistoryProvider, useHistory };

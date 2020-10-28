@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import InputContext from 'Contexts/InputContext';
+import { useInput } from 'contexts/input-context';
 
 const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
-  const inputContext = useContext(InputContext);
+  const inputContext = useInput();
   const inputValue = inputContext[`inputValue${bodyNum}`];
   const { updateInputValue } = inputContext;
 

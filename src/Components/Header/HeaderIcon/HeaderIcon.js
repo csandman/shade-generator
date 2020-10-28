@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import SplitViewContext from 'Contexts/SplitViewContext';
+import { useSplitView } from 'contexts/split-view-context';
 
 const HeaderIcon = ({ getRandomColors, colorData }) => {
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useSplitView();
 
   return (
     <div className="icon" onClick={getRandomColors}>

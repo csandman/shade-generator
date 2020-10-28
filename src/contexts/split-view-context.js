@@ -1,5 +1,17 @@
-import { useState, useCallback, useEffect } from 'react';
-import SplitViewContext from './SplitViewContext';
+import {
+  createContext,
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+} from 'react';
+
+const SplitViewContext = createContext({
+  splitView: false,
+  splitViewDisabled: false,
+  setSplitView: () => {},
+  toggleSplitView: () => {},
+});
 
 const isSplitViewDisabled = () => {
   return window.innerWidth <= 600;
@@ -35,4 +47,8 @@ const SplitViewProvider = ({ children }) => {
   );
 };
 
-export default SplitViewProvider;
+const useSplitView = () => {
+  return useContext(SplitViewContext);
+};
+
+export { SplitViewContext as default, SplitViewProvider, useSplitView };
