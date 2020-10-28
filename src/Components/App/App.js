@@ -1,24 +1,23 @@
 import { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { useOnline } from 'react-browser-hooks';
 import ReactGA from 'react-ga';
-import Header from '../Header';
-import Sidebar from '../Sidebar';
-import LoadingScreen from '../LoadingScreen';
-import BodyContent from '../BodyContent';
-import FirebaseContext from '../../Contexts/FirebaseContext';
-import { InputUpdater } from '../../Contexts/InputContext';
-import SplitViewContext from '../../Contexts/SplitViewContext';
-import HistoryContext from '../../Contexts/HistoryContext';
-import './App.scss';
-
-// import ContrastRatio from "../ContrastRatio";
-
+import Header from 'Components/Header';
+import Sidebar from 'Components/Sidebar';
+import LoadingScreen from 'Components/LoadingScreen';
+import BodyContent from 'Components/BodyContent';
+import FirebaseContext from 'Contexts/FirebaseContext';
+import { InputUpdater } from 'Contexts/InputContext';
+import SplitViewContext from 'Contexts/SplitViewContext';
+import HistoryContext from 'Contexts/HistoryContext';
 import {
   getAllColorInfo,
   getRandomColor,
   attemptCreateColor,
   parseColorFromString,
-} from '../../Functions';
+} from 'Functions';
+import './App.scss';
+
+// import ContrastRatio from "../ContrastRatio";
 
 // returns [ hex1, hex2, isSplitScreen ]
 const parseURL = () => {

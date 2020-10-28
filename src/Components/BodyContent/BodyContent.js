@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import ColorSquare from '../ColorSquare';
-import ColorInput from '../ColorInput';
-import SplitViewContext from '../../Contexts/SplitViewContext';
+import ColorSquare from 'Components/ColorSquare';
+import ColorInput from 'Components/ColorInput';
+import SplitViewContext from 'Contexts/SplitViewContext';
 import './BodyContent.scss';
 
 const BodyContent = ({

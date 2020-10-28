@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import { useOnline } from 'react-browser-hooks';
+import SidebarContext from 'Contexts/SidebarContext';
+import KofiButton from 'Components/KofiButton';
+import { useEventListener } from 'Hooks';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';
 import TopColors from './TopColors/TopColors';
-import KofiButton from '../KofiButton';
 import ColorNameMenu from './ColorNameMenu/ColorNameMenu';
 import './Sidebar.scss';
-import SidebarContext from '../../Contexts/SidebarContext';
-import { useEventListener } from '../../Hooks';
 
 const initialMenuStates = {
   isMainMenuOpen: true,

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
+import HistoryContext from 'Contexts/HistoryContext';
 import MenuItem from '../MenuItem/MenuItem';
-import HistoryContext from '../../../Contexts/HistoryContext';
 
 const ColorHistory = ({ handleColorClick }) => {
   const { recentColors } = useContext(HistoryContext);

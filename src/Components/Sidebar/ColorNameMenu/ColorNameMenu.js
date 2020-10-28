@@ -1,9 +1,8 @@
 import { useState, useContext, useRef, useEffect } from 'react';
 import Color from 'color';
 import namedColors from 'color-name-list';
-import SidebarContext from '../../../Contexts/SidebarContext';
-
-import { getContrastColor } from '../../../Functions';
+import SidebarContext from 'Contexts/SidebarContext';
+import { getContrastColor } from 'Functions';
 
 const initialColorNameList = namedColors.slice(0, 50).map((color) => ({
   ...color,

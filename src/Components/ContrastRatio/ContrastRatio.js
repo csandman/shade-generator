@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Color from 'color';
-import SplitViewContext from '../../Contexts/SplitViewContext';
+import SplitViewContext from 'Contexts/SplitViewContext';
 
 import './ContrastRatio.scss';
 

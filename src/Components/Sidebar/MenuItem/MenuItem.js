@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import SidebarContext from '../../../Contexts/SidebarContext';
-import SplitViewContext from '../../../Contexts/SplitViewContext';
+import SidebarContext from 'Contexts/SidebarContext';
+import SplitViewContext from 'Contexts/SplitViewContext';
 
 function MenuItem({
   color = '#222',

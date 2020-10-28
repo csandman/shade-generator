@@ -1,8 +1,8 @@
 import { memo, useContext } from 'react';
+import SplitViewContext from 'Contexts/SplitViewContext';
+import HamburgerButton from 'Components/HamburgerButton';
 import HeaderIcon from './HeaderIcon/HeaderIcon';
 import HeaderButton from './HeaderButton/HeaderButton';
-import HamburgerButton from '../HamburgerButton';
-import SplitViewContext from '../../Contexts/SplitViewContext';
 import './Header.scss';
 
 const Header = ({ colorData, getRandomColors }) => {

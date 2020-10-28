@@ -1,6 +1,6 @@
 import { memo, useContext } from 'react';
+import SidebarContext from 'Contexts/SidebarContext';
 import './HamburgerButton.scss';
-import SidebarContext from '../../Contexts/SidebarContext';
 
 const HamburgerButton = ({ color, className = '' }) => {
   const { isMenuOpen, toggleMenu } = useContext(SidebarContext);

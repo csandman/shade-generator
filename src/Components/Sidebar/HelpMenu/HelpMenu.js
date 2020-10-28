@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PlusButton from '../../PlusButton';
+import PlusButton from 'Components/PlusButton';
 
 const HelpMenu = () => {
   const [accordianStates, updateAccordianStates] = useState({

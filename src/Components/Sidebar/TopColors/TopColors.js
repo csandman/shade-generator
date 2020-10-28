@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useOnline } from 'react-browser-hooks';
-import FirebaseContext from '../../../Contexts/FirebaseContext';
+import FirebaseContext from 'Contexts/FirebaseContext';
 import MenuItem from '../MenuItem/MenuItem';
 
 const TopColors = ({ handleColorClick }) => {
