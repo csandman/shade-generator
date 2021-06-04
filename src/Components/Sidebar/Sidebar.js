@@ -1,39 +1,44 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useOnline } from 'react-browser-hooks';
+import { useState, useEffect } from 'react';
+import useOnline from 'hooks/use-online';
+import { useSidebar } from 'contexts/sidebar-context';
+import KofiButton from 'Components/KofiButton';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';
 import TopColors from './TopColors/TopColors';
-import KofiButton from '../KofiButton';
 import ColorNameMenu from './ColorNameMenu/ColorNameMenu';
 import './Sidebar.scss';
-import SidebarContext from '../../Contexts/SidebarContext';
-import { useEventListener } from '../../Hooks';
 
 const initialMenuStates = {
   isMainMenuOpen: true,
   isHistoryMenuOpen: false,
   isSearchMenuOpen: false,
   isTopColorsMenuOpen: false,
-  isHelpMenuOpen: false
+  isHelpMenuOpen: false,
 };
 
 const Sidebar = ({ handleColorClick = () => {} }) => {
-  const { isMenuOpen, closeMenu } = useContext(SidebarContext);
+  const { isMenuOpen, closeMenu } = useSidebar();
 
-  function handleKeyPress(e) {
-    if (e.code === 'Escape') {
-      closeMenu();
-    }
-  }
-  useEventListener('keyup', handleKeyPress, document);
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.code === 'Escape') {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   const online = useOnline();
   const [menuStates, updateMenuStates] = useState(initialMenuStates);
 
-  const openMenu = menuId => {
+  const openMenu = (menuId) => {
     const newMenuStates = {
       ...initialMenuStates,
-      isMainMenuOpen: false
+      isMainMenuOpen: false,
     };
     newMenuStates[`is${menuId}Open`] = true;
     updateMenuStates(newMenuStates);
@@ -63,7 +68,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
           <div
             className="main-menu-item"
             id="HistoryMenu"
-            onClick={e => openMenu(e.currentTarget.id)}
+            onClick={(e) => openMenu(e.currentTarget.id)}
           >
             <i className="icon fas fa-history" />
             <span>History</span>
@@ -72,7 +77,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <div
               className="main-menu-item"
               id="TopColorsMenu"
-              onClick={e => openMenu(e.currentTarget.id)}
+              onClick={(e) => openMenu(e.currentTarget.id)}
             >
               <i className="icon fas fa-award" />
               <span>Top Colors</span>
@@ -81,7 +86,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
           <div
             className="main-menu-item"
             id="SearchMenu"
-            onClick={e => openMenu(e.currentTarget.id)}
+            onClick={(e) => openMenu(e.currentTarget.id)}
           >
             <i className="icon fas fa-search" />
             <span>Search Colors</span>
@@ -89,7 +94,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
           <div
             className="main-menu-item"
             id="HelpMenu"
-            onClick={e => openMenu(e.currentTarget.id)}
+            onClick={(e) => openMenu(e.currentTarget.id)}
           >
             <i className="icon fas fa-question-circle" />
             <span>What is this?</span>

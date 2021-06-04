@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
 import Color from 'color';
-import SplitViewContext from '../../Contexts/SplitViewContext';
+import { useSplitView } from 'contexts/split-view-context';
 
 import './ContrastRatio.scss';
 
 const ContrastRatio = ({ hex1, hex2 }) => {
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useSplitView();
 
   const color1 = Color(hex1);
   const color2 = Color(hex2);

@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import app from 'firebase/app';
 import 'firebase/firestore';
 // import 'firebase/auth'; // Do later
@@ -9,7 +9,7 @@ const config = {
   databaseURL: process.env.REACT_APP_DATABASE_URL,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
 class Firebase {
@@ -42,19 +42,21 @@ class Firebase {
 }
 
 const FirebaseContext = createContext({
-  firebase: {}
+  firebase: {},
 });
 
 const firebase = new Firebase();
 
 const FirebaseProvider = ({ children }) => {
   return (
-    <FirebaseContext.Provider value={{ firebase }}>
+    <FirebaseContext.Provider value={firebase}>
       {children}
     </FirebaseContext.Provider>
   );
 };
 
-export { FirebaseProvider };
+const useFirebase = () => {
+  return useContext(FirebaseContext);
+};
 
-export default FirebaseContext;
+export { FirebaseContext as default, FirebaseProvider, useFirebase };

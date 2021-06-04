@@ -1,4 +1,3 @@
-import React from 'react';
 import './PlusButton.scss';
 
 const PlusButton = ({ className = '', open = false, color = '#222' }) => {

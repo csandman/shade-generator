@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PlusButton from '../../PlusButton';
+import { useState } from 'react';
+import PlusButton from 'Components/PlusButton';
 
 const HelpMenu = () => {
   const [accordianStates, updateAccordianStates] = useState({
@@ -9,13 +9,13 @@ const HelpMenu = () => {
     randomColorsOpen: false,
     colorHistoryOpen: false,
     offlineCapabilityOpen: false,
-    splitViewOpen: false
+    splitViewOpen: false,
   });
 
-  const toggleAccordianState = accordianID => {
+  const toggleAccordianState = (accordianID) => {
     updateAccordianStates({
       ...accordianStates,
-      [`${accordianID}Open`]: !accordianStates[`${accordianID}Open`]
+      [`${accordianID}Open`]: !accordianStates[`${accordianID}Open`],
     });
   };
 
@@ -60,7 +60,7 @@ const HelpMenu = () => {
       </p>
       <h5
         id="colorParser"
-        onClick={e => {
+        onClick={(e) => {
           // console.log(e);
           toggleAccordianState(e.currentTarget.id);
         }}
@@ -109,7 +109,7 @@ const HelpMenu = () => {
       </div>
       <h5
         id="copyToClipboard"
-        onClick={e => {
+        onClick={(e) => {
           toggleAccordianState(e.currentTarget.id);
         }}
       >
@@ -145,7 +145,7 @@ const HelpMenu = () => {
       </div>
       <h5
         id="colorNames"
-        onClick={e => {
+        onClick={(e) => {
           toggleAccordianState(e.currentTarget.id);
         }}
       >
@@ -203,7 +203,7 @@ const HelpMenu = () => {
       </div>
       <h5
         id="randomColors"
-        onClick={e => {
+        onClick={(e) => {
           toggleAccordianState(e.currentTarget.id);
         }}
       >
@@ -229,7 +229,7 @@ const HelpMenu = () => {
       </div>
       <h5
         id="colorHistory"
-        onClick={e => {
+        onClick={(e) => {
           toggleAccordianState(e.currentTarget.id);
         }}
       >
@@ -264,7 +264,7 @@ const HelpMenu = () => {
       </div>
       <h5
         id="offlineCapability"
-        onClick={e => {
+        onClick={(e) => {
           toggleAccordianState(e.currentTarget.id);
         }}
       >
@@ -283,7 +283,7 @@ const HelpMenu = () => {
       </div>
       <h5
         id="splitView"
-        onClick={e => {
+        onClick={(e) => {
           toggleAccordianState(e.currentTarget.id);
         }}
       >

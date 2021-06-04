@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import SplitViewContext from '../../../Contexts/SplitViewContext';
+import { useSplitView } from 'contexts/split-view-context';
 
 const HeaderButton = ({
   action = () => {},
@@ -8,15 +7,15 @@ const HeaderButton = ({
   buttonText = '',
   iconClassName = '',
   textClassName = '',
-  name = ''
+  name = '',
 }) => {
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useSplitView();
 
   const colorStyles =
     !splitView || splitViewDisabled
       ? {
           borderColor: colorData.contrast,
-          color: colorData.contrast
+          color: colorData.contrast,
         }
       : {};
 

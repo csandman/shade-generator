@@ -12,14 +12,8 @@ export function getRandomColor() {
 
 function calculateGradient(color, isDark, opacity) {
   return isDark
-    ? color
-        .mix(Color('black'), opacity)
-        .rgb()
-        .round()
-    : color
-        .mix(Color('white'), opacity)
-        .rgb()
-        .round();
+    ? color.mix(Color('black'), opacity).rgb().round()
+    : color.mix(Color('white'), opacity).rgb().round();
 }
 
 export function getContrastColor(color, minContrastRatio = 4.5) {
@@ -80,7 +74,7 @@ export function calcAllGradients(color) {
       rgb: newColor.rgb().array(),
       contrastRatio: color.contrast(newColor),
       contrastLevel: color.level(newColor),
-      isDark: newColor.isDark()
+      isDark: newColor.isDark(),
     });
   }
   for (let opac = 5; opac <= 90; opac += 5) {
@@ -90,7 +84,7 @@ export function calcAllGradients(color) {
       rgb: newColor.rgb().array(),
       contrastRatio: color.contrast(newColor),
       contrastLevel: color.level(newColor),
-      isDark: newColor.isDark()
+      isDark: newColor.isDark(),
     });
   }
   return gradientArr;
@@ -128,7 +122,7 @@ export function getAllColorInfo(colorVal) {
     highContrast: getContrastColor(color, 7.0).hex(),
     lowContrast: getLowContrastColor(color).hex(),
     oppositeContrast: getOppositeContrastColor(color).hex(),
-    shades: calcAllGradients(color)
+    shades: calcAllGradients(color),
   };
 }
 
@@ -141,8 +135,4 @@ export function parseColorFromString(str) {
     searchNamedColors(cleanStr) ||
     '';
   return hex.toUpperCase();
-}
-
-export function getCopy(obj) {
-  return JSON.parse(JSON.stringify(obj));
 }

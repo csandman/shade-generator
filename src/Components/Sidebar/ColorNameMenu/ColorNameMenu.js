@@ -1,26 +1,24 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Color from 'color';
 import namedColors from 'color-name-list';
-import SidebarContext from '../../../Contexts/SidebarContext';
+import { useSidebar } from 'contexts/sidebar-context';
+import { getContrastColor } from 'Functions';
 
-import { getContrastColor } from '../../../Functions';
-
-const initialColorNameList = namedColors.slice(0, 50).map(color => ({
+const initialColorNameList = namedColors.slice(0, 50).map((color) => ({
   ...color,
-  contrast: getContrastColor(Color(color.hex)).hex()
+  contrast: getContrastColor(Color(color.hex)).hex(),
 }));
 
-let inputElTimeout;
-
 const ColorNameMenu = ({ handleColorClick, isOpen }) => {
-  const { closeMenu } = useContext(SidebarContext);
+  const { closeMenu } = useSidebar();
 
   const inputEl = useRef(null);
+  const inputElTimeout = useRef();
 
   useEffect(() => {
-    clearTimeout(inputElTimeout);
+    clearTimeout(inputElTimeout.current);
     if (isOpen) {
-      inputElTimeout = setTimeout(() => {
+      inputElTimeout.current = setTimeout(() => {
         inputEl.current.select();
       }, 310);
     } else {
@@ -31,7 +29,7 @@ const ColorNameMenu = ({ handleColorClick, isOpen }) => {
   const [searchInput, updateSearchInput] = useState('');
   const [colorNameList, updateColorNameList] = useState(initialColorNameList);
 
-  const searchColorNames = e => {
+  const searchColorNames = (e) => {
     updateSearchInput(e.target.value);
     const newColorArr = [];
     let index = 0;
@@ -46,9 +44,9 @@ const ColorNameMenu = ({ handleColorClick, isOpen }) => {
       }
       index += 1;
     }
-    newColorArr.map(el => ({
+    newColorArr.map((el) => ({
       ...el,
-      contrast: getContrastColor(Color(el.hex)).hex()
+      contrast: getContrastColor(Color(el.hex)).hex(),
     }));
     updateColorNameList(newColorArr);
   };

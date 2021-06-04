@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import InputContext from '../../Contexts/InputContext';
+import { useInput } from 'contexts/input-context';
 
 const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
-  const inputContext = useContext(InputContext);
+  const inputContext = useInput();
   const inputValue = inputContext[`inputValue${bodyNum}`];
   const { updateInputValue } = inputContext;
 
@@ -25,7 +24,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         id={`color-input-${bodyNum}`}
         type="search"
         placeholder="Color Code (Hex, RGB, or Name)"
-        onChange={e => {
+        onChange={(e) => {
           updateInputValue(bodyNum, e.target.value);
         }}
         onKeyPress={handleKeyPress}
@@ -39,7 +38,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         style={{
           borderColor: contrast,
           backgroundColor: contrast,
-          color: oppositeContrast
+          color: oppositeContrast,
         }}
       >
         GO

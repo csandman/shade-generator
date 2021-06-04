@@ -6,6 +6,13 @@
     "jest": true
   },
   "extends": ["airbnb", "prettier", "prettier/react"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
@@ -33,13 +40,14 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "react/prop-types": 0,
-    "no-underscore-dangle": 0,
+    "no-underscore-dangle": "off",
+    "no-console": "off",
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error",
-    "no-console": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
     "react/no-array-index-key": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "jsx-a11y/label-has-associated-control": [

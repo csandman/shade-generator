@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
-import ColorSquare from '../ColorSquare';
-import ColorInput from '../ColorInput';
-import SplitViewContext from '../../Contexts/SplitViewContext';
+import ColorSquare from 'Components/ColorSquare';
+import ColorInput from 'Components/ColorInput';
+import { useSplitView } from 'contexts/split-view-context';
 import './BodyContent.scss';
 
 const BodyContent = ({
   handleSubmit,
   bodyNum,
   colorData,
-  handleColorClick
+  handleColorClick,
 }) => {
-  const { splitView, splitViewDisabled } = useContext(SplitViewContext);
+  const { splitView, splitViewDisabled } = useSplitView();
 
   return (
     <div

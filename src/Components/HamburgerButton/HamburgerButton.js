@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import { memo } from 'react';
+import { useSidebar } from 'contexts/sidebar-context';
 import './HamburgerButton.scss';
-import SidebarContext from '../../Contexts/SidebarContext';
 
 const HamburgerButton = ({ color, className = '' }) => {
-  const { isMenuOpen, toggleMenu } = useContext(SidebarContext);
+  const { isMenuOpen, toggleMenu } = useSidebar();
 
   return (
     <button
@@ -19,4 +19,4 @@ const HamburgerButton = ({ color, className = '' }) => {
   );
 };
 
-export default React.memo(HamburgerButton);
+export default memo(HamburgerButton);

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import { useHistory } from 'contexts/history-context';
 import MenuItem from '../MenuItem/MenuItem';
-import HistoryContext from '../../../Contexts/HistoryContext';
 
 const ColorHistory = ({ handleColorClick }) => {
-  const { recentColors } = useContext(HistoryContext);
+  const { recentColors } = useHistory();
 
   return (
     <div className="menu-items">

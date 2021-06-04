@@ -1,14 +1,13 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import 'typeface-nunito';
+import App from 'Components/App';
+import * as serviceWorker from 'serviceWorker';
+import { FirebaseProvider } from 'contexts/firebase-context';
+import { InputProvider } from 'contexts/input-context';
+import { SidebarProvider } from 'contexts/sidebar-context';
+import { SplitViewProvider } from 'contexts/split-view-context';
+import { HistoryProvider } from 'contexts/history-context';
 import './index.css';
-import App from './Components/App';
-import * as serviceWorker from './serviceWorker';
-import { FirebaseProvider } from './Contexts/FirebaseContext';
-import { InputProvider } from './Contexts/InputContext';
-import { SidebarProvider } from './Contexts/SidebarContext';
-import { SplitViewProvider } from './Contexts/SplitViewContext';
-import { HistoryProvider } from './Contexts/HistoryContext';
 
 ReactDOM.render(
   <FirebaseProvider>
