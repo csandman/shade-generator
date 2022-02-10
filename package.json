@@ -9,7 +9,7 @@
     "color-name-list": "^7.14.0",
     "firebase": "^8.0.0",
     "nearest-color": "^0.4.4",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "parse-color": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
