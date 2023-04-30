@@ -14,7 +14,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-ga": "^3.2.0",
-    "react-scripts": "^4.0.0",
+    "react-scripts": "^5.0.1",
     "react-tippy": "^1.4.0",
     "typeface-nunito": "^1.1.13"
   },
