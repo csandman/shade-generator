@@ -1,4 +1,4 @@
-@import '../../styles/general';
+@use '../../styles/general' as general;
 
 .content-background {
   min-height: calc(100vh - 5rem);
@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color $transition-time linear;
+  transition: background-color general.$transition-time linear;
   will-change: background-color;
 }
 

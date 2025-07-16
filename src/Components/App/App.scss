@@ -1,7 +1,4 @@
-@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
-@import '@fortawesome/fontawesome-free/scss/solid.scss';
-@import '@fortawesome/fontawesome-free/scss/brands.scss';
-@import '../../styles/general';
+@use '../../styles/general' as general;
 
 * {
   box-sizing: border-box;
@@ -41,7 +38,7 @@ input:after {
 }
 
 #App {
-  transition: $transition-time background-color ease-in-out;
+  transition: general.$transition-time background-color ease-in-out;
   will-change: background-color;
   background-color: #222;
 }
@@ -97,7 +94,7 @@ input:after {
   letter-spacing: 2px;
   line-height: 2rem;
   text-align: center;
-  transition: $transition-time color ease-in-out;
+  transition: general.$transition-time color ease-in-out;
 }
 
 label {

@@ -1,4 +1,4 @@
-@import '../../styles/general';
+@use '../../styles/general' as general;
 
 .color-square {
   & > div {
