@@ -1,5 +1,5 @@
 import { createContext, useRef, useContext } from 'react';
-import useLocalStorage from 'hooks/use-local-storage';
+import useLocalStorageState from 'use-local-storage-state';
 
 const HistoryContext = createContext({
   recentColors: [],
@@ -7,7 +7,9 @@ const HistoryContext = createContext({
 });
 
 const HistoryProvider = ({ children }) => {
-  const [recentColors, setRecentColors] = useLocalStorage('recentColors', []);
+  const [recentColors, setRecentColors] = useLocalStorageState('recentColors', {
+    defaultValue: [],
+  });
 
   const recentColorsRef = useRef(recentColors);
 

@@ -1,5 +1,5 @@
-@import '../../styles/colors';
-@import '../../styles/general';
+@use '../../styles/colors' as colors;
+@use '../../styles/general' as general;
 
 #header {
   height: 5rem;
@@ -9,14 +9,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 500;
-  transition: $transition-time all linear;
+  transition: general.$transition-time all linear;
   z-index: 2000;
-  border-bottom: 2px solid $contrast;
-  background-color: $color;
+  border-bottom: 2px solid colors.$contrast;
+  background-color: colors.$color;
 
   * {
-    transition: $transition-time all linear;
+    transition: general.$transition-time all linear;
   }
 
   .left-content {
@@ -25,7 +24,7 @@
     display: flex;
     align-items: center;
     cursor: default;
-    color: $contrast;
+    color: colors.$contrast;
 
     h1 {
       font-size: 2rem;
@@ -71,37 +70,37 @@
     align-items: center;
     cursor: pointer;
     font-weight: 600;
-    border: 2px solid $contrast;
-    color: $contrast;
+    border: 2px solid colors.$contrast;
+    color: colors.$contrast;
     user-select: none;
 
     &.active {
-      color: $opposite-contrast;
-      background-color: $contrast;
+      color: colors.$opposite-contrast;
+      background-color: colors.$contrast;
 
       i {
-        color: $opposite-contrast;
+        color: colors.$opposite-contrast;
         padding: 2px 0;
       }
 
       span {
-        color: $opposite-contrast;
+        color: colors.$opposite-contrast;
       }
     }
 
     i {
       font-size: 1.4rem;
-      color: $contrast;
+      color: colors.$contrast;
     }
 
     span {
       margin-left: 10px;
-      color: $contrast;
+      color: colors.$contrast;
     }
   }
 
   .menu-icon {
-    transition: color $transition-time linear;
+    transition: color general.$transition-time linear;
   }
 
   @media only screen and (max-width: 900px) {

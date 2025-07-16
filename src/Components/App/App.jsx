@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import useOnline from 'hooks/use-online';
-import { useFirebase } from 'contexts/firebase-context';
+// import { useFirebase } from "contexts/firebase-context";
 import { useSplitView } from 'contexts/split-view-context';
 import { useHistory } from 'contexts/history-context';
 import Header from 'Components/Header';
@@ -44,11 +44,11 @@ const parseURL = () => {
 const [initialHex1, initialHex2, initialSplitState] = parseURL();
 
 const initialColor1 = getAllColorInfo(
-  initialHex1.length ? attemptCreateColor(initialHex1) : getRandomColor()
+  initialHex1.length ? attemptCreateColor(initialHex1) : getRandomColor(),
 );
 
 const initialColor2 = getAllColorInfo(
-  initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor()
+  initialHex2.length ? attemptCreateColor(initialHex2) : getRandomColor(),
 );
 
 const App = () => {
@@ -65,7 +65,7 @@ const App = () => {
 
   const { splitView, splitViewDisabled, setSplitView } = useSplitView();
 
-  const firebase = useFirebase();
+  // const firebase = useFirebase();
 
   const { updateRecentColors } = useHistory();
 
@@ -82,21 +82,21 @@ const App = () => {
 
         updateRecentColors(colorToAdd);
 
-        if (online) {
-          const colorRef = firebase.db
-            .collection('color-history')
-            .doc(colorToAdd.hex);
+        // if (online) {
+        //   const colorRef = firebase.db
+        //     .collection("color-history")
+        //     .doc(colorToAdd.hex);
 
-          colorRef.get().then((colorRecord) => {
-            if (colorRecord.exists) {
-              colorToAdd.count = (colorRecord.data().count || 0) + 1;
-              colorRef.update(colorToAdd);
-            } else {
-              colorToAdd.count = 1;
-              colorRef.set(colorToAdd);
-            }
-          });
-        }
+        //   colorRef.get().then((colorRecord) => {
+        //     if (colorRecord.exists) {
+        //       colorToAdd.count = (colorRecord.data().count || 0) + 1;
+        //       colorRef.update(colorToAdd);
+        //     } else {
+        //       colorToAdd.count = 1;
+        //       colorRef.set(colorToAdd);
+        //     }
+        //   });
+        // }
       };
 
       let colorData;
@@ -123,7 +123,7 @@ const App = () => {
 
       addMenuItem({ ...colorData });
     },
-    [firebase.db, online, updateRecentColors]
+    [online, updateRecentColors],
   );
 
   const getRandomColors = () => {
@@ -150,7 +150,7 @@ const App = () => {
   // initialize app
   useEffect(() => {
     if (online) {
-      ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+      ReactGA.initialize(import.meta.env.VITE_APP_GA_CODE);
       ReactGA.event({
         category: 'Connection',
         action: 'Connected to Shade Generator',

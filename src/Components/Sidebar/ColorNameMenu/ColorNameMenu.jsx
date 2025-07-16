@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Color from 'color';
-import namedColors from 'color-name-list';
+import { colornames as namedColors } from 'color-name-list';
 import { useSidebar } from 'contexts/sidebar-context';
 import { getContrastColor } from 'Functions';
 

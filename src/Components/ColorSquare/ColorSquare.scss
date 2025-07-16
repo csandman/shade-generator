@@ -1,4 +1,4 @@
-@import '../../styles/general';
+@use '../../styles/general' as general;
 
 .color-square {
   & > div {
@@ -61,6 +61,7 @@
   margin-bottom: 11px;
   font-weight: 600;
   letter-spacing: 1px;
+  text-align: center;
 }
 
 .tooltip-sub-title {
@@ -87,27 +88,16 @@
   }
 }
 
-.tippy-tooltip {
+.tippy-content {
   padding: 0;
 }
 
-.tippy-tooltip.dark-border-theme {
+.tippy-box {
   background-clip: padding-box;
   border: 2px solid white;
 }
 
-.tippy-popper[x-placement^='top'] [x-arrow] {
-  border-top-color: white;
-}
-
-.tippy-popper[x-placement^='bottom'] [x-arrow] {
+.tippy-box[data-placement^='bottom'] > .tippy-arrow:before {
   border-bottom-color: white;
-}
-
-.tippy-popper[x-placement^='right'] [x-arrow] {
-  border-right-color: white;
-}
-
-.tippy-popper[x-placement^='left'] [x-arrow] {
-  border-left-color: white;
+  top: -8px;
 }

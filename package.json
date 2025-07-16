@@ -1,60 +1,48 @@
 {
+  "private": true,
   "name": "shade-generator",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.1",
-    "clipboard-polyfill": "^3.0.1",
-    "color": "^3.1.3",
-    "color-name-list": "^7.14.0",
-    "firebase": "^8.0.0",
-    "nearest-color": "^0.4.4",
-    "node-sass": "^4.14.1",
-    "parse-color": "^1.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-ga": "^3.2.0",
-    "react-scripts": "^4.0.0",
-    "react-tippy": "^1.4.0",
-    "typeface-nunito": "^1.1.13"
-  },
+  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/**.{js,ts,css,less,scss,vue,json,gql,md}\"",
-    "predeploy": "npm install && npm run prettify && npm run build",
-    "deploy": "npm run predeploy && firebase deploy",
-    "lint": "eslint --ext .js --ext .jsx .",
-    "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm i"
+    "build": "tsc -b && vite build",
+    "dev": "vite",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "prettier": {
-    "tabWidth": 2,
-    "singleQuote": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+  "dependencies": {
+    "@fontsource/nunito": "^5.2.6",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@tippyjs/react": "^4.2.6",
+    "clipboard-polyfill": "^4.1.1",
+    "color": "^5.0.0",
+    "color-name-list": "^11.24.0",
+    "firebase": "^11.10.0",
+    "nearest-color": "^0.4.4",
+    "parse-color": "^1.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-ga4": "^2.1.0",
+    "sass": "^1.89.2",
+    "tippy.js": "^6.3.7",
+    "use-local-storage-state": "^19.5.0"
   },
   "devDependencies": {
-    "eslint": "^7.12.1",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.0",
-    "prettier": "^2.1.2",
-    "pretty-quick": "^3.1.0"
+    "@eslint/js": "^9.30.1",
+    "@types/nearest-color": "^0.4.1",
+    "@types/parse-color": "^1.0.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^9.30.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "firebase-tools": "^14.10.1",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.4",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

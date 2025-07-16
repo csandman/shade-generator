@@ -1,5 +1,5 @@
 import nearestColor from 'nearest-color';
-import namedColors from 'color-name-list';
+import { colornames as namedColors } from 'color-name-list';
 import parseColor from 'parse-color';
 import Color from 'color';
 
@@ -59,7 +59,7 @@ export function searchNamedColors(searchTerm) {
 export function getColorName(hexCode) {
   const colors = namedColors.reduce(
     (o, { name, hex }) => Object.assign(o, { [name]: hex }),
-    {}
+    {},
   );
   const nearest = nearestColor.from(colors);
   return nearest(hexCode).name;

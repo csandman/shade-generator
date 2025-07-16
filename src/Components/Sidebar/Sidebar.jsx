@@ -4,7 +4,7 @@ import { useSidebar } from 'contexts/sidebar-context';
 import KofiButton from 'Components/KofiButton';
 import HelpMenu from './HelpMenu/HelpMenu';
 import ColorHistory from './ColorHistory/ColorHistory';
-import TopColors from './TopColors/TopColors';
+// import TopColors from './TopColors/TopColors';
 import ColorNameMenu from './ColorNameMenu/ColorNameMenu';
 import './Sidebar.scss';
 
@@ -73,7 +73,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <i className="icon fas fa-history" />
             <span>History</span>
           </div>
-          {online && (
+          {/* {online && (
             <div
               className="main-menu-item"
               id="TopColorsMenu"
@@ -82,7 +82,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
               <i className="icon fas fa-award" />
               <span>Top Colors</span>
             </div>
-          )}
+          )} */}
           <div
             className="main-menu-item"
             id="SearchMenu"
@@ -130,7 +130,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
           </div>
         </div>
 
-        <div
+        {/* <div
           className={`sub-menu${
             menuStates.isTopColorsMenuOpen ? '' : ' hidden'
           }`}
@@ -144,7 +144,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
               <TopColors handleColorClick={handleColorClick} />
             )}
           </div>
-        </div>
+        </div> */}
 
         <div
           className={`sub-menu${menuStates.isSearchMenuOpen ? '' : ' hidden'}`}

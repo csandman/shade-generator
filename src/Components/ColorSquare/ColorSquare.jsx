@@ -1,7 +1,7 @@
 import { memo, useState, useRef } from 'react';
 import * as clipboard from 'clipboard-polyfill';
-import { Tooltip } from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
+import Tooltip from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import './ColorSquare.scss';
 
 const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
@@ -42,13 +42,13 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
       <Tooltip
         hideOnClick={false}
         trigger="mouseenter"
-        position="bottom"
+        placement="bottom"
         arrow
         animation="fade"
         interactive
         theme="dark-border"
         duration={200}
-        html={
+        content={
           <div>
             <div className="tooltip-title">CLICK TO COPY</div>
             <div className="popup-button">

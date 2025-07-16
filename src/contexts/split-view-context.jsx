@@ -20,7 +20,7 @@ const isSplitViewDisabled = () => {
 const SplitViewProvider = ({ children }) => {
   const [splitView, setSplitView] = useState(null);
   const [splitViewDisabled, setSplitViewDisabled] = useState(
-    isSplitViewDisabled()
+    isSplitViewDisabled(),
   );
 
   const toggleSplitView = useCallback(() => {
