@@ -2,7 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './fonts';
 import App from 'Components/App';
-import * as serviceWorker from 'serviceWorker';
 // import { FirebaseProvider } from "contexts/firebase-context";
 import { InputProvider } from 'contexts/input-context';
 import { SidebarProvider } from 'contexts/sidebar-context';
@@ -25,8 +24,3 @@ createRoot(document.getElementById('root')!).render(
     {/* </FirebaseProvider> */}
   </StrictMode>,
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
