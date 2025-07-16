@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-// import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import useOnline from 'hooks/use-online';
 // import { useFirebase } from "contexts/firebase-context";
 import { useSplitView } from 'contexts/split-view-context';
@@ -127,10 +127,10 @@ const App = () => {
   );
 
   const getRandomColors = () => {
-    // ReactGA.event({
-    //   category: 'Button Press',
-    //   action: 'Random color button',
-    // });
+    ReactGA.event({
+      category: 'Button Press',
+      action: 'Random color button',
+    });
     const randomColor1 = getAllColorInfo(getRandomColor());
     updateStateValues(randomColor1, 1);
 
@@ -150,11 +150,11 @@ const App = () => {
   // initialize app
   useEffect(() => {
     if (online) {
-      // ReactGA.initialize(process.env.REACT_APP_GA_CODE);
-      // ReactGA.event({
-      //   category: 'Connection',
-      //   action: 'Connected to Shade Generator',
-      // });
+      ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+      ReactGA.event({
+        category: 'Connection',
+        action: 'Connected to Shade Generator',
+      });
     } else {
       console.log('offline detected');
     }
