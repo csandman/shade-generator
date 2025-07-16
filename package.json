@@ -1,11 +1,12 @@
 {
-  "name": "shade-generator",
   "private": true,
+  "name": "shade-generator",
   "version": "0.1.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "tsc -b && vite build",
+    "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview"
   },
