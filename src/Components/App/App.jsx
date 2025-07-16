@@ -150,7 +150,7 @@ const App = () => {
   // initialize app
   useEffect(() => {
     if (online) {
-      ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+      ReactGA.initialize(import.meta.env.VITE_APP_GA_CODE);
       ReactGA.event({
         category: 'Connection',
         action: 'Connected to Shade Generator',
