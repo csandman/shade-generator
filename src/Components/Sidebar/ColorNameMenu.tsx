@@ -37,7 +37,7 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
 
   const colorNames = useMemo(() => {
     if (!searchInput) {
-      return namedColors.slice(0, 100).map<ColorNameWithContrast>((color) => ({
+      return namedColors.slice(0, 50).map<ColorNameWithContrast>((color) => ({
         ...color,
         contrast: getContrastColor(Color(color.hex)).hex(),
       }));
