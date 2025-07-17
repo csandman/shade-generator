@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useCallback, useContext, useMemo } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import type { ColorInfo } from 'utils/color';
 
@@ -24,20 +24,23 @@ export const HistoryProvider = ({ children }: HistoryProviderProps) => {
     },
   );
 
-  const updateRecentColors = (newColor: ColorInfo) => {
-    setRecentColors((prevRecentColors) => [
-      newColor,
-      ...prevRecentColors.slice(0, 99),
-    ]);
-  };
+  const updateRecentColors = useCallback(
+    (newColor: ColorInfo) => {
+      setRecentColors((prevRecentColors) => [
+        newColor,
+        ...prevRecentColors.slice(0, 99),
+      ]);
+    },
+    [setRecentColors],
+  );
+
+  const contextValue = useMemo(
+    () => ({ recentColors, updateRecentColors }),
+    [recentColors, updateRecentColors],
+  );
 
   return (
-    <HistoryContext.Provider
-      value={{
-        recentColors,
-        updateRecentColors,
-      }}
-    >
+    <HistoryContext.Provider value={contextValue}>
       {children}
     </HistoryContext.Provider>
   );

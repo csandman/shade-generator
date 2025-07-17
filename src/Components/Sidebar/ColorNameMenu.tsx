@@ -6,6 +6,8 @@ import { getContrastColor } from 'utils/color';
 import type { ColorCallback } from 'types/app';
 import { FaSearch } from 'react-icons/fa';
 
+const SEARCH_INPUT_ID = 'color-search';
+
 interface ColorNameWithContrast extends ColorName {
   contrast: string;
 }
@@ -61,10 +63,10 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
     <>
       <div className="search-input-container">
         <FaSearch className="icon" />
-        <label htmlFor="color-search">Color search</label>
+        <label htmlFor={SEARCH_INPUT_ID}>Color search</label>
         <input
           ref={inputEl}
-          id="color-search"
+          id={SEARCH_INPUT_ID}
           type="search"
           placeholder="Search..."
           value={searchInput}
@@ -74,9 +76,9 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
 
       <div className="sub-menu-content">
         <div className="menu-items">
-          {colorNamesWithContrast.map((color, i) => (
+          {colorNamesWithContrast.map((color) => (
             <div
-              key={`${color.name}-${i}`}
+              key={color.name}
               className="color-result-item"
               style={{ background: color.hex, color: color.contrast }}
               onClick={() => {

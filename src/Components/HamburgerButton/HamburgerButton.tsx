@@ -12,6 +12,7 @@ const HamburgerButton = ({ color, className = '' }: HamburgerButtonProps) => {
 
   return (
     <button
+      aria-label="Menu"
       type="button"
       className={`hamburger-button ${className} ${isMenuOpen ? 'close' : ''}`}
       onClick={toggleMenu}

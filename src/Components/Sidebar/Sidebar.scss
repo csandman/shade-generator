@@ -148,6 +148,9 @@
     }
 
     .sub-menu-header {
+      outline: none;
+      appearance: none;
+      border: none;
       display: flex;
       align-items: center;
       padding: 1rem 1.5rem;

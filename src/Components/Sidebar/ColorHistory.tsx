@@ -1,6 +1,7 @@
+/* eslint-disable react/no-array-index-key */
 import { useHistory } from 'contexts/history-context';
-import MenuItem from './MenuItem';
 import type { ColorCallback } from 'types/app';
+import MenuItem from './MenuItem';
 
 interface ColorHistoryProps {
   handleColorClick: ColorCallback;

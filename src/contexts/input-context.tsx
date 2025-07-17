@@ -1,4 +1,12 @@
-import { createContext, useState, useContext, useRef, useEffect } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 import type { BodyNumber } from 'types/app';
 
 type UpdateInputValue = (inputNum: BodyNumber, value: string) => void;
@@ -25,15 +33,23 @@ export const InputProvider = ({ children }: InputProviderProps) => {
     inputValue2: '',
   });
 
-  const updateInputValue = (inputNum: BodyNumber, value: string) => {
-    setInputValues((prevInputValues) => ({
-      ...prevInputValues,
-      [`inputValue${inputNum}`]: value,
-    }));
-  };
+  const updateInputValue = useCallback(
+    (inputNum: BodyNumber, value: string) => {
+      setInputValues((prevInputValues) => ({
+        ...prevInputValues,
+        [`inputValue${inputNum}`]: value,
+      }));
+    },
+    [],
+  );
+
+  const contextValue = useMemo(
+    () => ({ ...inputValues, updateInputValue }),
+    [inputValues, updateInputValue],
+  );
 
   return (
-    <InputContext.Provider value={{ ...inputValues, updateInputValue }}>
+    <InputContext.Provider value={contextValue}>
       {children}
     </InputContext.Provider>
   );

@@ -31,9 +31,11 @@ export interface ColorInfo {
 export function getRandomColor(): ColorInstance {
   const color = '0123456789ABCDEF'
     .split('')
-    .reduce((a: string, _c: string, i: number, arr: string[]) => {
-      return i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a;
-    }, '#');
+    .reduce(
+      (a: string, _c: string, i: number, arr: string[]) =>
+        i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a,
+      '#',
+    );
   return Color(color);
 }
 
@@ -49,7 +51,7 @@ function calculateGradient(
 
 export function getContrastColor(
   color: ColorInstance,
-  minContrastRatio: number = 4.5,
+  minContrastRatio = 4.5,
 ): ColorInstance {
   const isDark = !color.isDark();
   let i = 0.01;

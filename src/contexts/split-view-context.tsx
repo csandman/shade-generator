@@ -21,9 +21,7 @@ const SplitViewContext = createContext<SplitViewContextValue>({
   toggleSplitView: () => {},
 });
 
-const isSplitViewDisabled = () => {
-  return window.innerWidth <= 600;
-};
+const isSplitViewDisabled = () => window.innerWidth <= 600;
 
 interface SplitViewProviderProps {
   children: React.ReactNode;
@@ -67,8 +65,6 @@ export const SplitViewProvider = ({ children }: SplitViewProviderProps) => {
   );
 };
 
-export const useSplitView = () => {
-  return useContext(SplitViewContext);
-};
+export const useSplitView = () => useContext(SplitViewContext);
 
 export default SplitViewContext;

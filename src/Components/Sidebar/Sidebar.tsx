@@ -1,18 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSidebar } from 'contexts/sidebar-context';
-import KofiButton from 'Components/KofiButton';
+import { FaHistory, FaQuestionCircle, FaSearch } from 'react-icons/fa';
+import type { ColorCallback } from 'types/app';
 import HelpMenu from './HelpMenu';
 import ColorHistory from './ColorHistory';
 import ColorNameMenu from './ColorNameMenu';
-import type { ColorCallback } from 'types/app';
+import MainMenuItem from './MainMenuItem';
+import SubMenu from './SubMenu';
+import SidebarFooter from './SidebarFooter';
 import './Sidebar.scss';
-import {
-  FaArrowLeft,
-  FaGithub,
-  FaHistory,
-  FaQuestionCircle,
-  FaSearch,
-} from 'react-icons/fa';
 
 const initialMenuStates = {
   isMainMenuOpen: true,
@@ -68,87 +64,54 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
             menuStates.isMainMenuOpen ? '' : ' hidden'
           }`}
         >
-          <div
-            className="main-menu-item"
+          <MainMenuItem
             id="HistoryMenu"
-            onClick={(e) => openMenu(e.currentTarget.id)}
-          >
-            <FaHistory className="icon" />
-            <span>History</span>
-          </div>
-          <div
-            className="main-menu-item"
+            icon={FaHistory}
+            label="History"
+            onClick={openMenu}
+          />
+          <MainMenuItem
             id="SearchMenu"
-            onClick={(e) => openMenu(e.currentTarget.id)}
-          >
-            <FaSearch className="icon" />
-            <span>Search Colors</span>
-          </div>
-          <div
-            className="main-menu-item"
+            icon={FaSearch}
+            label="Search Colors"
+            onClick={openMenu}
+          />
+          <MainMenuItem
             id="HelpMenu"
-            onClick={(e) => openMenu(e.currentTarget.id)}
-          >
-            <FaQuestionCircle className="icon" />
-            <span>What is this?</span>
-          </div>
-          <div className="footer-row">
-            <a
-              href="https://github.com/csandman/shade-generator"
-              rel="noopener noreferrer"
-              target="_blank"
-              aria-label="Link to github repository"
-            >
-              <FaGithub className="icon" />
-            </a>
-            <a
-              href="https://ko-fi.com/D1D513LDD"
-              rel="noopener noreferrer"
-              target="_blank"
-              aria-label="Support me on Ko-fi"
-            >
-              <KofiButton className="icon" height={42} />
-            </a>
-          </div>
-        </div>
-        <div
-          className={`sub-menu${menuStates.isHistoryMenuOpen ? '' : ' hidden'}`}
-        >
-          <div onClick={closeSubMenu} className="sub-menu-header">
-            <FaArrowLeft className="icon" />
-            <span>Color History</span>
-          </div>
-          <div className="sub-menu-content">
-            <ColorHistory handleColorClick={handleColorClick} />
-          </div>
+            icon={FaQuestionCircle}
+            label="What is this?"
+            onClick={openMenu}
+          />
+          <SidebarFooter />
         </div>
 
-        <div
-          className={`sub-menu${menuStates.isSearchMenuOpen ? '' : ' hidden'}`}
+        <SubMenu
+          isOpen={menuStates.isHistoryMenuOpen}
+          title="Color History"
+          onBack={closeSubMenu}
+        >
+          <ColorHistory handleColorClick={handleColorClick} />
+        </SubMenu>
+
+        <SubMenu
+          isOpen={menuStates.isSearchMenuOpen}
+          title="Search Colors"
+          onBack={closeSubMenu}
           id="color-search-menu"
         >
-          <div onClick={closeSubMenu} className="sub-menu-header">
-            <FaArrowLeft className="icon" />
-            <span>Search Colors</span>
-          </div>
           <ColorNameMenu
             isOpen={menuStates.isSearchMenuOpen && isMenuOpen}
             handleColorClick={handleColorClick}
           />
-        </div>
+        </SubMenu>
 
-        <div
-          className={`sub-menu${menuStates.isHelpMenuOpen ? '' : ' hidden'}`}
+        <SubMenu
+          isOpen={menuStates.isHelpMenuOpen}
+          title="What is this?"
+          onBack={closeSubMenu}
         >
-          <div onClick={closeSubMenu} className="sub-menu-header">
-            <FaArrowLeft className="icon" />
-            <span>What is this?</span>
-          </div>
-
-          <div className="sub-menu-content">
-            <HelpMenu />
-          </div>
-        </div>
+          <HelpMenu />
+        </SubMenu>
       </div>
       <div className="background" onClick={closeMenu} />
     </div>
