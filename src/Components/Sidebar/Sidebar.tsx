@@ -6,6 +6,13 @@ import ColorHistory from './ColorHistory';
 import ColorNameMenu from './ColorNameMenu';
 import type { ColorCallback } from 'types/app';
 import './Sidebar.scss';
+import {
+  FaArrowLeft,
+  FaGithub,
+  FaHistory,
+  FaQuestionCircle,
+  FaSearch,
+} from 'react-icons/fa';
 
 const initialMenuStates = {
   isMainMenuOpen: true,
@@ -66,7 +73,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
             id="HistoryMenu"
             onClick={(e) => openMenu(e.currentTarget.id)}
           >
-            <i className="icon fas fa-history" />
+            <FaHistory className="icon" />
             <span>History</span>
           </div>
           <div
@@ -74,7 +81,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
             id="SearchMenu"
             onClick={(e) => openMenu(e.currentTarget.id)}
           >
-            <i className="icon fas fa-search" />
+            <FaSearch className="icon" />
             <span>Search Colors</span>
           </div>
           <div
@@ -82,7 +89,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
             id="HelpMenu"
             onClick={(e) => openMenu(e.currentTarget.id)}
           >
-            <i className="icon fas fa-question-circle" />
+            <FaQuestionCircle className="icon" />
             <span>What is this?</span>
           </div>
           <div className="footer-row">
@@ -92,7 +99,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
               target="_blank"
               aria-label="Link to github repository"
             >
-              <i className="icon fab fa-github" />
+              <FaGithub className="icon" />
             </a>
             <a
               href="https://ko-fi.com/D1D513LDD"
@@ -100,7 +107,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
               target="_blank"
               aria-label="Support me on Ko-fi"
             >
-              <KofiButton className="icon " height={42} />
+              <KofiButton className="icon" height={42} />
             </a>
           </div>
         </div>
@@ -108,7 +115,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
           className={`sub-menu${menuStates.isHistoryMenuOpen ? '' : ' hidden'}`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
-            <i className="icon fas fa-arrow-left" />
+            <FaArrowLeft className="icon" />
             <span>Color History</span>
           </div>
           <div className="sub-menu-content">
@@ -121,7 +128,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
           id="color-search-menu"
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
-            <i className="icon fas fa-arrow-left" />
+            <FaArrowLeft className="icon" />
             <span>Search Colors</span>
           </div>
           <ColorNameMenu
@@ -134,7 +141,7 @@ const Sidebar = ({ handleColorClick }: SidebarProps) => {
           className={`sub-menu${menuStates.isHelpMenuOpen ? '' : ' hidden'}`}
         >
           <div onClick={closeSubMenu} className="sub-menu-header">
-            <i className="icon fas fa-arrow-left" />
+            <FaArrowLeft className="icon" />
             <span>What is this?</span>
           </div>
 

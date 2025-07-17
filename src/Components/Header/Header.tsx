@@ -5,6 +5,7 @@ import HeaderIcon from './HeaderIcon';
 import HeaderButton from './HeaderButton';
 import type { ColorInfo } from 'utils/color';
 import './Header.scss';
+import { FaColumns, FaRandom } from 'react-icons/fa';
 
 interface HeaderProps {
   colorData: ColorInfo;
@@ -46,7 +47,7 @@ const Header = ({ colorData, getRandomColors }: HeaderProps) => {
             className="random-button"
             colorData={colorData}
             buttonText="Random"
-            iconClassName="fas fa-random"
+            icon={FaRandom}
             textClassName="random-button-text"
           />
           <HeaderButton
@@ -55,7 +56,7 @@ const Header = ({ colorData, getRandomColors }: HeaderProps) => {
             className={`split-button ${splitView ? ' active' : ''}`}
             colorData={colorData}
             buttonText="Split View"
-            iconClassName="fas fa-columns"
+            icon={FaColumns}
             textClassName="split-button-text"
           />
         </div>

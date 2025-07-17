@@ -71,6 +71,8 @@
     }
 
     .main-menu-item {
+      display: flex;
+      align-items: center;
       padding: 1.5rem;
       cursor: pointer;
       color: colors.$high-contrast;
@@ -119,14 +121,10 @@
       background-color: white;
       line-height: auto;
 
-      .search-icon-container {
-        flex: 0 0 4rem;
-        text-align: center;
-      }
-
-      .icon.fa-search {
-        font-size: 1.6rem;
+      .icon {
+        font-size: 1.5rem;
         color: #222;
+        margin: 0 0.75rem 0 1.25rem;
       }
 
       input {
@@ -150,6 +148,8 @@
     }
 
     .sub-menu-header {
+      display: flex;
+      align-items: center;
       padding: 1rem 1.5rem;
       cursor: pointer;
       color: colors.$high-contrast;
@@ -289,7 +289,7 @@
   justify-content: center;
 
   .icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: colors.$high-contrast;
     cursor: pointer;
     fill: colors.$high-contrast;

@@ -4,6 +4,7 @@ import { colornames as namedColors, type ColorName } from 'color-name-list';
 import { useSidebar } from 'contexts/sidebar-context';
 import { getContrastColor } from 'utils/color';
 import type { ColorCallback } from 'types/app';
+import { FaSearch } from 'react-icons/fa';
 
 interface ColorNameWithContrast extends ColorName {
   contrast: string;
@@ -59,9 +60,7 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
   return (
     <>
       <div className="search-input-container">
-        <div className="search-icon-container">
-          <i className="icon fas fa-search" />
-        </div>
+        <FaSearch className="icon" />
         <label htmlFor="color-search">Color search</label>
         <input
           ref={inputEl}
