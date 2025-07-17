@@ -3,10 +3,22 @@ import * as clipboard from 'clipboard-polyfill';
 import Tooltip from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import './ColorSquare.scss';
+import type { ColorShade } from 'utils/color';
+import type { BodyNumber } from 'types/app';
 
-const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
-  const hexTimeout = useRef();
-  const rgbTimeout = useRef();
+interface ColorSquareProps {
+  color: ColorShade;
+  squareNumber: number;
+  bodyNum: BodyNumber;
+}
+
+const ColorSquare = ({
+  color: { rgb, hex },
+  squareNumber,
+  bodyNum,
+}: ColorSquareProps) => {
+  const hexTimeout = useRef<NodeJS.Timeout | null>(null);
+  const rgbTimeout = useRef<NodeJS.Timeout | null>(null);
   const [r, g, b] = rgb;
   const rgbStr = `rgb(${r}, ${g}, ${b})`;
   const hexStr = hex.toUpperCase();
@@ -22,7 +34,9 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
   const copyHexCode = () => {
     clipboard.writeText(hexStr);
     setHexBtnTxt('Copied!');
-    clearTimeout(hexTimeout.current);
+    if (hexTimeout.current) {
+      clearTimeout(hexTimeout.current);
+    }
     hexTimeout.current = setTimeout(() => {
       setHexBtnTxt(hexStr);
     }, 1200);
@@ -31,7 +45,9 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
   const copyRgb = () => {
     clipboard.writeText(rgbStr);
     setRgbBtnTxt('Copied!');
-    clearTimeout(rgbTimeout.current);
+    if (rgbTimeout.current) {
+      clearTimeout(rgbTimeout.current);
+    }
     rgbTimeout.current = setTimeout(() => {
       setRgbBtnTxt(rgbStr);
     }, 1200);
@@ -61,22 +77,14 @@ const ColorSquare = ({ color: { rgb, hex }, squareNumber, bodyNum }) => {
                 {rgbBtnTxt}
               </button>
             </div>
-            {/* <div className="tooltip-sub-title">
-              CONTRAST - {contrastRatio.toFixed(1)}:1{" "}
-              {contrastLevel ? `(${contrastLevel})` : ""}
-            </div> */}
           </div>
         }
       >
         <div
-          // type="button"
           aria-label={`Color tile ${bodyNum}-${squareNumber}`}
           style={{ background }}
           className="color-tile"
           id={`tippy-tooltip-${(bodyNum - 1) * 36 + squareNumber}`}
-          // onClick={e => {
-          //   handleColorClick(hex, bodyNum);
-          // }}
         />
       </Tooltip>
     </div>

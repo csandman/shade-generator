@@ -4,9 +4,17 @@ import {
   useCallback,
   useEffect,
   useContext,
+  useMemo,
 } from 'react';
 
-const SplitViewContext = createContext({
+interface SplitViewContextValue {
+  splitView: boolean | null;
+  splitViewDisabled: boolean;
+  setSplitView: (newSplitView: boolean) => void;
+  toggleSplitView: () => void;
+}
+
+const SplitViewContext = createContext<SplitViewContextValue>({
   splitView: false,
   splitViewDisabled: false,
   setSplitView: () => {},
@@ -17,8 +25,12 @@ const isSplitViewDisabled = () => {
   return window.innerWidth <= 600;
 };
 
-const SplitViewProvider = ({ children }) => {
-  const [splitView, setSplitView] = useState(null);
+interface SplitViewProviderProps {
+  children: React.ReactNode;
+}
+
+export const SplitViewProvider = ({ children }: SplitViewProviderProps) => {
+  const [splitView, setSplitView] = useState<boolean | null>(null);
   const [splitViewDisabled, setSplitViewDisabled] = useState(
     isSplitViewDisabled(),
   );
@@ -38,17 +50,25 @@ const SplitViewProvider = ({ children }) => {
     };
   }, []);
 
+  const contextValue = useMemo(
+    (): SplitViewContextValue => ({
+      splitView,
+      splitViewDisabled,
+      setSplitView,
+      toggleSplitView,
+    }),
+    [splitView, splitViewDisabled, setSplitView, toggleSplitView],
+  );
+
   return (
-    <SplitViewContext.Provider
-      value={{ splitView, splitViewDisabled, setSplitView, toggleSplitView }}
-    >
+    <SplitViewContext.Provider value={contextValue}>
       {children}
     </SplitViewContext.Provider>
   );
 };
 
-const useSplitView = () => {
+export const useSplitView = () => {
   return useContext(SplitViewContext);
 };
 
-export { SplitViewContext as default, SplitViewProvider, useSplitView };
+export default SplitViewContext;

@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import useOnline from 'hooks/use-online';
 import { useSidebar } from 'contexts/sidebar-context';
 import KofiButton from 'Components/KofiButton';
-import HelpMenu from './HelpMenu/HelpMenu';
-import ColorHistory from './ColorHistory/ColorHistory';
-// import TopColors from './TopColors/TopColors';
-import ColorNameMenu from './ColorNameMenu/ColorNameMenu';
+import HelpMenu from './HelpMenu';
+import ColorHistory from './ColorHistory';
+import ColorNameMenu from './ColorNameMenu';
 import './Sidebar.scss';
+import type { ColorCallback } from 'types/app';
 
 const initialMenuStates = {
   isMainMenuOpen: true,
@@ -16,11 +15,15 @@ const initialMenuStates = {
   isHelpMenuOpen: false,
 };
 
-const Sidebar = ({ handleColorClick = () => {} }) => {
+interface SidebarProps {
+  handleColorClick: ColorCallback;
+}
+
+const Sidebar = ({ handleColorClick }: SidebarProps) => {
   const { isMenuOpen, closeMenu } = useSidebar();
 
   useEffect(() => {
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e: KeyboardEvent) => {
       if (e.code === 'Escape') {
         closeMenu();
       }
@@ -30,32 +33,25 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, []);
+  }, [closeMenu]);
 
-  const online = useOnline();
   const [menuStates, updateMenuStates] = useState(initialMenuStates);
 
-  const openMenu = (menuId) => {
+  const openMenu = (menuId: string) => {
     const newMenuStates = {
       ...initialMenuStates,
       isMainMenuOpen: false,
     };
-    newMenuStates[`is${menuId}Open`] = true;
+    newMenuStates[`is${menuId}Open` as keyof typeof newMenuStates] = true;
     updateMenuStates(newMenuStates);
   };
 
   const closeSubMenu = () => {
-    document.activeElement.blur();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     updateMenuStates({ ...initialMenuStates });
   };
-
-  const [firestoreMenuLoad, setFirestoreMenuLoad] = useState(false);
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      setFirestoreMenuLoad(true);
-    }
-  }, [isMenuOpen, setFirestoreMenuLoad]);
 
   return (
     <div id="sidebar" className={isMenuOpen ? '' : 'hidden'}>
@@ -73,16 +69,6 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <i className="icon fas fa-history" />
             <span>History</span>
           </div>
-          {/* {online && (
-            <div
-              className="main-menu-item"
-              id="TopColorsMenu"
-              onClick={(e) => openMenu(e.currentTarget.id)}
-            >
-              <i className="icon fas fa-award" />
-              <span>Top Colors</span>
-            </div>
-          )} */}
           <div
             className="main-menu-item"
             id="SearchMenu"
@@ -114,7 +100,7 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
               target="_blank"
               aria-label="Support me on Ko-fi"
             >
-              <KofiButton className="icon " height="42" />
+              <KofiButton className="icon " height={42} />
             </a>
           </div>
         </div>
@@ -129,22 +115,6 @@ const Sidebar = ({ handleColorClick = () => {} }) => {
             <ColorHistory handleColorClick={handleColorClick} />
           </div>
         </div>
-
-        {/* <div
-          className={`sub-menu${
-            menuStates.isTopColorsMenuOpen ? '' : ' hidden'
-          }`}
-        >
-          <div onClick={closeSubMenu} className="sub-menu-header">
-            <i className="icon fas fa-arrow-left" />
-            <span>Top Colors</span>
-          </div>
-          <div className="sub-menu-content">
-            {firestoreMenuLoad && (
-              <TopColors handleColorClick={handleColorClick} />
-            )}
-          </div>
-        </div> */}
 
         <div
           className={`sub-menu${menuStates.isSearchMenuOpen ? '' : ' hidden'}`}

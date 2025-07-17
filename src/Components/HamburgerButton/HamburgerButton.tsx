@@ -2,7 +2,12 @@ import { memo } from 'react';
 import { useSidebar } from 'contexts/sidebar-context';
 import './HamburgerButton.scss';
 
-const HamburgerButton = ({ color, className = '' }) => {
+interface HamburgerButtonProps {
+  color: string;
+  className?: string;
+}
+
+const HamburgerButton = ({ color, className = '' }: HamburgerButtonProps) => {
   const { isMenuOpen, toggleMenu } = useSidebar();
 
   return (

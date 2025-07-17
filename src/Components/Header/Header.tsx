@@ -1,11 +1,17 @@
 import { memo } from 'react';
 import { useSplitView } from 'contexts/split-view-context';
 import HamburgerButton from 'Components/HamburgerButton';
-import HeaderIcon from './HeaderIcon/HeaderIcon';
-import HeaderButton from './HeaderButton/HeaderButton';
+import HeaderIcon from './HeaderIcon';
+import HeaderButton from './HeaderButton';
+import type { ColorInfo } from 'utils/color';
 import './Header.scss';
 
-const Header = ({ colorData, getRandomColors }) => {
+interface HeaderProps {
+  colorData: ColorInfo;
+  getRandomColors: () => void;
+}
+
+const Header = ({ colorData, getRandomColors }: HeaderProps) => {
   const { splitView, splitViewDisabled, toggleSplitView } = useSplitView();
 
   return (
@@ -26,11 +32,7 @@ const Header = ({ colorData, getRandomColors }) => {
         )}
         <h1
           style={
-            !splitView || splitViewDisabled
-              ? {
-                  color: colorData.contrast,
-                }
-              : {}
+            !splitView || splitViewDisabled ? { color: colorData.contrast } : {}
           }
         >
           Shade Generator

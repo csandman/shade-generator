@@ -2,13 +2,20 @@ import ColorSquare from 'Components/ColorSquare';
 import ColorInput from 'Components/ColorInput';
 import { useSplitView } from 'contexts/split-view-context';
 import './BodyContent.scss';
+import type { ColorInfo } from 'utils/color';
+import type { BodyNumber } from 'types/app';
+
+interface BodyContentProps {
+  handleSubmit: (bodyNum: BodyNumber, inputValue: string) => void;
+  bodyNum: BodyNumber;
+  colorData: ColorInfo;
+}
 
 const BodyContent = ({
   handleSubmit,
   bodyNum,
   colorData,
-  handleColorClick,
-}) => {
+}: BodyContentProps) => {
   const { splitView, splitViewDisabled } = useSplitView();
 
   return (
@@ -33,18 +40,14 @@ const BodyContent = ({
           </div>
         </div>
         <div className="container">
-          {colorData.shades.map((color, index) => {
-            return (
-              <ColorSquare
-                hex={color.hex}
-                handleColorClick={handleColorClick}
-                bodyNum={bodyNum}
-                color={color}
-                key={`color-square-${bodyNum}-${index}-${color.hex}`}
-                squareNumber={index + 1}
-              />
-            );
-          })}
+          {colorData.shades.map((color, index) => (
+            <ColorSquare
+              key={`color-square-${bodyNum}-${index}-${color.hex}`}
+              bodyNum={bodyNum}
+              color={color}
+              squareNumber={index + 1}
+            />
+          ))}
         </div>
       </div>
     </div>

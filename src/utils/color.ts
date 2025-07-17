@@ -1,50 +1,84 @@
 import nearestColor from 'nearest-color';
 import { colornames as namedColors } from 'color-name-list';
 import parseColor from 'parse-color';
-import Color from 'color';
+import Color, { type ColorInstance, type ColorLike } from 'color';
 
-export function getRandomColor() {
-  const color = '0123456789ABCDEF'.split('').reduce((a, c, i, arr) => {
-    return i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a;
-  }, '#');
+export interface ColorShade {
+  hex: string;
+  rgb: number[];
+  contrastRatio: number;
+  contrastLevel: string;
+  isDark: boolean;
+}
+
+export interface ColorInfo {
+  contrast: string;
+  hex: string;
+  rgb: number[];
+  cmyk: number[];
+  hsl: number[];
+  hsv: number[];
+  name: string;
+  highContrast: string;
+  lowContrast: string;
+  oppositeContrast: string;
+  shades: ColorShade[];
+  timeString?: string;
+  dateString?: string;
+  keyword?: string;
+}
+
+export function getRandomColor(): ColorInstance {
+  const color = '0123456789ABCDEF'
+    .split('')
+    .reduce((a: string, _c: string, i: number, arr: string[]) => {
+      return i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a;
+    }, '#');
   return Color(color);
 }
 
-function calculateGradient(color, isDark, opacity) {
+function calculateGradient(
+  color: ColorInstance,
+  isDark: boolean,
+  opacity: number,
+): ColorInstance {
   return isDark
     ? color.mix(Color('black'), opacity).rgb().round()
     : color.mix(Color('white'), opacity).rgb().round();
 }
 
-export function getContrastColor(color, minContrastRatio = 4.5) {
+export function getContrastColor(
+  color: ColorInstance,
+  minContrastRatio: number = 4.5,
+): ColorInstance {
   const isDark = !color.isDark();
   let i = 0.01;
-  let contrastColor;
+  let contrastColor: ColorInstance | undefined;
   let contrastRatio = 0;
   while (contrastRatio < minContrastRatio && i < 0.9) {
     contrastColor = calculateGradient(color, isDark, i);
     contrastRatio = color.contrast(contrastColor);
     i += 0.01;
   }
-  return contrastColor;
+  return contrastColor!;
 }
 
-export function getOppositeContrastColor(color) {
+export function getOppositeContrastColor(color: ColorInstance): ColorInstance {
   const isDark = color.isLight();
   return calculateGradient(color, !isDark, 0.3);
 }
 
-export function getHighContrastColor(color) {
+export function getHighContrastColor(color: ColorInstance): ColorInstance {
   const isDark = color.isLight();
   return calculateGradient(color, isDark, 0.7);
 }
 
-export function getLowContrastColor(color) {
+export function getLowContrastColor(color: ColorInstance): ColorInstance {
   const isDark = color.isLight();
   return calculateGradient(color, isDark, 0.2);
 }
 
-export function searchNamedColors(searchTerm) {
+export function searchNamedColors(searchTerm: string): string | null {
   for (let i = 0; i < namedColors.length; i += 1) {
     if (namedColors[i].name.replace(/\s/g, '').toLowerCase() === searchTerm) {
       return namedColors[i].hex.toUpperCase();
@@ -56,17 +90,18 @@ export function searchNamedColors(searchTerm) {
 // Uses the named-colors library for a list of named of colors
 // and uses nearest color to match the entered color to the closest
 // option with a name
-export function getColorName(hexCode) {
-  const colors = namedColors.reduce(
+export function getColorName(hexCode: string): string {
+  const colors = namedColors.reduce<Record<string, string>>(
     (o, { name, hex }) => Object.assign(o, { [name]: hex }),
     {},
   );
   const nearest = nearestColor.from(colors);
-  return nearest(hexCode).name;
+  const result = nearest(hexCode);
+  return result ? result.name : '';
 }
 
-export function calcAllGradients(color) {
-  const gradientArr = [];
+export function calcAllGradients(color: ColorInstance): ColorShade[] {
+  const gradientArr: ColorShade[] = [];
   for (let opac = 90; opac >= 5; opac -= 5) {
     const newColor = calculateGradient(color, false, opac / 100);
     gradientArr.push({
@@ -90,20 +125,20 @@ export function calcAllGradients(color) {
   return gradientArr;
 }
 
-export function attemptCreateColor(colorStr) {
-  let color;
+export function attemptCreateColor(colorStr: ColorLike): ColorInstance | null {
+  let color: ColorInstance;
 
   try {
     color = Color(colorStr);
-  } catch (err) {
+  } catch {
     return null;
   }
 
   return color;
 }
 
-export function getAllColorInfo(colorVal) {
-  let color;
+export function getAllColorInfo(colorVal: ColorInstance | string): ColorInfo {
+  let color: ColorInstance;
   if (typeof colorVal === 'string') {
     color = Color(colorVal);
   } else {
@@ -126,7 +161,7 @@ export function getAllColorInfo(colorVal) {
   };
 }
 
-export function parseColorFromString(str) {
+export function parseColorFromString(str: string): string {
   const cleanStr = str.replace(/\s/g, '').toLowerCase();
   const hex =
     attemptCreateColor(cleanStr)?.hex() ||

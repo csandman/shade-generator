@@ -1,21 +1,33 @@
 import { useState } from 'react';
 import PlusButton from 'Components/PlusButton';
 
+interface AccordianStates {
+  colorParser: boolean;
+  copyToClipboard: boolean;
+  colorNames: boolean;
+  randomColors: boolean;
+  colorHistory: boolean;
+  offlineCapability: boolean;
+  splitView: boolean;
+}
+
+type AccordianID = keyof AccordianStates;
+
 const HelpMenu = () => {
-  const [accordianStates, updateAccordianStates] = useState({
-    colorParserOpen: false,
-    copyToClipboardOpen: false,
-    colorNamesOpen: false,
-    randomColorsOpen: false,
-    colorHistoryOpen: false,
-    offlineCapabilityOpen: false,
-    splitViewOpen: false,
+  const [accordianStates, updateAccordianStates] = useState<AccordianStates>({
+    colorParser: false,
+    copyToClipboard: false,
+    colorNames: false,
+    randomColors: false,
+    colorHistory: false,
+    offlineCapability: false,
+    splitView: false,
   });
 
-  const toggleAccordianState = (accordianID) => {
+  const toggleAccordianState = (accordianID: AccordianID) => {
     updateAccordianStates({
       ...accordianStates,
-      [`${accordianID}Open`]: !accordianStates[`${accordianID}Open`],
+      [accordianID]: !accordianStates[accordianID],
     });
   };
 
@@ -60,17 +72,16 @@ const HelpMenu = () => {
       </p>
       <h5
         id="colorParser"
-        onClick={(e) => {
-          // console.log(e);
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('colorParser');
         }}
       >
-        <PlusButton color="#bdbdbd" open={accordianStates.colorParserOpen} />
+        <PlusButton color="#bdbdbd" open={accordianStates.colorParser} />
         Color Parser
       </h5>
       <div
         className={`feature-container${
-          accordianStates.colorParserOpen ? '' : ' closed'
+          accordianStates.colorParser ? '' : ' closed'
         }`}
       >
         <p>
@@ -109,19 +120,16 @@ const HelpMenu = () => {
       </div>
       <h5
         id="copyToClipboard"
-        onClick={(e) => {
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('copyToClipboard');
         }}
       >
-        <PlusButton
-          color="#bdbdbd"
-          open={accordianStates.copyToClipboardOpen}
-        />
+        <PlusButton color="#bdbdbd" open={accordianStates.copyToClipboard} />
         Copy to Clipboard
       </h5>
       <div
         className={`feature-container${
-          accordianStates.copyToClipboardOpen ? '' : ' closed'
+          accordianStates.copyToClipboard ? '' : ' closed'
         }`}
       >
         <p>
@@ -145,16 +153,16 @@ const HelpMenu = () => {
       </div>
       <h5
         id="colorNames"
-        onClick={(e) => {
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('colorNames');
         }}
       >
-        <PlusButton color="#bdbdbd" open={accordianStates.colorNamesOpen} />
+        <PlusButton color="#bdbdbd" open={accordianStates.colorNames} />
         Color Names
       </h5>
       <div
         className={`feature-container${
-          accordianStates.colorNamesOpen ? '' : ' closed'
+          accordianStates.colorNames ? '' : ' closed'
         }`}
       >
         <p>
@@ -203,16 +211,16 @@ const HelpMenu = () => {
       </div>
       <h5
         id="randomColors"
-        onClick={(e) => {
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('randomColors');
         }}
       >
-        <PlusButton color="#bdbdbd" open={accordianStates.randomColorsOpen} />
+        <PlusButton color="#bdbdbd" open={accordianStates.randomColors} />
         Random Colors
       </h5>
       <div
         className={`feature-container${
-          accordianStates.randomColorsOpen ? '' : ' closed'
+          accordianStates.randomColors ? '' : ' closed'
         }`}
       >
         <p>
@@ -229,16 +237,16 @@ const HelpMenu = () => {
       </div>
       <h5
         id="colorHistory"
-        onClick={(e) => {
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('colorHistory');
         }}
       >
-        <PlusButton color="#bdbdbd" open={accordianStates.colorHistoryOpen} />
+        <PlusButton color="#bdbdbd" open={accordianStates.colorHistory} />
         Color History
       </h5>
       <div
         className={`feature-container${
-          accordianStates.colorHistoryOpen ? '' : ' closed'
+          accordianStates.colorHistory ? '' : ' closed'
         }`}
       >
         <p>
@@ -264,35 +272,32 @@ const HelpMenu = () => {
       </div>
       <h5
         id="offlineCapability"
-        onClick={(e) => {
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('offlineCapability');
         }}
       >
-        <PlusButton
-          color="#bdbdbd"
-          open={accordianStates.offlineCapabilityOpen}
-        />
+        <PlusButton color="#bdbdbd" open={accordianStates.offlineCapability} />
         Offline Capability
       </h5>
       <div
         className={`feature-container${
-          accordianStates.offlineCapabilityOpen ? '' : ' closed'
+          accordianStates.offlineCapability ? '' : ' closed'
         }`}
       >
         <p className="italic">work in progress...</p>
       </div>
       <h5
         id="splitView"
-        onClick={(e) => {
-          toggleAccordianState(e.currentTarget.id);
+        onClick={() => {
+          toggleAccordianState('splitView');
         }}
       >
-        <PlusButton color="#bdbdbd" open={accordianStates.splitViewOpen} />
+        <PlusButton color="#bdbdbd" open={accordianStates.splitView} />
         Split Screen
       </h5>
       <div
         className={`feature-container${
-          accordianStates.splitViewOpen ? '' : ' closed'
+          accordianStates.splitView ? '' : ' closed'
         }`}
       >
         <p className="italic">work in progress...</p>

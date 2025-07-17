@@ -1,18 +1,32 @@
 import { useInput } from 'contexts/input-context';
+import type { BodyNumber } from 'types/app';
 
-const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
+interface ColorInputProps {
+  bodyNum: BodyNumber;
+  handleSubmit: (bodyNum: BodyNumber, inputValue: string) => void;
+  contrast: string;
+  oppositeContrast: string;
+}
+
+const ColorInput = ({
+  bodyNum,
+  handleSubmit,
+  contrast,
+  oppositeContrast,
+}: ColorInputProps) => {
   const inputContext = useInput();
-  const inputValue = inputContext[`inputValue${bodyNum}`];
+
+  const inputValue =
+    bodyNum === 1 ? inputContext.inputValue1 : inputContext.inputValue2;
   const { updateInputValue } = inputContext;
 
-  function handleKeyPress(e) {
-    // console.log(e, e.key);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (document.activeElement.id !== 'color-search') {
+      if (document.activeElement?.id !== 'color-search') {
         handleSubmit(bodyNum, inputValue);
       }
     }
-  }
+  };
 
   return (
     <div className="color-input">
@@ -27,7 +41,7 @@ const ColorInput = ({ bodyNum, handleSubmit, contrast, oppositeContrast }) => {
         onChange={(e) => {
           updateInputValue(bodyNum, e.target.value);
         }}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         value={inputValue}
         style={{ borderColor: contrast }}
       />

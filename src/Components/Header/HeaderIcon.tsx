@@ -1,6 +1,12 @@
 import { useSplitView } from 'contexts/split-view-context';
+import type { ColorInfo } from 'utils/color';
 
-const HeaderIcon = ({ getRandomColors, colorData }) => {
+interface HeaderIconProps {
+  getRandomColors: () => void;
+  colorData: ColorInfo;
+}
+
+const HeaderIcon = ({ getRandomColors, colorData }: HeaderIconProps) => {
   const { splitView, splitViewDisabled } = useSplitView();
 
   return (
