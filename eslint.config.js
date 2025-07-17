@@ -8,6 +8,7 @@ import {
   plugins as airbnbPlugins,
 } from 'eslint-config-airbnb-extended';
 import prettierConfig from 'eslint-config-prettier';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
 const jsConfig = [
   // ESLint Recommended Rules
@@ -54,6 +55,7 @@ export default tseslint.config([
       reactConfig,
       typescriptConfig,
       reactRefresh.configs.vite,
+      eslintPluginUnicorn.configs.recommended,
       prettierConfig,
     ],
     languageOptions: {
@@ -64,6 +66,7 @@ export default tseslint.config([
       curly: 'error',
       'import-x/prefer-default-export': 'off',
       'no-restricted-syntax': 'off',
+      'no-restricted-exports': 'off',
       'react-refresh/only-export-components': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/require-default-props': 'off',
@@ -79,6 +82,13 @@ export default tseslint.config([
       'jsx-a11y/no-static-element-interactions': 'off',
       'jsx-a11y/no-noninteractive-element-interactions': 'off',
       'jsx-a11y/label-has-associated-control': 'off',
+      // Turn off Unicorn rules
+      'unicorn/prevent-abbreviations': 'off',
+      'unicorn/explicit-length-check': 'off',
+      'unicorn/no-array-reduce': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/prefer-object-from-entries': 'off',
+      'unicorn/prefer-string-replace-all': 'off',
     },
   },
 ]);

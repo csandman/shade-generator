@@ -29,13 +29,11 @@ export interface ColorInfo {
 }
 
 export function getRandomColor(): ColorInstance {
-  const color = '0123456789ABCDEF'
-    .split('')
-    .reduce(
-      (a: string, _c: string, i: number, arr: string[]) =>
-        i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a,
-      '#',
-    );
+  const color = [...'0123456789ABCDEF'].reduce(
+    (a: string, _c: string, i: number, arr: string[]) =>
+      i < 6 ? a + arr[Math.floor(Math.random() * 16)] : a,
+    '#',
+  );
   return Color(color);
 }
 
@@ -82,7 +80,7 @@ export function getLowContrastColor(color: ColorInstance): ColorInstance {
 
 export function searchNamedColors(searchTerm: string): string | null {
   for (const color of colornames) {
-    if (color.name.replace(/\s/g, '').toLowerCase() === searchTerm) {
+    if (color.name.replaceAll(/\s/g, '').toLowerCase() === searchTerm) {
       return color.hex.toUpperCase();
     }
   }
@@ -137,12 +135,7 @@ export function attemptCreateColor(colorStr: ColorLike): ColorInstance | null {
 }
 
 export function getAllColorInfo(colorVal: ColorInstance | string): ColorInfo {
-  let color: ColorInstance;
-  if (typeof colorVal === 'string') {
-    color = Color(colorVal);
-  } else {
-    color = colorVal;
-  }
+  const color = typeof colorVal === 'string' ? Color(colorVal) : colorVal;
 
   return {
     contrast: getContrastColor(color).hex(),
@@ -153,7 +146,7 @@ export function getAllColorInfo(colorVal: ColorInstance | string): ColorInfo {
     hsv: color.hsv().array(),
     name: getColorName(color.hex()),
 
-    highContrast: getContrastColor(color, 7.0).hex(),
+    highContrast: getContrastColor(color, 7).hex(),
     lowContrast: getLowContrastColor(color).hex(),
     oppositeContrast: getOppositeContrastColor(color).hex(),
     shades: calcAllGradients(color),
@@ -161,7 +154,7 @@ export function getAllColorInfo(colorVal: ColorInstance | string): ColorInfo {
 }
 
 export function parseColorFromString(str: string): string {
-  const cleanStr = str.replace(/\s/g, '').toLowerCase();
+  const cleanStr = str.replaceAll(/\s/g, '').toLowerCase();
   const hex =
     attemptCreateColor(cleanStr)?.hex() ||
     attemptCreateColor(`#${cleanStr}`)?.hex() ||

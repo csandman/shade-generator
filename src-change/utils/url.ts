@@ -6,21 +6,24 @@ export interface UrlState {
 }
 
 export const parseURL = (): ParsedURL => {
-  const path = window.location.pathname.slice(1);
+  const path = globalThis.location.pathname.slice(1);
   if (path.length) {
-    const splitUrl = window.location.pathname.slice(1).toUpperCase().split('-');
+    const splitUrl = globalThis.location.pathname
+      .slice(1)
+      .toUpperCase()
+      .split('-');
 
-    if (splitUrl.length === 1 && splitUrl[0].match(/^[0-9A-F]{6}$/)) {
+    if (splitUrl.length === 1 && /^[0-9A-F]{6}$/.test(splitUrl[0])) {
       return [`#${splitUrl[0]}`, '', false];
     }
     if (
       splitUrl.length === 2 &&
-      splitUrl[0].match(/^[0-9A-F]{6}$/) &&
-      splitUrl[1].match(/^[0-9A-F]{6}$/)
+      /^[0-9A-F]{6}$/.test(splitUrl[0]) &&
+      /^[0-9A-F]{6}$/.test(splitUrl[1])
     ) {
       return [`#${splitUrl[0]}`, `#${splitUrl[1]}`, true];
     }
-    window.history.pushState({}, 'Shade Generator', '');
+    globalThis.history.pushState({}, 'Shade Generator', '');
   }
 
   return ['', '', false];

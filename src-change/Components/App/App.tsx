@@ -64,15 +64,13 @@ const App = () => {
 
       let colorData;
       if (typeof color === 'object') {
-        if (color?.shades?.[0]?.contrastRatio) {
-          colorData = color;
-        } else {
-          colorData = getAllColorInfo(color.hex);
-        }
+        colorData = color?.shades?.[0]?.contrastRatio
+          ? color
+          : getAllColorInfo(color.hex);
       } else if (typeof color === 'string') {
         colorData = getAllColorInfo(color);
       } else {
-        throw new Error('Invalid color');
+        throw new TypeError('Invalid color');
       }
 
       delete colorData.keyword;
@@ -127,16 +125,16 @@ const App = () => {
 
   // Update url when colors change or when split view
   useEffect(() => {
-    if (!popCount.current) {
+    if (popCount.current) {
+      popCount.current -= 1;
+    } else {
       const newState: UrlState = { hex1 };
       let newPath = hex1.slice(1);
       if (splitView && !splitViewDisabled) {
         newState.hex2 = hex2;
         newPath += `-${hex2.slice(1)}`;
       }
-      window.history.pushState(newState, 'Shade Generator', newPath);
-    } else {
-      popCount.current -= 1;
+      globalThis.history.pushState(newState, 'Shade Generator', newPath);
     }
   }, [hex1, hex2, splitView, splitViewDisabled]);
 
@@ -157,9 +155,9 @@ const App = () => {
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
+    globalThis.addEventListener('popstate', handlePopState);
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      globalThis.removeEventListener('popstate', handlePopState);
     };
   }, [setSplitView, updateStateValues]);
 

@@ -21,10 +21,8 @@ const ColorInput = ({
   const { updateInputValue } = inputContext;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      if (document.activeElement?.id !== 'color-search') {
-        handleSubmit(bodyNum, inputValue);
-      }
+    if (e.key === 'Enter' && document.activeElement?.id !== 'color-search') {
+      handleSubmit(bodyNum, inputValue);
     }
   };
 

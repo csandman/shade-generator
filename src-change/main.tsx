@@ -8,7 +8,7 @@ import { SplitViewProvider } from 'contexts/split-view-context';
 import { HistoryProvider } from 'contexts/history-context';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.querySelector('#root')!).render(
   <StrictMode>
     <SidebarProvider>
       <SplitViewProvider>
@@ -23,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
 );
 
 if ('serviceWorker' in navigator) {
+  // eslint-disable-next-line unicorn/prefer-top-level-await
   navigator.serviceWorker.ready.then((registration) => {
     registration.unregister();
   });
