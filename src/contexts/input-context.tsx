@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useRef, useEffect } from 'react';
+import type { BodyNumber } from 'types/app';
 
-type UpdateInputValue = (inputNum: number, value: string) => void;
+type UpdateInputValue = (inputNum: BodyNumber, value: string) => void;
 
 interface InputContextValue {
   inputValue1: string;
@@ -24,7 +25,7 @@ export const InputProvider = ({ children }: InputProviderProps) => {
     inputValue2: '',
   });
 
-  const updateInputValue = (inputNum: number, value: string) => {
+  const updateInputValue = (inputNum: BodyNumber, value: string) => {
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
       [`inputValue${inputNum}`]: value,
