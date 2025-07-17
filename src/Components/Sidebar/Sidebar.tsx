@@ -4,8 +4,8 @@ import KofiButton from 'Components/KofiButton';
 import HelpMenu from './HelpMenu';
 import ColorHistory from './ColorHistory';
 import ColorNameMenu from './ColorNameMenu';
-import './Sidebar.scss';
 import type { ColorCallback } from 'types/app';
+import './Sidebar.scss';
 
 const initialMenuStates = {
   isMainMenuOpen: true,

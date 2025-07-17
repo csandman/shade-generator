@@ -1,4 +1,4 @@
-import { createContext, useRef, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import type { ColorInfo } from 'utils/color';
 
@@ -24,14 +24,11 @@ export const HistoryProvider = ({ children }: HistoryProviderProps) => {
     },
   );
 
-  const recentColorsRef = useRef(recentColors);
-
   const updateRecentColors = (newColor: ColorInfo) => {
-    recentColorsRef.current = [
+    setRecentColors((prevRecentColors) => [
       newColor,
-      ...recentColorsRef.current.slice(0, 100),
-    ];
-    setRecentColors(recentColorsRef.current);
+      ...prevRecentColors.slice(0, 99),
+    ]);
   };
 
   return (
