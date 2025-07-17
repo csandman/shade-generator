@@ -1,5 +1,5 @@
 import { memo, useState, useRef } from 'react';
-import * as clipboard from 'clipboard-polyfill';
+import { writeText as writeTextToClipboard } from 'clipboard-polyfill';
 import Tooltip from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import './ColorSquare.scss';
@@ -32,7 +32,7 @@ const ColorSquare = ({
       : `rgba(0,0,0,${((squareNumber - 18) * 5) / 100})`;
 
   const copyHexCode = () => {
-    clipboard.writeText(hexStr);
+    writeTextToClipboard(hexStr);
     setHexBtnTxt('Copied!');
     if (hexTimeout.current) {
       clearTimeout(hexTimeout.current);
@@ -43,7 +43,7 @@ const ColorSquare = ({
   };
 
   const copyRgb = () => {
-    clipboard.writeText(rgbStr);
+    writeTextToClipboard(rgbStr);
     setRgbBtnTxt('Copied!');
     if (rgbTimeout.current) {
       clearTimeout(rgbTimeout.current);
