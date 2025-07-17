@@ -52,11 +52,12 @@ const App = () => {
     (color, colorNum) => {
       const addMenuItem = (newColor: ColorInfo) => {
         const colorToAdd = { ...newColor };
-        colorToAdd.timeString = new Date().toLocaleTimeString([], {
+        const addedAt = new Date();
+        colorToAdd.timeString = addedAt.toLocaleTimeString([], {
           hour: 'numeric',
           minute: 'numeric',
         });
-        colorToAdd.dateString = new Date().toLocaleDateString();
+        colorToAdd.dateString = addedAt.toLocaleDateString();
 
         updateRecentColors(colorToAdd);
       };
