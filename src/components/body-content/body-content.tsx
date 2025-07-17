@@ -1,7 +1,7 @@
-import ColorSquare from 'Components/ColorSquare';
-import ColorInput from 'Components/ColorInput';
+import ColorSquare from 'components/color-square';
+import ColorInput from 'components/color-input';
 import { useSplitView } from 'contexts/split-view-context';
-import './BodyContent.scss';
+import './body-content.scss';
 import type { ColorInfo } from 'utils/color';
 import type { BodyNumber } from 'types/app';
 

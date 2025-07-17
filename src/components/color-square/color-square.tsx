@@ -1,10 +1,10 @@
 import { memo, useState, useRef } from 'react';
 import { writeText as writeTextToClipboard } from 'clipboard-polyfill';
 import Tooltip from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
-import './ColorSquare.scss';
 import type { ColorShade } from 'utils/color';
 import type { BodyNumber } from 'types/app';
+import 'tippy.js/dist/tippy.css';
+import './color-square.scss';
 
 interface ColorSquareProps {
   color: ColorShade;

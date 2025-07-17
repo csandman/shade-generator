@@ -1,5 +1,5 @@
 import { FaGithub } from 'react-icons/fa';
-import KofiButton from 'Components/KofiButton';
+import KofiButton from 'components/kofi-button';
 
 const SidebarFooter = () => (
   <div className="footer-row">

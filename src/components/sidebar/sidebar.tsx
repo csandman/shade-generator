@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useSidebar } from 'contexts/sidebar-context';
 import { FaHistory, FaQuestionCircle, FaSearch } from 'react-icons/fa';
 import type { ColorCallback } from 'types/app';
-import HelpMenu from './HelpMenu';
-import ColorHistory from './ColorHistory';
-import ColorNameMenu from './ColorNameMenu';
-import MainMenuItem from './MainMenuItem';
-import SubMenu from './SubMenu';
-import SidebarFooter from './SidebarFooter';
-import './Sidebar.scss';
+import HelpMenu from './help-menu';
+import ColorHistory from './color-history';
+import ColorNameMenu from './color-name-menu';
+import MainMenuItem from './main-menu-item';
+import SubMenu from './sub-menu';
+import SidebarFooter from './sidebar-footer';
+import './sidebar.scss';
 
 const initialMenuStates = {
   isMainMenuOpen: true,

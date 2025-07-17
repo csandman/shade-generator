@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useSidebar } from 'contexts/sidebar-context';
-import './HamburgerButton.scss';
+import './hamburger-button.scss';
 
 interface HamburgerButtonProps {
   color: string;

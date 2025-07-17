@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PlusButton from 'Components/PlusButton';
+import PlusButton from 'components/plus-button';
 
 interface AccordianStates {
   colorParser: boolean;

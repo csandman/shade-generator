@@ -3,9 +3,9 @@ import ReactGA from 'react-ga4';
 import useOnline from 'hooks/use-online';
 import { useSplitView } from 'contexts/split-view-context';
 import { useHistory } from 'contexts/history-context';
-import Header from 'Components/Header';
-import Sidebar from 'Components/Sidebar';
-import BodyContent from 'Components/BodyContent';
+import Header from 'components/header';
+import Sidebar from 'components/sidebar';
+import BodyContent from 'components/body-content';
 import { InputUpdater } from 'contexts/input-context';
 import {
   getAllColorInfo,
@@ -14,7 +14,7 @@ import {
   parseColorFromString,
   type ColorInfo,
 } from 'utils/color';
-import './App.scss';
+import './app.scss';
 import type { ColorInstance } from 'color';
 import type { BodyNumber, ColorCallback } from 'types/app';
 import { parseURL, type UrlState } from 'utils/url';

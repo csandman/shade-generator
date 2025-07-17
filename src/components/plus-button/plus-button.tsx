@@ -1,4 +1,4 @@
-import './PlusButton.scss';
+import './plus-button.scss';
 
 interface PlusButtonProps {
   className?: string;

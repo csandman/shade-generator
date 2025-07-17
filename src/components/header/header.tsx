@@ -1,11 +1,11 @@
 import { memo } from 'react';
 import { useSplitView } from 'contexts/split-view-context';
-import HamburgerButton from 'Components/HamburgerButton';
+import HamburgerButton from 'components/hamburger-button';
 import type { ColorInfo } from 'utils/color';
 import { FaColumns, FaRandom } from 'react-icons/fa';
-import HeaderIcon from './HeaderIcon';
-import HeaderButton from './HeaderButton';
-import './Header.scss';
+import HeaderIcon from './header-icon';
+import HeaderButton from './header-button';
+import './header.scss';
 
 interface HeaderProps {
   colorData: ColorInfo;

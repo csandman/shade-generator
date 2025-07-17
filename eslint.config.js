@@ -63,6 +63,14 @@ export default tseslint.config([
       globals: globals.browser,
     },
     rules: {
+      '@typescript-eslint/consistent-type-imports': [
+        'warn',
+        {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: true,
+          fixStyle: 'inline-type-imports',
+        },
+      ],
       curly: 'error',
       'import-x/prefer-default-export': 'off',
       'no-restricted-syntax': 'off',
