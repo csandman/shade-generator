@@ -21,3 +21,9 @@ createRoot(document.getElementById('root')!).render(
     </SidebarProvider>
   </StrictMode>,
 );
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.ready.then((registration) => {
+    registration.unregister();
+  });
+}
