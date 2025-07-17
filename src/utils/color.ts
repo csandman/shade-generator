@@ -1,5 +1,5 @@
 import nearestColor from 'nearest-color';
-import { colornames as namedColors } from 'color-name-list';
+import { colornames } from 'color-name-list';
 import parseColor from 'parse-color';
 import Color, { type ColorInstance, type ColorLike } from 'color';
 
@@ -79,9 +79,9 @@ export function getLowContrastColor(color: ColorInstance): ColorInstance {
 }
 
 export function searchNamedColors(searchTerm: string): string | null {
-  for (let i = 0; i < namedColors.length; i += 1) {
-    if (namedColors[i].name.replace(/\s/g, '').toLowerCase() === searchTerm) {
-      return namedColors[i].hex.toUpperCase();
+  for (const color of colornames) {
+    if (color.name.replace(/\s/g, '').toLowerCase() === searchTerm) {
+      return color.hex.toUpperCase();
     }
   }
   return null;
@@ -91,7 +91,7 @@ export function searchNamedColors(searchTerm: string): string | null {
 // and uses nearest color to match the entered color to the closest
 // option with a name
 export function getColorName(hexCode: string): string {
-  const colors = namedColors.reduce<Record<string, string>>(
+  const colors = colornames.reduce<Record<string, string>>(
     (o, { name, hex }) => Object.assign(o, { [name]: hex }),
     {},
   );
@@ -126,15 +126,12 @@ export function calcAllGradients(color: ColorInstance): ColorShade[] {
 }
 
 export function attemptCreateColor(colorStr: ColorLike): ColorInstance | null {
-  let color: ColorInstance;
-
   try {
-    color = Color(colorStr);
+    const color = Color(colorStr);
+    return color;
   } catch {
     return null;
   }
-
-  return color;
 }
 
 export function getAllColorInfo(colorVal: ColorInstance | string): ColorInfo {

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Color from 'color';
-import { colornames as namedColors, type ColorName } from 'color-name-list';
+import { colornames, type ColorName } from 'color-name-list';
 import { useSidebar } from 'contexts/sidebar-context';
 import { getContrastColor } from 'utils/color';
 import type { ColorCallback } from 'types/app';
@@ -36,14 +36,14 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
 
   const [searchInput, setSearchInput] = useState('');
 
-  const colorNames = useMemo(() => {
+  const colorNamesWithContrast = useMemo(() => {
     if (!searchInput) {
-      return namedColors.slice(0, 50).map<ColorNameWithContrast>((color) => ({
+      return colornames.slice(0, 50).map<ColorNameWithContrast>((color) => ({
         ...color,
         contrast: getContrastColor(Color(color.hex)).hex(),
       }));
     }
-    return namedColors
+    return colornames
       .filter((color) =>
         color.name
           .replace(/\s/g, '')
@@ -74,7 +74,7 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
 
       <div className="sub-menu-content">
         <div className="menu-items">
-          {colorNames.map((color, i) => (
+          {colorNamesWithContrast.map((color, i) => (
             <div
               key={`${color.name}-${i}`}
               className="color-result-item"
