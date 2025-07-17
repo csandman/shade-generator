@@ -30,9 +30,13 @@ const MenuItem = ({
     onClick(item, 1);
   };
 
-  const handleSubClick = (num: BodyNumber) => {
+  const handleSubClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    num: BodyNumber,
+  ) => {
     closeMenu();
     onClick(item, num);
+    e.stopPropagation();
   };
 
   return (
@@ -48,10 +52,10 @@ const MenuItem = ({
       <div className="footer-right">{textBottomRight}</div>
       {splitView && (
         <div className="menu-item-overlay">
-          <div className="panel left" onClick={() => handleSubClick(1)}>
+          <div className="panel left" onClick={(e) => handleSubClick(e, 1)}>
             <span className="panel-text">Apply to Left</span>
           </div>
-          <div className="panel right" onClick={() => handleSubClick(2)}>
+          <div className="panel right" onClick={(e) => handleSubClick(e, 2)}>
             <span className="panel-text">Apply to Right</span>
           </div>
         </div>
