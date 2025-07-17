@@ -9,13 +9,6 @@ interface ColorNameWithContrast extends ColorName {
   contrast: string;
 }
 
-const initialColorNameList = namedColors.map<ColorNameWithContrast>(
-  (color) => ({
-    ...color,
-    contrast: getContrastColor(Color(color.hex)).hex(),
-  }),
-);
-
 interface ColorNameMenuProps {
   handleColorClick: ColorCallback;
   isOpen: boolean;
@@ -44,16 +37,23 @@ const ColorNameMenu = ({ handleColorClick, isOpen }: ColorNameMenuProps) => {
 
   const colorNames = useMemo(() => {
     if (!searchInput) {
-      return initialColorNameList.slice(0, 100);
+      return namedColors.slice(0, 100).map<ColorNameWithContrast>((color) => ({
+        ...color,
+        contrast: getContrastColor(Color(color.hex)).hex(),
+      }));
     }
-    return initialColorNameList
+    return namedColors
       .filter((color) =>
         color.name
           .replace(/\s/g, '')
           .toLowerCase()
           .includes(searchInput.replace(/\s/g, '').toLowerCase()),
       )
-      .slice(0, 100);
+      .slice(0, 100)
+      .map<ColorNameWithContrast>((color) => ({
+        ...color,
+        contrast: getContrastColor(Color(color.hex)).hex(),
+      }));
   }, [searchInput]);
 
   return (
