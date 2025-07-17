@@ -42,7 +42,7 @@ const BodyContent = ({
         <div className="container">
           {colorData.shades.map((color, index) => (
             <ColorSquare
-              key={`color-square-${bodyNum}-${index}-${color.hex}`}
+              key={color.hex}
               bodyNum={bodyNum}
               color={color}
               squareNumber={index + 1}
