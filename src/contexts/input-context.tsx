@@ -51,7 +51,7 @@ export const InputUpdater = ({
 }: InputUpdaterProps) => {
   const prevInput1 = useRef('');
   const prevInput2 = useRef('');
-  const { updateInputValue } = useContext(InputContext);
+  const { updateInputValue } = useInput();
 
   useEffect(() => {
     if (inputValue1 !== prevInput1.current) {
